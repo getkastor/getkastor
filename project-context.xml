@@ -8,6 +8,10 @@
       <version>^7.4.47</version>
     </dependency>
     <dependency>
+      <name>@nuxt/content</name>
+      <version>2.13.4</version>
+    </dependency>
+    <dependency>
       <name>nuxt</name>
       <version>^3.15.1</version>
     </dependency>
@@ -25,9 +29,12 @@
     <![CDATA[
 ├── README.md
 ├── app.vue
+├── content/
+│   └── blog.md
 ├── nuxt.config.ts
 ├── package.json
 ├── pages/
+│   ├── [...slug].vue
 │   └── index.vue
 ├── plugins/
 │   └── vuetify.ts
@@ -44,5 +51,57 @@
   </fileTree>
   <fileContents>
     
+          <file>
+            <path>app.vue</path>
+            <content><![CDATA[<template>
+  <NuxtLayout>
+    <v-app>
+      <NuxtPage />
+    </v-app>
+  </NuxtLayout>
+</template>
+]]></content>
+          </file>
+        
+          <file>
+            <path>content/blog.md</path>
+            <content><![CDATA[this is my blog.]]></content>
+          </file>
+        
+          <file>
+            <path>pages/[...slug].vue</path>
+            <content><![CDATA[<template>
+  <main>
+    <ContentDoc />
+  </main>
+</template>]]></content>
+          </file>
+        
+          <file>
+            <path>pages/index.vue</path>
+            <content><![CDATA[// basic test page
+
+<template>
+  <div>
+    <h1>Index Page</h1>
+  </div>
+  <v-btn 
+    color="primary"
+  >Click me</v-btn>
+  <v-btn 
+    color="secondary"
+  >Click me</v-btn>
+  <v-btn 
+    color="success"
+  >Click me</v-btn>
+  <v-btn 
+    color="error"
+  >Click me</v-btn>
+  <v-btn 
+    color="warning"
+  >Click me</v-btn>
+</template>]]></content>
+          </file>
+        
   </fileContents>
 </projectContext>
