@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     baseURL: '/kastor-lp/'
   },
   modules: [
+    '@nuxt/content',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -19,6 +20,7 @@ export default defineNuxtConfig({
     },
     //...
   ],
+  ssr: true,
   vite: {
     vue: {
       template: {

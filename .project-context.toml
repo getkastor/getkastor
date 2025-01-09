@@ -6,7 +6,9 @@ excluded_from_file_tree = [
   "node_modules",
   ".project-context.toml",
   "build",
-  "dist"
+  "dist",
+  "static-site-deployment-guide.md",
+  "vuetify-3-for-Nuxt.md",
 ]
 
 # Files/directories to completely ignore
@@ -18,16 +20,20 @@ ignored_paths = [
   ".git",
   ".project-context.toml",
   "build",
-  "dist"
+  "dist",
+  "static-site-deployment-guide.md",
+  "vuetify-3-for-Nuxt.md",
 ]
 
 # Paths to include in XML content
 included_paths = [
   # "README.md",
-  # "app.vue",
+  "app.vue",
+  "content/blog.md",
   # "nuxt.config.ts",
   # "package.json",
-  # "pages/index.vue",
+  "pages/[...slug].vue",
+  "pages/index.vue",
   # "plugins/vuetify.ts",
   # "project-context.xml",
   # "public/favicon.ico",
