@@ -1,0 +1,35 @@
+# Files/directories to exclude from tree visualization
+excluded_from_file_tree = [
+  ".nuxt",
+  ".git",
+  ".output",
+  "node_modules",
+  ".project-context.toml",
+  "build",
+  "dist"
+]
+
+# Files/directories to completely ignore
+ignored_paths = [
+  ".nuxt",
+  ".output",
+  "yarn.lock",
+  "node_modules",
+  ".git",
+  ".project-context.toml",
+  "build",
+  "dist"
+]
+
+# Paths to include in XML content
+included_paths = [
+  # "README.md",
+  # "app.vue",
+  # "nuxt.config.ts",
+  # "package.json",
+  # "plugins/vuetify.ts",
+  # "public/favicon.ico",
+  # "public/robots.txt",
+  # "server/tsconfig.json",
+  # "tsconfig.json"
+]

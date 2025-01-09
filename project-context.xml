@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectContext>
+  <projectInfo>
+  <name>nuxt-app</name>
+  <dependencies>
+    <dependency>
+      <name>@mdi/font</name>
+      <version>^7.4.47</version>
+    </dependency>
+    <dependency>
+      <name>nuxt</name>
+      <version>^3.15.1</version>
+    </dependency>
+    <dependency>
+      <name>vue</name>
+      <version>latest</version>
+    </dependency>
+    <dependency>
+      <name>vue-router</name>
+      <version>latest</version>
+    </dependency>
+  </dependencies>
+</projectInfo>
+  <fileTree>
+    <![CDATA[
+├── README.md
+├── app.vue
+├── nuxt.config.ts
+├── package.json
+├── plugins/
+│   └── vuetify.ts
+├── public/
+│   ├── favicon.ico
+│   └── robots.txt
+├── server/
+│   └── tsconfig.json
+├── tsconfig.json
+└── yarn.lock
+
+    ]]>
+  </fileTree>
+  <fileContents>
+    
+  </fileContents>
+</projectContext>
