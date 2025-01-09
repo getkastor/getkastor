@@ -28,13 +28,6 @@ interface UserType {
 const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
 const currentTypeIndex = ref(0);
 
-// Stats data
-const stats: Stat[] = [
-  { value: '10K+', label: 'Beta Users' },
-  { value: '1M+', label: 'Posts Generated' },
-  { value: '98%', label: 'Satisfaction Rate' }
-];
-
 // Benefits data
 const benefits: Benefit[] = [
   {
@@ -170,23 +163,17 @@ onMounted(() => {
                 Now in Beta
               </v-chip>
             </div>
-            <h1 class="text-h2 font-weight-black white--text mb-6 hero-title">
-              Instant AI
-              <span class="rotating-text-container d-inline-block">
-                <transition
-                  name="slide-fade"
-                  mode="out-in"
-                >
-                  <span
-                    :key="currentTypeIndex"
-                    class="rotating-text gradient-text"
-                  >
-                    {{ rotatingContent[currentTypeIndex] }}
-                  </span>
-                </transition>
-              </span>
-              <br>That Sound Like You
-            </h1>
+            <h1 class="hero-title">
+  <div class="text-center mb-2">Instant</div>
+  <div class="rotating-container">
+    <transition name="fade-slide" mode="out-in">
+      <div :key="currentTypeIndex" class="gradient-text rotating-text">
+        {{ rotatingContent[currentTypeIndex] }}
+      </div>
+    </transition>
+  </div>
+  <div class="text-center mt-2">That Sounds Like You</div>
+</h1>
             <h2 class="text-h5 font-weight-regular white--text mb-8 hero-subtitle">
               From idea to final version in seconds.
               <span class="d-block">No prompt engineering needed.</span>
@@ -214,19 +201,6 @@ onMounted(() => {
                 <v-icon start>mdi-email-outline</v-icon>
                 Join Waitlist
               </v-btn>
-            </div>
-            <div class="mt-16 stats-section">
-              <v-row justify="center">
-                <v-col
-                  cols="auto"
-                  v-for="(stat, index) in stats"
-                  :key="index"
-                  class="text-center mx-4"
-                >
-                  <div class="text-h3 font-weight-black white--text">{{ stat.value }}</div>
-                  <div class="text-subtitle-1 text-grey-lighten-2">{{ stat.label }}</div>
-                </v-col>
-              </v-row>
             </div>
           </div>
         </v-col>
@@ -483,9 +457,14 @@ onMounted(() => {
 <style scoped>
 .hero-section {
   position: relative;
-  min-height: 100vh;
   padding: 120px 0;
-  background: linear-gradient(135deg, rgb(0, 179, 197), rgb(0, 93, 107));
+  /* Much lighter gradient using primary-lighten colors */
+  background: linear-gradient(135deg,
+      rgb(38, 198, 218),
+      /* primary-lighten-1 */
+      rgb(128, 222, 235)
+      /* primary-lighten-2 */
+    );
   overflow: hidden;
 }
 
@@ -495,11 +474,15 @@ onMounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
+  /* Softer overlays with very light colors */
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.1) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(224, 247, 250, 0.1) 0%, transparent 40%);
+    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.3) 0%, transparent 50%),
+    /* primary-lighten-3 */
+    radial-gradient(circle at 80% 80%, rgba(247, 253, 254, 0.3) 0%, transparent 50%);
+  /* primary-lighten-4 */
   z-index: 1;
 }
+
 
 .hero-content {
   position: relative;
@@ -508,8 +491,36 @@ onMounted(() => {
 
 .hero-title {
   font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.2;
+  line-height: 1.3;
   letter-spacing: -0.02em;
+  color: rgb(0, 66, 77);
+}
+
+
+.hero-title-wrapper {
+  position: relative;
+  height: 1.2em;
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-title-line {
+  margin-top: 0.2em;
+}
+
+.fixed-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(calc(-50% - 140px)); /* Half of rotating-text-container width */
+}
+
+.hero-cta .v-btn.v-btn--outlined {
+  border-color: rgb(0, 179, 197);
+  /* primary */
+  color: rgb(0, 179, 197);
+  /* primary */
 }
 
 .gradient-text {
@@ -522,6 +533,7 @@ onMounted(() => {
 .hero-subtitle {
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   opacity: 0.9;
+  color: rgb(0, 93, 107);
 }
 
 .text-button-large {
@@ -532,31 +544,34 @@ onMounted(() => {
 }
 
 /* Rotating text animations */
-.rotating-text-container {
-  min-width: 280px;
-  text-align: left;
+.rotating-container {
+  height: 1.3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.2em 0;
 }
 
 .rotating-text {
-  display: inline-block;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+
+/* Smooth fade-slide transition */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.5s ease;
 }
 
-.slide-fade-leave-active {
-  transition: all 0.3s ease-in;
-}
-
-.slide-fade-enter-from {
+.fade-slide-enter-from {
+  opacity: 0;
   transform: translateY(-20px);
-  opacity: 0;
 }
 
-.slide-fade-leave-to {
-  transform: translateY(20px);
+.fade-slide-leave-to {
   opacity: 0;
+  transform: translateY(20px);
 }
 
 .benefit-card {
@@ -635,8 +650,23 @@ onMounted(() => {
     font-size: clamp(1rem, 1.5vw, 1.25rem);
   }
 
-  .stats-section {
-    margin-top: 3rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .hero-title-wrapper {
+    height: 2.4em; /* Double height for stacked layout */
+  }
+  
+  .fixed-text {
+    top: 0;
+    transform: translateX(-50%); /* Center align */
+  }
+  
+  .rotating-text-container {
+    top: 1.2em;
+    transform: translateX(-50%); /* Center align */
+    text-align: center;
   }
 }
 </style>
