@@ -27,8 +27,11 @@
 ├── app.vue
 ├── nuxt.config.ts
 ├── package.json
+├── pages/
+│   └── index.vue
 ├── plugins/
 │   └── vuetify.ts
+├── project-context.xml
 ├── public/
 │   ├── favicon.ico
 │   └── robots.txt
