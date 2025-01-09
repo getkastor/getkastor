@@ -3,7 +3,7 @@
     <v-app-bar>
       <v-container class="d-flex align-center">
         <v-app-bar-title>
-          <NuxtLink to="/" class="text-decoration-none">Your Site Name</NuxtLink>
+          <NuxtLink to="/" class="text-decoration-none">Kastor</NuxtLink>
         </v-app-bar-title>
         <v-spacer></v-spacer>
         <v-btn to="/" variant="text">Home</v-btn>
@@ -20,7 +20,7 @@
     <v-footer app>
       <v-container>
         <div class="text-center">
-          © {{ new Date().getFullYear() }} Your Site Name
+          © {{ new Date().getFullYear() }} Kastor
         </div>
       </v-container>
     </v-footer>

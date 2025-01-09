@@ -1,5 +1,10 @@
 <script setup>
-const { data: articles } = await useAsyncData('articles', () => queryContent('blog').find())
+const { data: articles } = await useAsyncData('articles', () => queryContent('blog').find(), {
+  // Add cache options
+  watch: true,
+  // Refresh on route change
+  refresh: true
+});
 const categories = [...new Set(articles.value.map(article => article._path.split('/')[2]))]
 </script>
 
