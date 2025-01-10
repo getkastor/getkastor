@@ -172,7 +172,7 @@ onMounted(() => {
       </div>
     </transition>
   </div>
-  <div class="text-center mt-2">That Sounds Like You</div>
+  <div class="text-center mt-2">That Sound Like You</div>
 </h1>
             <h2 class="text-h5 font-weight-regular white--text mb-8 hero-subtitle">
               From idea to final version in seconds.
