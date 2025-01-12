@@ -13,7 +13,7 @@ const benefits: Benefit[] = [
     description: [
       'Get perfect posts in seconds',
       'Multiple options to choose from',
-      'Ready for all your channels'
+      'Orchestrate full campaigns in a few clicks'
     ],
     icon: 'mdi-creation'
   },

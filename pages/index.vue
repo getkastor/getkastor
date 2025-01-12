@@ -99,13 +99,11 @@ onMounted(() => {
       </div>
     </v-container>
 
-    <!-- Benefits Section -->
     <Benefits />
     <DemoVideo />
-    <ContentTypes2 />
-    
-
     <HowItWorks/>
+    <ContentTypes/>
+
     
 
     <!-- Who Uses Kastor -->

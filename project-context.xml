@@ -27,21 +27,52 @@
 </projectInfo>
   <fileTree>
     <![CDATA[
+├── .DS_Store
 ├── README.md
 ├── app.vue
+├── components/
+│   ├── Benefits.vue
+│   ├── BlogCard.vue
+│   ├── BlogList.vue
+│   ├── ContentTypes.vue
+│   ├── ContentTypes1.vue
+│   ├── ContentTypes2.vue
+│   ├── ContentTypes3.vue
+│   ├── DemoVideo.vue
+│   ├── HowItWorks.vue
+│   └── InfinitePossibilities.vue
 ├── content/
-│   └── blog.md
+│   └── blog/
+│       ├── content-marketing/
+│       │   └── testPost2.md
+│       └── tutorials/
+│           └── testPost.md
+├── layouts/
+│   └── default.vue
 ├── nuxt.config.ts
 ├── package.json
 ├── pages/
-│   ├── [...slug].vue
+│   ├── blog/
+│   │   ├── [category]/
+│   │   │   ├── [...slug].vue
+│   │   │   └── index.vue
+│   │   └── index.vue
 │   └── index.vue
 ├── plugins/
 │   └── vuetify.ts
 ├── project-context.xml
 ├── public/
+│   ├── .DS_Store
+│   ├── content-brief.png
+│   ├── content-type.png
 │   ├── favicon.ico
-│   └── robots.txt
+│   ├── final-blog.png
+│   ├── final-tweet.png
+│   ├── kastor-demo-800.mp4
+│   ├── kastor-demo.mp4
+│   ├── robots.txt
+│   ├── tweet-creation.png
+│   └── voice-creation.png
 ├── server/
 │   └── tsconfig.json
 ├── tsconfig.json
@@ -64,43 +95,839 @@
           </file>
         
           <file>
-            <path>content/blog.md</path>
-            <content><![CDATA[this is my blog.]]></content>
+            <path>components/Benefits.vue</path>
+            <content><![CDATA[<!-- components/Benefits.vue -->
+
+<script setup lang="ts">
+interface Benefit {
+  title: string;
+  description: string[];
+  icon: string;
+}
+
+const benefits: Benefit[] = [
+  {
+    title: 'Instant Content That Works',
+    description: [
+      'Get perfect posts in seconds',
+      'Multiple options to choose from',
+      'Ready for all your channels'
+    ],
+    icon: 'mdi-creation'
+  },
+  {
+    title: 'Sounds Just Like You',
+    description: [
+      'Show your AI how you write and talk',
+      'Keep your personality in every post',
+      'No more generic AI content'
+    ],
+    icon: 'mdi-account-voice'
+  },
+  {
+    title: 'Surprisingly Simple',
+    description: [
+      'Pick a topic, get content',
+      'No technical skills needed',
+      'Set up once, use forever'
+    ],
+    icon: 'mdi-lightning-bolt'
+  }
+];
+</script>
+
+<template>
+  <v-container fluid class="benefits-section py-16">
+    <div class="main-container">
+      <h2 class="text-h3 text-center font-weight-black mb-4">Why Choose Kastor?</h2>
+      <p class="text-subtitle-1 text-grey-darken-1 text-center mb-12">
+        Create authentic content at scale without compromising your unique voice
+      </p>
+      <v-row justify="center" align="stretch">
+        <v-col v-for="benefit in benefits" :key="benefit.title" cols="12" md="4">
+          <div class="benefit-wrapper">
+            <div class="benefit-icon-container">
+              <v-icon :icon="benefit.icon" size="32" color="primary" />
+            </div>
+            <h3 class="text-h5 font-weight-bold mb-4">{{ benefit.title }}</h3>
+            <ul class="benefit-list">
+              <li v-for="(item, i) in benefit.description" :key="i" class="benefit-item">
+                <v-icon size="16" color="secondary" class="mr-2">mdi-check-circle</v-icon>
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+        </v-col>
+      </v-row>
+    </div>
+  </v-container>
+</template>
+
+<style scoped>
+
+
+.benefit-wrapper {
+  position: relative;
+  padding: 1rem;
+  height: 100%;
+}
+
+.benefit-icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, 
+    rgba(0, 179, 197, 0.15),
+    rgba(0, 179, 197, 0.05)
+  );
+}
+
+.benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: rgba(0, 66, 77, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.benefit-item .v-icon {
+  margin-top: 0.25rem; /* Align icon with first line of text */
+}
+
+.benefit-item:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 960px) {
+  .benefit-wrapper {
+    padding: 1.5rem;
+  }
+  
+  .benefit-item {
+    font-size: 1rem;
+  }
+}
+</style>]]></content>
           </file>
         
           <file>
-            <path>pages/[...slug].vue</path>
-            <content><![CDATA[<template>
-  <main>
-    <ContentDoc />
-  </main>
-</template>]]></content>
+            <path>components/ContentTypes.vue</path>
+            <content><![CDATA[<!-- components/ContentTypes.vue -->
+<script setup lang="ts">
+interface ContentType {
+  title: string;
+  icon: string;
+}
+
+const contentTypes: ContentType[] = [
+  {
+    title: 'Tweets',
+    icon: 'mdi-twitter' // Or 'mdi-message-text' if you prefer generic
+  },
+  {
+    title: 'LinkedIn Posts',
+    icon: 'mdi-linkedin' // Or 'mdi-post' if you prefer generic
+  },
+  {
+    title: 'Blog Posts',
+    icon: 'mdi-post-outline'
+  },
+  {
+    title: 'Marketing Emails',
+    icon: 'mdi-email-newsletter'
+  },
+  {
+    title: 'Full Campaigns',
+    icon: 'mdi-arrange-send-backward'
+  }
+];
+</script>
+
+<template>
+  <v-container fluid class="content-types-section py-16">
+    <div class="main-container">
+      <h2 class="text-h3 text-center font-weight-black mb-12">Create Any Content</h2>
+      
+      <div class="content-types-container">
+        <div 
+          v-for="type in contentTypes" 
+          :key="type.title"
+          class="content-type-tile"
+        >
+          <div class="icon-wrapper">
+            <v-icon
+              :icon="type.icon"
+              size="32"
+              color="primary"
+            ></v-icon>
+          </div>
+          <div class="text-subtitle-1 font-weight-medium text-center mt-3">
+            {{ type.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </v-container>
+</template>
+
+<style scoped>
+.content-types-container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.content-type-tile {
+  flex: 0 1 auto;
+  min-width: 140px;
+  max-width: 180px;
+  text-align: center;
+  padding: 1rem;
+}
+
+.icon-wrapper {
+  background: linear-gradient(135deg, 
+    rgba(var(--v-theme-primary), 0.15),
+    rgba(var(--v-theme-primary), 0.05)
+  );
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: transform 0.2s ease;
+}
+
+.content-type-tile:hover .icon-wrapper {
+  transform: translateY(-4px);
+}
+
+@media (max-width: 600px) {
+  .content-types-container {
+    gap: 1rem;
+  }
+  
+  .content-type-tile {
+    min-width: 120px;
+    padding: 0.5rem;
+  }
+  
+  .icon-wrapper {
+    width: 64px;
+    height: 64px;
+  }
+}
+</style>]]></content>
+          </file>
+        
+          <file>
+            <path>components/DemoVideo.vue</path>
+            <content><![CDATA[<!-- components/DemoVideo.vue -->
+
+<template>
+  <v-container
+    fluid
+    class="py-16"
+  >
+    <div class="main-container ">
+    <v-sheet
+      class="mx-auto video-sheet"
+      max-width="800"
+      elevation="4"
+      rounded="lg"
+    >
+      <video
+        controls
+        class="demo-video"
+        width="800"
+        playsinline
+        autoplay
+        muted
+      >
+        <source
+          src="/kastor-demo-800.mp4"
+          type="video/mp4"
+        >
+        Your browser does not support the video tag.
+      </video>
+    </v-sheet>
+    </div>
+  </v-container>
+</template>
+
+<style scoped>
+.video-container {
+  position: relative;
+  z-index: 2;
+  line-height: 0;
+  font-size: 0;
+}
+
+.video-sheet {
+  padding: 0 !important;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+}
+
+.demo-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+}
+</style>]]></content>
+          </file>
+        
+          <file>
+            <path>components/HowItWorks.vue</path>
+            <content><![CDATA[<!-- components/HowItWorks.vue -->
+<script setup lang="ts">
+
+interface Steps {
+  title: string;
+  details: string[];
+  image: string;
+}
+
+// How it works
+const steps: Steps[] = [
+  {
+    title: 'Show Kastor your style',
+    details: [
+      'Create a voice (or several)',
+      'Share example content',
+      'Tell Kastor your do\'s and don\'ts'
+    ],
+    image: '/voice-creation.png'
+  },
+  {
+    title: 'Create a brief',
+    details: [
+      'Pick what you want to create',
+      'Select a goal: cover a topic, promote a product, recycle another post...',
+      'Give as little or as much detail as you want'
+    ],
+    image: '/content-brief.png'
+  },
+  {
+    title: 'Get your content in seconds',
+    details: [
+      'Choose from multiple options',
+      'Edit, tweak, or publish as is',
+      'Get more content whenever you want'
+    ],
+    image: '/tweet-creation.png'
+  }
+];
+</script>
+
+<template>
+
+  <v-container
+    fluid
+    class="py-16"
+  >
+    <div class="main-container">
+      <h2 class="text-h3 text-center font-weight-black mb-12">How it Works</h2>
+      <div
+        v-for="(type, index) in steps"
+        :key="type.title"
+        class="content-row"
+      >
+        <div class="content-text">
+          <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
+          <div class="checklist">
+            <div
+              v-for="(detail, i) in type.details"
+              :key="i"
+              class="checklist-item"
+            >
+              <v-icon
+                color="tertiary"
+                size="small"
+                class="checklist-icon"
+              >mdi-check-circle</v-icon>
+              <span class="checklist-text">{{ detail }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="content-image">
+          <v-img
+            :src="type.image"
+            cover
+            class="rounded-lg"
+          ></v-img>
+        </div>
+      </div>
+    </div>
+  </v-container>
+
+</template>
+
+<style scoped>
+/* Content card styles */
+.content-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 6rem;
+  align-items: center;
+}
+
+.content-row:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.content-text {
+  flex: 0 0 30%;
+}
+
+.content-image {
+  flex: 0 0 70%;
+  max-width: 70%;
+  /* This ensures the image container doesn't overflow */
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.checklist-icon {
+  margin-top: 4px; /* Aligns icon with first line of text */
+}
+
+.checklist-text {
+  line-height: 1.4;
+  flex: 1;
+}
+
+@media (max-width: 959px) {
+  .content-row {
+    flex-direction: column !important;
+    margin-bottom: 4rem;
+    gap: 1rem;
+  }
+
+  .content-text {
+    flex: 0 0 auto;
+    width: 100%;
+    order: -1;
+    padding: 1rem;
+  }
+
+  .content-image {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+</style>]]></content>
           </file>
         
           <file>
             <path>pages/index.vue</path>
-            <content><![CDATA[// basic test page
+            <content><![CDATA[<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import DemoVideo from '~/components/DemoVideo.vue';
+
+// Interfaces
+
+interface Benefit {
+  title: string;
+  description: string[];
+  icon: string;
+}
+
+interface UserType {
+  title: string;
+  benefits: string[];
+}
+
+// Hero section rotating content
+const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
+const currentTypeIndex = ref(0);
+
+// User types data
+const userTypes: UserType[] = [
+  {
+    title: 'Creators & Solopreneurs',
+    benefits: [
+      'Create content for social, email, and blog without the time sink',
+      'Keep your authentic voice while growing your following',
+      'Get real marketing results without hiring a team'
+    ]
+  },
+  {
+    title: 'Marketing Teams',
+    benefits: [
+      'Get everyone writing in your brand\'s voice from day one',
+      'Keep quality high even during product launches and events',
+      'Scale content creation without scaling your team'
+    ]
+  }
+];
+
+// Rotate through content types
+onMounted(() => {
+  setInterval(() => {
+    currentTypeIndex.value = (currentTypeIndex.value + 1) % rotatingContent.length;
+  }, 3000);
+});
+</script>
 
 <template>
   <div>
-    <h1>Index Page</h1>
+    <!-- Hero Section -->
+    <v-container
+      fluid
+      class="hero-section"
+    >
+      <div class="hero-background"></div>
+      <div class="hero-content main-container text-center">
+        <h1 class="hero-title">
+          <div class="rotating-container">
+            <transition
+              name="fade-slide"
+              mode="out-in"
+            >
+              <div
+                :key="currentTypeIndex"
+                class="gradient-text rotating-text text-secondary"
+              >
+                {{ rotatingContent[currentTypeIndex] }}
+              </div>
+            </transition>
+          </div>
+          <div class="text-center mt-2">That Sound Like You</div>
+        </h1>
+        <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
+          From idea to authentic content in seconds.
+        </h2>
+        <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
+          <v-btn
+            size="x-large"
+            color="rgb(236, 64, 122)"
+            elevation="4"
+            class="text-button-large"
+            :ripple="false"
+          >
+            <v-icon start>mdi-rocket-launch</v-icon>
+            Join the Beta
+          </v-btn>
+          <v-btn
+            size="x-large"
+            variant="flat"
+            class="text-button-large waitlist-button"
+            :ripple="false"
+          >
+            <v-icon start>mdi-email-outline</v-icon>
+            Join Waitlist
+          </v-btn>
+        </div>
+      </div>
+    </v-container>
+
+    <!-- Benefits Section -->
+    <Benefits />
+    <DemoVideo />
+
+    
+
+    <HowItWorks/>
+    <ContentTypes/>
+
+    
+
+    <!-- Who Uses Kastor -->
+    <v-container
+      fluid
+      class="py-16"
+    >
+      <div class="main-container">
+        <h2 class="text-h3 text-center font-weight-black mb-12">Who Uses Kastor</h2>
+        <v-row>
+          <v-col
+            v-for="user in userTypes"
+            :key="user.title"
+            cols="12"
+            md="6"
+          >
+            <v-card class="h-100">
+              <v-card-item>
+                <h3 class="text-h5 font-weight-bold mb-4">{{ user.title }}</h3>
+                <v-list>
+                  <v-list-item
+                    v-for="(benefit, index) in user.benefits"
+                    :key="index"
+                    :title="benefit"
+                    density="comfortable"
+                  >
+                    <template v-slot:prepend>
+                      <v-icon
+                        color="secondary"
+                        size="small"
+                      >mdi-check-circle</v-icon>
+                    </template>
+                  </v-list-item>
+                </v-list>
+              </v-card-item>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+    </v-container>
+
+    <!-- CTA Section -->
+    <v-container
+      fluid
+      class="bg-primary py-16"
+    >
+      <div class="main-container">
+        <h2 class="text-h3 white--text text-center mb-12">Join Kastor Early</h2>
+        <v-row>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-card class="h-100">
+              <v-card-item>
+                <h3 class="text-h5 font-weight-bold mb-4">Get Beta Access</h3>
+                <v-list>
+                  <v-list-item title="Help shape the product"></v-list-item>
+                  <v-list-item title="Early access to all features"></v-list-item>
+                  <v-list-item title="Special beta pricing"></v-list-item>
+                </v-list>
+                <v-btn
+                  color="primary"
+                  block
+                  class="mt-4 text-button-large"
+                >
+                  Apply for Beta Access
+                </v-btn>
+              </v-card-item>
+            </v-card>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-card class="h-100">
+              <v-card-item>
+                <h3 class="text-h5 font-weight-bold mb-4">Join the Waitlist</h3>
+                <v-list>
+                  <v-list-item title="Be first to know when we launch"></v-list-item>
+                  <v-list-item title="Get exclusive early-bird pricing"></v-list-item>
+                  <v-list-item title="Stay updated on our progress"></v-list-item>
+                </v-list>
+                <v-btn
+                  color="secondary"
+                  block
+                  class="mt-4 text-button-large"
+                >
+                  Join Waitlist
+                </v-btn>
+              </v-card-item>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+    </v-container>
   </div>
-  <v-btn 
-    color="primary"
-  >Click me</v-btn>
-  <v-btn 
-    color="secondary"
-  >Click me</v-btn>
-  <v-btn 
-    color="success"
-  >Click me</v-btn>
-  <v-btn 
-    color="error"
-  >Click me</v-btn>
-  <v-btn 
-    color="warning"
-  >Click me</v-btn>
-</template>]]></content>
+</template>
+
+<style scoped>
+.hero-section {
+  position: relative;
+  padding: 200px 0 120px 0;
+    background: linear-gradient(135deg,
+    rgb(138, 220, 235),
+    rgb(178, 242, 245)  
+    );
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Softer overlays with very light colors */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.7) 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(247, 253, 254, 0.7) 0%, transparent 50%);
+  z-index: 1;
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: rgb(0, 66, 77);
+}
+
+
+.hero-title-wrapper {
+  position: relative;
+  height: 1.2em;
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-title-line {
+  margin-top: 0.2em;
+}
+
+.fixed-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(calc(-50% - 140px));
+  /* Half of rotating-text-container width */
+}
+
+.hero-cta .v-btn.v-btn--outlined {
+  border-color: rgb(0, 179, 197);
+  /* primary */
+  color: rgb(0, 179, 197);
+  /* primary */
+}
+
+.hero-subtitle {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  opacity: 0.9;
+  color: rgb(0, 93, 107);
+}
+
+.text-button-large {
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  font-weight: 700;
+  padding: 0 32px;
+  min-width: 250px;
+}
+
+.waitlist-button {
+  color: rgb(var(--v-theme-secondary)) !important;
+  border: 2px solid rgb(var(--v-theme-secondary)) !important;
+  background-color: white !important;
+  
+}
+
+/* Rotating text animations */
+.rotating-container {
+  height: 1.3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.2em 0;
+}
+
+.rotating-text {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+
+/* Smooth fade-slide transition */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+  }
+
+
+  .hero-title-wrapper {
+    height: 2.4em;
+    /* Double height for stacked layout */
+  }
+
+  .fixed-text {
+    top: 0;
+    transform: translateX(-50%);
+    /* Center align */
+  }
+
+  .rotating-text-container {
+    min-width: 200px;
+    top: 1.2em;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .text-button-large {
+  min-width: 300px;
+}
+}
+</style>]]></content>
           </file>
         
   </fileContents>

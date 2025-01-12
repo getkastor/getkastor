@@ -16,16 +16,16 @@ const steps: Steps[] = [
       'Share example content',
       'Tell Kastor your do\'s and don\'ts'
     ],
-    image: '/how-it-works.png'
+    image: '/voice-creation.png'
   },
   {
     title: 'Create a brief',
     details: [
       'Pick what you want to create',
-      'Choose your topic',
+      'Select a goal: cover a topic, promote a product, recycle another post...',
       'Give as little or as much detail as you want'
     ],
-    image: '/how-it-works.png'
+    image: '/content-brief.png'
   },
   {
     title: 'Get your content in seconds',
@@ -34,7 +34,7 @@ const steps: Steps[] = [
       'Edit, tweak, or publish as is',
       'Get more content whenever you want'
     ],
-    image: '/how-it-works.png'
+    image: '/tweet-creation.png'
   }
 ];
 </script>

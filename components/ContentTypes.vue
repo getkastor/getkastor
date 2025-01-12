@@ -1,129 +1,129 @@
-<!-- components/ContentTypesSection.vue -->
-<template>
-  <v-container fluid class="bg-surface-light py-16">
-    <div class="main-container">
-      <h2 class="text-h3 text-center font-weight-black mb-12">Create What You Need</h2>
+<!-- components/ContentTypes.vue -->
+<script setup lang="ts">
+interface ContentType {
+  title: string;
+  icon: string;
+  description: string;
+}
 
-      <!-- Desktop View with Slide Group -->
-      <v-slide-group
-        v-model="model"
-        class="hidden-sm-and-down"
-        show-arrows
-        center-active
-      >
-        <v-slide-group-item
-          v-for="type in contentTypes"
-          :key="type.title"
-          v-slot="{ isSelected, toggle, selectedClass }"
-        >
-          <v-card
-            :class="['ma-4', selectedClass]"
-            width="400"
-            @click="toggle"
-            elevation="2"
-            :elevation="isSelected ? 8 : 2"
-            class="content-card transition-swing"
-          >
-            <v-img
-              :src="type.image"
-              height="250"
-              cover
-              class="align-end"
-
-            >
-            </v-img>
-            <v-card-title class="text-h5 pt-4">{{ type.title }}</v-card-title>
-            <v-card-text>
-              <p class="text-subtitle-1">{{ type.description }}</p>
-            </v-card-text>
-          </v-card>
-        </v-slide-group-item>
-      </v-slide-group>
-
-      <!-- Mobile View with Stacked Cards -->
-      <v-row class="hidden-md-and-up">
-        <v-col
-          v-for="type in contentTypes"
-          :key="type.title"
-          cols="12"
-        >
-          <v-card
-            elevation="2"
-            class="content-card mx-auto"
-            max-width="400"
-          >
-            <v-img
-              :src="type.image"
-              height="200"
-              cover
-              class="align-end"
-              gradient="to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%"
-            >
-            </v-img>
-            <v-card-title class="text-h5 pt-4">{{ type.title }}</v-card-title>
-            <v-card-text>
-              <p class="text-subtitle-1">{{ type.description }}</p>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
-  </v-container>
-</template>
-
-
-<script setup>
-import { ref } from 'vue';
-
-const model = ref(null);
-
-const contentTypes = [
+const contentTypes: ContentType[] = [
   {
-    title: 'Social Posts',
-    description: 'Create engaging social media content that resonates with your audience and drives meaningful interactions.',
-    image: '/content-type.png'
+    title: 'LinkedIn Posts',
+    icon: 'mdi-linkedin',
+    description: 'Professional content that builds authority'
   },
   {
-    title: 'Blog Articles',
-    description: 'Generate well-structured blog posts that establish your expertise and keep readers coming back for more.',
-    image: '/content-type.png'
+    title: 'Tweets',
+    icon: 'mdi-twitter',
+    description: 'Engaging tweets that drive conversation'
   },
   {
     title: 'Marketing Emails',
-    description: 'Craft compelling email campaigns that connect with subscribers and drive conversions.',
-    image: '/content-type.png'
+    icon: 'mdi-email-newsletter',
+    description: 'Emails that get opened and clicked'
   },
   {
-    title: 'LinkedIn Posts',
-    description: 'Build your professional brand with thought leadership content that speaks to your network.',
-    image: '/content-type.png'
+    title: 'Blog Posts',
+    icon: 'mdi-post-outline',
+    description: 'SEO-optimized articles that convert'
+  },
+  {
+    title: 'Full Campaigns',
+    icon: 'mdi-view-grid-plus-outline',
+    description: 'Coordinated content across channels'
   }
 ];
 </script>
 
+<template>
+  <v-container fluid class="content-types-section py-16">
+    <div class="main-container">
+      <h2 class="text-h3 text-center font-weight-black mb-12">Create Any Content</h2>
+
+      
+      <div class="d-flex flex-wrap justify-center">
+        <v-hover v-for="type in contentTypes" :key="type.title" v-slot="{ isHovering, props }">
+          <div 
+            class="content-type-tile"
+            v-bind="props"
+            :class="{ 'tile-hover': isHovering }"
+          >
+            <div class="icon-wrapper" :class="{ 'icon-hover': isHovering }">
+              <v-icon
+                :icon="type.icon"
+                size="32"
+                color="primary"
+                class="icon-transition"
+              ></v-icon>
+            </div>
+            <h3 class="text-h6 font-weight-bold text-center mt-4 mb-2">
+              {{ type.title }}
+            </h3>
+            <p class="text-subtitle-2 text-center description-text" >
+              {{ type.description }}
+            </p>
+          </div>
+        </v-hover>
+      </div>
+    </div>
+  </v-container>
+</template>
+
 <style scoped>
-.content-card {
-  transition: all 0.3s ease;
+
+.content-type-tile {
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-.content-card:hover {
-  transform: translateY(-4px);
+.icon-wrapper {
+  background: linear-gradient(135deg, 
+    rgba(var(--v-theme-primary), 0.12),
+    rgba(var(--v-theme-primary), 0.05)
+  );
+  width: 88px;
+  height: 88px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 0.5rem;
 }
 
-/* Ensure consistent card width on mobile */
-@media (max-width: 959px) {
-  .content-card {
-    width: 100%;
+.icon-hover {
+  transform: scale(1.05);
+}
+
+.icon-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.description-text {
+  max-width: 180px;
+  margin: 0 auto;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+
+
+@media (max-width: 600px) {
+
+  
+  .icon-wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
   }
-}
 
-/* Add some breathing room between stacked cards */
-.v-col {
-  padding-bottom: 24px;
-}
-
-/* Smooth transitions for elevation changes */
-.transition-swing {
-  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  .description-text {
+    font-size: 0.875rem;
+    max-width: 150px;
+  }
 }
 </style>
