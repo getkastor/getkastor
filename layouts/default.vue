@@ -34,7 +34,6 @@ onUnmounted(() => {
           <NuxtLink 
             to="/" 
             class="text-decoration-none"
-            :class="{ 'text-white': !isScrolled }"
           >
             Kastor
           </NuxtLink>
@@ -43,14 +42,12 @@ onUnmounted(() => {
         <v-btn 
           to="/" 
           variant="text"
-          :class="{ 'text-white': !isScrolled }"
         >
           Home
         </v-btn>
         <v-btn 
           to="/blog" 
           variant="text"
-          :class="{ 'text-white': !isScrolled }"
         >
           Blog
         </v-btn>
@@ -91,7 +88,7 @@ onUnmounted(() => {
 }
 
 .v-main {
-  padding-top: 0px;
+  padding-top: 0px !important;
 }
 
 .v-container main-container {

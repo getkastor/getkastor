@@ -19,37 +19,6 @@ interface UserType {
 const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
 const currentTypeIndex = ref(0);
 
-// Benefits data
-const benefits: Benefit[] = [
-  {
-    title: 'Instant Content That Works',
-    description: [
-      'Get perfect posts in seconds',
-      'Multiple options to choose from',
-      'Ready for all your channels'
-    ],
-    icon: 'mdi-rocket-launch'
-  },
-  {
-    title: 'Sounds Just Like You',
-    description: [
-      'Show your AI how you write and talk',
-      'Keep your personality in every post',
-      'No more generic AI content'
-    ],
-    icon: 'mdi-account-voice'
-  },
-  {
-    title: 'Surprisingly Simple',
-    description: [
-      'Pick a topic, get content',
-      'No technical skills needed',
-      'Set up once, use forever'
-    ],
-    icon: 'mdi-lightning-bolt'
-  }
-];
-
 // User types data
 const userTypes: UserType[] = [
   {
@@ -87,16 +56,7 @@ onMounted(() => {
     >
       <div class="hero-background"></div>
       <div class="hero-content main-container text-center">
-        <div class="hero-badge mb-4">
-          <v-chip
-            color="secondary"
-            class="text-uppercase font-weight-bold"
-          >
-            Now in Beta
-          </v-chip>
-        </div>
         <h1 class="hero-title">
-          <div class="text-center mb-2">Instant</div>
           <div class="rotating-container">
             <transition
               name="fade-slide"
@@ -104,7 +64,7 @@ onMounted(() => {
             >
               <div
                 :key="currentTypeIndex"
-                class="gradient-text rotating-text"
+                class="gradient-text rotating-text text-secondary"
               >
                 {{ rotatingContent[currentTypeIndex] }}
               </div>
@@ -112,9 +72,8 @@ onMounted(() => {
           </div>
           <div class="text-center mt-2">That Sound Like You</div>
         </h1>
-        <h2 class="text-h5 font-weight-regular white--text mb-8 hero-subtitle">
-          From idea to final version in seconds.
-          <span class="d-block">No prompt engineering needed.</span>
+        <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
+          From idea to authentic content in seconds.
         </h2>
         <div class="d-flex justify-center ga-4 hero-cta">
           <v-btn
@@ -146,7 +105,7 @@ onMounted(() => {
     <!-- Benefits Section -->
     <Benefits />
     <DemoVideo />
-    <ContentTypes1 />
+    <ContentTypes2 />
     
 
     <HowItWorks/>
@@ -252,13 +211,10 @@ onMounted(() => {
 <style scoped>
 .hero-section {
   position: relative;
-  padding: 120px 0;
-  /* Much lighter gradient using primary-lighten colors */
-  background: linear-gradient(135deg,
-      rgb(38, 198, 218),
-      /* primary-lighten-1 */
-      rgb(128, 222, 235)
-      /* primary-lighten-2 */
+  padding: 200px 0 120px 0;
+    background: linear-gradient(135deg,
+    rgb(138, 220, 235),
+    rgb(178, 242, 245)  
     );
   overflow: hidden;
 }
@@ -271,10 +227,8 @@ onMounted(() => {
   bottom: 0;
   /* Softer overlays with very light colors */
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.3) 0%, transparent 50%),
-    /* primary-lighten-3 */
-    radial-gradient(circle at 80% 80%, rgba(247, 253, 254, 0.3) 0%, transparent 50%);
-  /* primary-lighten-4 */
+    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.7) 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(247, 253, 254, 0.7) 0%, transparent 50%);
   z-index: 1;
 }
 
@@ -317,13 +271,6 @@ onMounted(() => {
   /* primary */
   color: rgb(0, 179, 197);
   /* primary */
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, rgb(236, 64, 122), rgb(255, 164, 193));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .hero-subtitle {

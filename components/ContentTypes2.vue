@@ -1,13 +1,41 @@
 <!-- components/ContentTypesSection.vue -->
 <template>
   <v-container fluid class="bg-surface-light py-16">
-    <div class="main-container">
+    <div class="benefits-section">
       <h2 class="text-h3 text-center font-weight-black mb-12">Create What You Need</h2>
+
+      <!-- Desktop View (4 cards) - Show only on lg and up -->
+      <v-row class="d-none d-xl-flex benefits-container-large">
+        <v-col
+          v-for="type in contentTypes"
+          :key="type.title"
+          cols="12"
+          lg="3"
+        >
+          <v-card
+            elevation="2"
+            class="content-card h-100"
+          >
+            <v-img
+              :src="type.image"
+              height="300"
+              cover
+              class="align-end"
+              gradient="to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 85%"
+            >
+              <div class="card-overlay pa-4">
+                <h3 class="text-h5 font-weight-bold text-white mb-1">{{ type.title }}</h3>
+                <p class="text-subtitle-2 text-white">{{ type.description }}</p>
+              </div>
+            </v-img>
+          </v-card>
+        </v-col>
+      </v-row>
 
       <!-- Desktop View with Slide Group -->
       <v-slide-group
         v-model="model"
-        class="hidden-sm-and-down"
+        class="d-none d-md-flex d-xl-none"
         show-arrows
         center-active
       >
@@ -40,7 +68,7 @@
       </v-slide-group>
 
       <!-- Mobile View with Stacked Cards -->
-      <v-row class="hidden-md-and-up">
+      <v-row class="d-flex d-md-none">
         <v-col
           v-for="type in contentTypes"
           :key="type.title"
@@ -100,6 +128,12 @@ const contentTypes = [
 </script>
 
 <style scoped>
+
+.benefits-container-large {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .content-card {
   transition: all 0.3s ease;
   overflow: hidden;
