@@ -1,11 +1,8 @@
+<!-- components/HowItWorks.vue -->
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-
-
 
 interface Steps {
   title: string;
-  subtitle: string;
   details: string[];
   image: string;
 }
@@ -14,7 +11,6 @@ interface Steps {
 const steps: Steps[] = [
   {
     title: 'Show Kastor your style',
-    subtitle: 'One-time, 5 minutes',
     details: [
       'Create a voice (or several)',
       'Share example content',
@@ -23,8 +19,7 @@ const steps: Steps[] = [
     image: '/how-it-works.png'
   },
   {
-    title: 'Create a Brief',
-    subtitle: 'In seconds',
+    title: 'Create a brief',
     details: [
       'Pick what you want to create',
       'Choose your topic',
@@ -34,7 +29,6 @@ const steps: Steps[] = [
   },
   {
     title: 'Get your content in seconds',
-    subtitle: 'No waiting',
     details: [
       'Choose from multiple options',
       'Edit, tweak, or publish as is',
@@ -47,52 +41,48 @@ const steps: Steps[] = [
 
 <template>
 
-    <v-container
-      fluid
-      class="bg-surface-light py-16"
-    >
-      <div class="main-container">
-        <h2 class="text-h3 text-center font-weight-black mb-12">How it Works</h2>
-        <div
-          v-for="(type, index) in steps"
-          :key="type.title"
-          class="content-row"
-        >
-          <div class="content-text">
-            <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
-            <p class="text-subtitle-1 mb-6">{{ type.subtitle }}</p>
-            <v-list>
-              <v-list-item
-                v-for="(detail, i) in type.details"
-                :key="i"
-                :title="detail"
-                density="comfortable"
-              >
-                <template v-slot:prepend>
-                  <v-icon
-                    color="secondary"
-                    size="small"
-                  >mdi-check-circle</v-icon>
-                </template>
-              </v-list-item>
-            </v-list>
-          </div>
-          <div class="content-image">
-            <v-img
-              :src="type.image"
-              
-              cover
-              class="rounded-lg"
-            ></v-img>
+  <v-container
+    fluid
+    class="py-16"
+  >
+    <div class="main-container">
+      <h2 class="text-h3 text-center font-weight-black mb-12">How it Works</h2>
+      <div
+        v-for="(type, index) in steps"
+        :key="type.title"
+        class="content-row"
+      >
+        <div class="content-text">
+          <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
+          <div class="checklist">
+            <div
+              v-for="(detail, i) in type.details"
+              :key="i"
+              class="checklist-item"
+            >
+              <v-icon
+                color="tertiary"
+                size="small"
+                class="checklist-icon"
+              >mdi-check-circle</v-icon>
+              <span class="checklist-text">{{ detail }}</span>
+            </div>
           </div>
         </div>
+        <div class="content-image">
+          <v-img
+            :src="type.image"
+            cover
+            class="rounded-lg"
+          ></v-img>
+        </div>
       </div>
-    </v-container>
+    </div>
+  </v-container>
 
 </template>
 
 <style scoped>
-
 /* Content card styles */
 .content-row {
   display: flex;
@@ -107,13 +97,33 @@ const steps: Steps[] = [
 
 .content-text {
   flex: 0 0 30%;
-  padding: 2rem;
 }
 
 .content-image {
   flex: 0 0 70%;
   max-width: 70%;
   /* This ensures the image container doesn't overflow */
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.checklist-icon {
+  margin-top: 4px; /* Aligns icon with first line of text */
+}
+
+.checklist-text {
+  line-height: 1.4;
+  flex: 1;
 }
 
 @media (max-width: 959px) {
@@ -136,10 +146,4 @@ const steps: Steps[] = [
     max-width: 100%;
   }
 }
-
-/* Utility classes */
-.gap-4 {
-  gap: 1rem;
-}
-
 </style>

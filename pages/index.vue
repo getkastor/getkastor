@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import DemoVideo from '~/components/DemoVideo.vue';
 
 // Interfaces
 
@@ -139,93 +140,12 @@ onMounted(() => {
             Join Waitlist
           </v-btn>
         </div>
-        <!-- Demo Video Section -->
-        <div class="video-container mt-12">
-          <v-sheet
-            class="mx-auto video-sheet"
-            max-width="800"
-            elevation="4"
-            rounded="lg"
-          >
-            <video
-              controls
-              class="demo-video"
-              width="800"
-              playsinline
-              autoplay
-              loop
-              muted
-            >
-              <source
-                src="/kastor-demo-800.mp4"
-                type="video/mp4"
-              >
-              Your browser does not support the video tag.
-            </video>
-          </v-sheet>
-        </div>
       </div>
     </v-container>
 
     <!-- Benefits Section -->
-    <v-container
-      fluid
-      class="benefits-section py-16"
-    >
-      <div class="main-container">
-        <h2 class="text-h3 text-center font-weight-black mb-4">Why Choose Kastor?</h2>
-        <p class="text-subtitle-1 text-grey-darken-1 text-center mb-12">
-          Create authentic content at scale without compromising your unique voice
-        </p>
-        <v-row>
-          <v-col
-            v-for="benefit in benefits"
-            :key="benefit.title"
-            cols="12"
-            md="4"
-          >
-            <v-hover v-slot="{ isHovering, props }">
-              <v-card
-                v-bind="props"
-                :elevation="isHovering ? 8 : 2"
-                :class="['h-100', 'benefit-card', { 'on-hover': isHovering }]"
-                rounded="lg"
-              >
-                <v-card-item>
-                  <div class="benefit-icon-wrapper mb-6">
-                    <v-icon
-                      size="36"
-                      :color="isHovering ? 'white' : 'primary'"
-                      class="benefit-icon"
-                    >
-                      {{ benefit.icon }}
-                    </v-icon>
-                  </div>
-                  <h3 class="text-h5 font-weight-bold mb-4">{{ benefit.title }}</h3>
-                  <v-list>
-                    <v-list-item
-                      v-for="(item, i) in benefit.description"
-                      :key="i"
-                      :title="item"
-                      density="comfortable"
-                      class="benefit-list-item"
-                    >
-                      <template v-slot:prepend>
-                        <v-icon
-                          color="secondary"
-                          size="small"
-                        >mdi-check-circle</v-icon>
-                      </template>
-                    </v-list-item>
-                  </v-list>
-                </v-card-item>
-              </v-card>
-            </v-hover>
-          </v-col>
-        </v-row>
-      </div>
-    </v-container>
-
+    <Benefits />
+    <DemoVideo />
     <ContentTypes1 />
     
 

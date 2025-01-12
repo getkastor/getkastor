@@ -26,16 +26,15 @@
           >
             <v-img
               :src="type.image"
-              height="400"
+              height="250"
               cover
               class="align-end"
-              gradient="to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 60%"
             >
-              <div class="card-overlay pa-6">
-                <h3 class="text-h5 font-weight-bold text-white mb-3">{{ type.title }}</h3>
-                <p class="text-subtitle-1 text-white">{{ type.description }}</p>
-              </div>
             </v-img>
+            <v-card-title class="text-h5 pt-4">{{ type.title }}</v-card-title>
+            <v-card-text>
+              <p class="text-subtitle-1">{{ type.description }}</p>
+            </v-card-text>
           </v-card>
         </v-slide-group-item>
       </v-slide-group>
@@ -54,16 +53,16 @@
           >
             <v-img
               :src="type.image"
-              height="300"
+              height="200"
               cover
               class="align-end"
-              gradient="to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 60%"
+              gradient="to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%"
             >
-              <div class="card-overlay pa-6">
-                <h3 class="text-h5 font-weight-bold text-white mb-3">{{ type.title }}</h3>
-                <p class="text-subtitle-1 text-white">{{ type.description }}</p>
-              </div>
             </v-img>
+            <v-card-title class="text-h5 pt-4">{{ type.title }}</v-card-title>
+            <v-card-text>
+              <p class="text-subtitle-1">{{ type.description }}</p>
+            </v-card-text>
           </v-card>
         </v-col>
       </v-row>
