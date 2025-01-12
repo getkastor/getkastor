@@ -29,7 +29,7 @@ onUnmounted(() => {
         'transition-all': true
       }"
     >
-      <v-container class="d-flex align-center">
+      <v-container class="d-flex align-center main-container">
         <v-app-bar-title>
           <NuxtLink 
             to="/" 
@@ -61,7 +61,7 @@ onUnmounted(() => {
       <slot />
     </v-main>
 
-    <v-footer app>
+    <v-footer>
       <v-container>
         <div class="text-center">
           © {{ new Date().getFullYear() }} Kastor
@@ -71,13 +71,31 @@ onUnmounted(() => {
   </v-app>
 </template>
 
-<style scoped>
+<style>
+.main-container {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    padding: 0 0.5rem;
+  }
+}
+
 .v-app-bar {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .v-main {
   padding-top: 0px;
+}
+
+.v-container main-container {
+  max-width: 1200px;
 }
 
 .bg-transparent {
