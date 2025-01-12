@@ -1,11 +1,11 @@
 <!-- components/ContentTypesSection.vue -->
 <template>
   <v-container fluid class="bg-surface-light py-16">
-    <div class="benefits-section">
+    <div class="content-type-section">
       <h2 class="text-h3 text-center font-weight-black mb-12">Create What You Need</h2>
 
       <!-- Desktop View (4 cards) - Show only on lg and up -->
-      <v-row class="d-none d-xl-flex benefits-container-large">
+      <v-row class="d-none d-xl-flex content-type-container-large">
         <v-col
           v-for="type in contentTypes"
           :key="type.title"
@@ -35,7 +35,7 @@
       <!-- Desktop View with Slide Group -->
       <v-slide-group
         v-model="model"
-        class="d-none d-md-flex d-xl-none"
+        class="d-none d-md-flex d-xl-none align-center"
         show-arrows
         center-active
       >
@@ -88,7 +88,7 @@
             >
               <div class="card-overlay pa-4">
                 <h3 class="text-h5 font-weight-bold text-white mb-1">{{ type.title }}</h3>
-                <p class="text-subtitle-2 text-white text-medium-emphasis">{{ type.description }}</p>
+                <p class="text-subtitle-2 text-white">{{ type.description }}</p>
               </div>
             </v-img>
           </v-card>
@@ -129,7 +129,7 @@ const contentTypes = [
 
 <style scoped>
 
-.benefits-container-large {
+.content-type-container-large {
   max-width: 1800px;
   margin-left: auto;
   margin-right: auto;
@@ -139,15 +139,16 @@ const contentTypes = [
   overflow: hidden;
 }
 
-/* .content-card:hover {
-  transform: translateY(-4px);
-} */
-
 .card-overlay {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+}
+
+:deep(.v-slide-group__content) {
+  justify-content: center;
+  
 }
 
 /* Ensure consistent card width on mobile */
