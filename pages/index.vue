@@ -75,25 +75,22 @@ onMounted(() => {
         <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
           From idea to authentic content in seconds.
         </h2>
-        <div class="d-flex justify-center ga-4 hero-cta">
+        <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
           <v-btn
             size="x-large"
             color="rgb(236, 64, 122)"
             elevation="4"
             class="text-button-large"
             :ripple="false"
-            min-width="200"
           >
             <v-icon start>mdi-rocket-launch</v-icon>
             Join the Beta
           </v-btn>
           <v-btn
             size="x-large"
-            variant="outlined"
-            color="white"
-            class="text-button-large white--text"
+            variant="flat"
+            class="text-button-large waitlist-button"
             :ripple="false"
-            min-width="200"
           >
             <v-icon start>mdi-email-outline</v-icon>
             Join Waitlist
@@ -283,7 +280,16 @@ onMounted(() => {
   font-size: 1.1rem;
   letter-spacing: 0.5px;
   text-transform: none;
+  font-weight: 700;
   padding: 0 32px;
+  min-width: 250px;
+}
+
+.waitlist-button {
+  color: rgb(var(--v-theme-secondary)) !important;
+  border: 2px solid rgb(var(--v-theme-secondary)) !important;
+  background-color: white !important;
+  
 }
 
 /* Rotating text animations */
@@ -317,61 +323,6 @@ onMounted(() => {
   transform: translateY(20px);
 }
 
-/* Video */
-
-.video-container {
-  position: relative;
-  z-index: 2;
-  line-height: 0;
-  font-size: 0;
-}
-
-.video-sheet {
-  padding: 0 !important;
-  line-height: 0;
-  font-size: 0;
-  overflow: hidden;
-}
-
-.demo-video {
-  display: block;
-  width: 100%;
-  height: auto;
-  line-height: 0;
-  margin: 0;
-  padding: 0;
-}
-
-/* Benefits */
-.benefit-card {
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.benefit-card.on-hover {
-  transform: translateY(-8px);
-}
-
-.benefit-icon-wrapper {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgb(247, 253, 254);
-  transition: all 0.3s ease;
-}
-
-.benefit-card.on-hover .benefit-icon-wrapper {
-  background: rgb(0, 179, 197);
-}
-
-.benefit-list-item {
-  padding-left: 0;
-}
-
-
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -388,9 +339,6 @@ onMounted(() => {
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  .rotating-text-container {
-    min-width: 200px;
-  }
 
   .hero-title {
     font-size: clamp(2rem, 4vw, 3rem);
@@ -400,10 +348,7 @@ onMounted(() => {
     font-size: clamp(1rem, 1.5vw, 1.25rem);
   }
 
-}
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
   .hero-title-wrapper {
     height: 2.4em;
     /* Double height for stacked layout */
@@ -416,10 +361,14 @@ onMounted(() => {
   }
 
   .rotating-text-container {
+    min-width: 200px;
     top: 1.2em;
     transform: translateX(-50%);
-    /* Center align */
     text-align: center;
   }
+
+  .text-button-large {
+  min-width: 300px;
+}
 }
 </style>
