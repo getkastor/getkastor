@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import DemoVideo from '~/components/DemoVideo.vue';
+import { AccessRequestType } from '~/types/accessRequest';
+
 
 // Interfaces
-
-interface Benefit {
-  title: string;
-  description: string[];
-  icon: string;
-}
 
 interface UserType {
   title: string;
   benefits: string[];
 }
+
+// Create const object for template use
+const requestTypes = {
+  beta: AccessRequestType.beta_access,
+  waitlist: AccessRequestType.ga_waitlist
+} as const;
+
+// Modal state
+const showBetaModal = ref(false);
+const showWaitlistModal = ref(false);
 
 // Hero section rotating content
 const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
@@ -82,6 +88,7 @@ onMounted(() => {
             elevation="4"
             class="text-button-large"
             :ripple="false"
+            @click="showBetaModal = true"
           >
             <v-icon start>mdi-rocket-launch</v-icon>
             Join the Beta
@@ -91,6 +98,7 @@ onMounted(() => {
             variant="flat"
             class="text-button-large waitlist-button"
             :ripple="false"
+            @click="showWaitlistModal = true"
           >
             <v-icon start>mdi-email-outline</v-icon>
             Join Waitlist
@@ -169,6 +177,7 @@ onMounted(() => {
                   color="primary"
                   block
                   class="mt-4 text-button-large"
+                  @click="showBetaModal = true"
                 >
                   Apply for Beta Access
                 </v-btn>
@@ -191,6 +200,7 @@ onMounted(() => {
                   color="secondary"
                   block
                   class="mt-4 text-button-large"
+                  @click="showWaitlistModal = true"
                 >
                   Join Waitlist
                 </v-btn>
@@ -200,6 +210,15 @@ onMounted(() => {
         </v-row>
       </div>
     </v-container>
+    <!-- Early Access Modals -->
+    <EarlyAccessModal
+    v-model="showBetaModal"
+    :type="AccessRequestType.beta_access"
+  />
+  <EarlyAccessModal
+    v-model="showWaitlistModal"
+    :type="AccessRequestType.ga_waitlist"
+  />
   </div>
 </template>
 
