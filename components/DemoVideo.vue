@@ -19,6 +19,7 @@
         playsinline
         autoplay
         muted
+        loop
       >
         <source
           src="/kastor-demo-800.mp4"

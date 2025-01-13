@@ -58,9 +58,9 @@ onUnmounted(() => {
       <slot />
     </v-main>
 
-    <v-footer>
+    <v-footer class="bg-primary">
       <v-container>
-        <div class="text-center">
+        <div class="bg-primary">
           © {{ new Date().getFullYear() }} Kastor
         </div>
       </v-container>
@@ -89,6 +89,7 @@ onUnmounted(() => {
 
 .v-main {
   padding-top: 0px !important;
+  font-size: 1.125rem;
 }
 
 .v-container main-container {

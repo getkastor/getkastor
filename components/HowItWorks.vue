@@ -35,6 +35,15 @@ const steps: Steps[] = [
       'Get more content whenever you want'
     ],
     image: '/tweet-creation.png'
+  },
+  {
+    title: 'Orchestrate full campaigns',
+    details: [
+      'Set the campaign goal and description',
+      'Let Kastor generate ideas and briefs for each asset',
+      'Tweak if needed, and generate all assets at once',
+    ],
+    image: '/campaign-creation.png'
   }
 ];
 </script>

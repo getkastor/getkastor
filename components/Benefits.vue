@@ -41,10 +41,10 @@ const benefits: Benefit[] = [
 <template>
   <v-container fluid class="benefits-section py-16">
     <div class="main-container">
-      <h2 class="text-h3 text-center font-weight-black mb-4">Why Choose Kastor?</h2>
-      <p class="text-subtitle-1 text-grey-darken-1 text-center mb-12">
+      <h2 class="text-h3 text-center font-weight-black mb-12">Why Choose Kastor?</h2>
+      <!-- <p class="text-subtitle-1 text-grey-darken-1 text-center mb-12 benefits-subtitle" >
         Create authentic content at scale without compromising your unique voice
-      </p>
+      </p> -->
       <v-row justify="center" align="stretch">
         <v-col v-for="benefit in benefits" :key="benefit.title" cols="12" md="4">
           <div class="benefit-wrapper">
@@ -86,6 +86,10 @@ const benefits: Benefit[] = [
     rgba(0, 179, 197, 0.15),
     rgba(0, 179, 197, 0.05)
   );
+}
+
+.benefits-subtitle {
+  font-size: 1.125rem;
 }
 
 .benefit-list {
