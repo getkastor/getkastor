@@ -2,15 +2,25 @@
 <template>
   <v-dialog
     v-model="dialog"
-    max-width="500"
+    width="500"
     persistent
     :scrim="loading ? '#000000' : undefined"
   >
-    <v-card class="auth-card">
+    <v-card class="auth-card pb-8">
+      <!-- Close button -->
+      <v-btn
+        icon="mdi-close"
+        variant="text"
+        size="small"
+        class="close-btn"
+        @click="handleClose"
+        :disabled="loading"
+      ></v-btn>
+
       <!-- Step 1: Email Collection -->
       <v-card-title
         v-if="!submitted"
-        class="text-center text-h5 font-weight-bold pt-6 pb-2"
+        class="text-center text-h5 font-weight-bold pt-6 pb-8"
       >
         {{ type === 'beta_access' ? 'Join the Beta' : 'Join the Waitlist' }}
       </v-card-title>
@@ -31,9 +41,12 @@
             variant="outlined"
             density="compact"
             bg-color="grey-lighten-5"
-            class="mb-2"
+
             :disabled="loading"
           />
+          <p class="text-caption text-medium-emphasis mb-8">
+            We'll never share your email or send you spam.
+          </p>
 
           <v-alert
             v-if="error"
@@ -48,12 +61,12 @@
 
           <v-btn
             block
-            :color="type === 'beta_access' ? 'secondary' : 'primary'"
+            color='primary'
             type="submit"
             size="large"
             :loading="loading"
             :disabled="!isEmailValid"
-            class="mt-4 mb-2"
+            class="mt-12 px-6"
           >
             {{ type === 'beta_access' ? 'Apply for Beta Access' : 'Join Waitlist' }}
           </v-btn>
@@ -73,22 +86,20 @@
               class="mb-4"
             />
             <h3 class="text-h5 font-weight-bold mb-2">Thank you!</h3>
-            <p class="text-body-1 text-medium-emphasis">
-              {{ type === 'beta_access'
-                ? "We'll review your application and get back to you soon."
-                : "We'll notify you when we launch." }}
-            </p>
+            <p class="text-body-1 text-medium-emphasis" v-html="detailsMessage"></p>
           </div>
 
           <v-textarea
             v-model="applicationDetails"
-            label="Optionally, tell us why you're interested and how you'd be planning on using Kastor"
+            label="Your message"
             variant="outlined"
             density="comfortable"
-            bg-color="grey-lighten-5"
             rows="4"
             :disabled="detailsSubmitted || loading"
             class="mb-4"
+            :counter="DETAILS_LIMIT"
+            :rules="[rules.detailsLimit]"
+            @input="applicationDetails = ($event.target as HTMLTextAreaElement).value.slice(0, DETAILS_LIMIT)"
           />
 
           <v-btn
@@ -98,26 +109,16 @@
             type="submit"
             size="large"
             :loading="loading"
-            class="mb-2"
+            class="px-6 mt-12"
           >
             Submit Additional Details
           </v-btn>
         </v-form>
       </v-card-text>
-
-      <!-- Close button -->
-      <v-card-actions class="justify-center pb-4">
-        <v-btn
-          variant="text"
-          @click="handleClose"
-          :disabled="loading"
-        >
-          Close
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
+
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -145,14 +146,30 @@ const error = ref('')
 const isEmailValid = ref(false)
 const submitted = ref(false)
 const detailsSubmitted = ref(false)
+const DETAILS_LIMIT = 1000;
+
 // TO DO: check how to edit for production
 const API_BASE_URL = 'http://localhost:3001'
 
 // Form validation rules
 const rules = {
   required: (v: string) => !!v || 'This field is required',
-  email: (v: string) => /.+@.+\..+/.test(v) || 'Please enter a valid email'
+  email: (v: string) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
+  detailsLimit: (v: string) => v.length <= DETAILS_LIMIT || `Maximum ${DETAILS_LIMIT} characters`
 }
+
+const waitlistDetailsMessage = `
+    We'll notify you when we launch. <br>
+    Optionally: please tell us why you're excited to use Kastor!
+`
+
+const betaDetailsMessage = `
+    Please tell us why you're interested and how you'd be planning on using Kastor.
+`
+
+const detailsMessage = computed(() => {
+  return props.type === AccessRequestType.beta_access ? betaDetailsMessage : waitlistDetailsMessage
+})
 
 // Handle initial email submission
 async function handleEmailSubmit() {
@@ -230,39 +247,71 @@ function handleClose() {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.modal-gradient {
+  background: linear-gradient(135deg, 
+    rgb(255, 255, 255) 0%,
+    rgb(248, 250, 252) 100%
+  );
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
 }
 
 .details-form {
   animation: fadeIn 0.3s ease-out;
 }
 
+
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Make form inputs stand out a bit */
-:deep(.v-field) {
-  border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.2s;
+/* Improved Typography */
+.v-card-title {
+  letter-spacing: -0.5px;
 }
 
-:deep(.v-field:hover) {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.auth-card .v-card-title {
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
-/* Reduce input height for compact look */
-:deep(.v-field .v-field__input) {
-  min-height: 40px;
-  padding-top: 0;
-  padding-bottom: 0;
+.v-card-text {
+  padding-top: 24px;
+  padding-bottom: 24px;
+
 }
+
+@media (max-width: 700px) {
+  .auth-card {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+  .v-dialog {
+    margin: 0px;
+    width: 100%;
+  }
+  
+  .v-card-text {
+    padding: 16px;
+  }
+}
+
 </style>
