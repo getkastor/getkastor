@@ -14,7 +14,7 @@ const myCustomLightTheme = {
     'surface-light': '#F5F7F8',    // Slightly blue-tinted light gray for subtle depth
     'surface-variant': '#EC407A',   // pink for tooltips
     'on-surface-variant': '#FFFFFF', // white for text on pink surfaces
-    'surface-dark': '#2D3436',      // Dark gray for elevated surfaces
+    'surface-dark': '#2D3436',      // Charcoal for navbars and navdrawers
 
     // Primary (Teal) family
     'primary-lighten-4': '#F7FDFE',

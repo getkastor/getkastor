@@ -84,7 +84,7 @@ onMounted(() => {
         <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
           <v-btn
             size="x-large"
-            color="rgb(236, 64, 122)"
+            color="secondary"
             elevation="4"
             class="text-button-large"
             :ripple="false"
@@ -252,6 +252,23 @@ onMounted(() => {
 .rotating-text {
   font-weight: 700;
   white-space: nowrap;
+}
+
+
+.text-button-large {
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  font-weight: 700;
+  padding: 0 32px;
+  min-width: 250px;
+}
+
+.waitlist-button {
+  color: rgb(var(--v-theme-secondary)) !important;
+  border: 2px solid rgb(var(--v-theme-secondary)) !important;
+  background-color: white !important;
+  
 }
 
 ul.list-none {
