@@ -148,8 +148,9 @@ const submitted = ref(false)
 const detailsSubmitted = ref(false)
 const DETAILS_LIMIT = 1000;
 
-// TO DO: check how to edit for production
-const API_BASE_URL = 'http://localhost:3001'
+const runtimeConfig = useRuntimeConfig()
+const API_BASE_URL = runtimeConfig.public.apiBase
+
 
 // Form validation rules
 const rules = {
