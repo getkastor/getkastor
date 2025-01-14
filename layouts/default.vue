@@ -2,10 +2,29 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const isScrolled = ref(false)
-const appBarHeight = 64 // Default v-app-bar height in pixels
+const showWhiteBg = ref(false) // New ref for background color
+
+const appBarHeight = 150 // Default v-app-bar height in pixels
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > appBarHeight
+  const isNowScrolled = window.scrollY > appBarHeight
+
+  if (isNowScrolled !== isScrolled.value) {
+    isScrolled.value = isNowScrolled
+
+    if (!isNowScrolled) {
+      // When scrolling back to top, remove dark bg immediately
+      showWhiteBg.value = false
+    } else {
+      // When scrolling down, delay the dark bg slightly
+      setTimeout(() => {
+        if (isScrolled.value) { // Check if still scrolled
+          showWhiteBg.value = true
+        }
+        // Adjust this timing to match your hide animation
+      }, 150)
+    }
+  }
 }
 
 // Add scroll event listener when component is mounted
@@ -23,30 +42,37 @@ onUnmounted(() => {
   <v-app>
     <v-app-bar
       :elevation="isScrolled ? 1 : 0"
+      scroll-behavior="hide"
+      scroll-threshold="100"
       :class="{
-        'bg-transparent': !isScrolled,
-        'bg-white': isScrolled,
-        'transition-all': true
+        'bg-transparent': !showWhiteBg,
+        'bg-white': showWhiteBg,
+        'bg-transition': true
       }"
     >
       <v-container class="d-flex align-center main-container">
         <v-app-bar-title>
-          <NuxtLink 
-            to="/" 
-            class="text-decoration-none"
+          <NuxtLink
+            to="/"
+            class="text-decoration-none d-flex align-center"
           >
-            Kastor
+            <img
+              src="/Kastor_wordmark_light_bg.svg"
+              alt="Kastor Logo"
+              height="32"
+              class="logo"
+            />
           </NuxtLink>
         </v-app-bar-title>
         <v-spacer></v-spacer>
-        <v-btn 
-          to="/" 
+        <v-btn
+          to="/"
           variant="text"
         >
           Home
         </v-btn>
-        <v-btn 
-          to="/blog" 
+        <v-btn
+          to="/blog"
           variant="text"
         >
           Blog
@@ -77,14 +103,27 @@ onUnmounted(() => {
   padding: 0 1rem;
 }
 
+.logo {
+  height: 32px;
+  width: auto;
+  transition: opacity 0.3s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-font-smoothing: antialiased;
+  shape-rendering: geometricPrecision;
+  will-change: transform;
+  stroke-width: 1px;
+}
+
+
 @media (max-width: 600px) {
   .main-container {
     padding: 0 0.5rem;
   }
 }
 
-.v-app-bar {
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+.bg-transition {
+  transition: background-color 0.3s ease !important;
 }
 
 .v-main {
@@ -98,13 +137,5 @@ onUnmounted(() => {
 
 .bg-transparent {
   background-color: transparent !important;
-}
-
-.bg-white {
-  background-color: white !important;
-}
-
-.transition-all {
-  transition: all 0.3s ease;
 }
 </style>
