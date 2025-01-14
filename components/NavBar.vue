@@ -224,6 +224,7 @@ onUnmounted(() => {
 .navButton.waitlist {
   color: rgb(var(--v-theme-primary-darken-1)) !important;
   border: 2px solid rgb(var(--v-theme-primary)) !important;
+  background-color: white !important;
 }
 
 
