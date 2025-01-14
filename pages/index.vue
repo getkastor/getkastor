@@ -109,10 +109,10 @@ onMounted(() => {
 
     <Benefits />
     <DemoVideo />
-    <HowItWorks/>
-    <ContentTypes/>
+    <HowItWorks />
+    <ContentTypes />
 
-    
+
 
     <!-- Who Uses Kastor -->
     <v-container
@@ -153,72 +153,20 @@ onMounted(() => {
       </div>
     </v-container>
 
-    <!-- CTA Section -->
-    <v-container
-      fluid
-      class="bg-primary py-16"
-    >
-      <div class="main-container">
-        <h2 class="text-h3 white--text text-center mb-12">Join Kastor Early</h2>
-        <v-row>
-          <v-col
-            cols="12"
-            sm="6"
-          >
-            <v-card class="h-100">
-              <v-card-item>
-                <h3 class="text-h5 font-weight-bold mb-4">Get Beta Access</h3>
-                <v-list>
-                  <v-list-item title="Help shape the product"></v-list-item>
-                  <v-list-item title="Early access to all features"></v-list-item>
-                  <v-list-item title="Special beta pricing"></v-list-item>
-                </v-list>
-                <v-btn
-                  color="primary"
-                  block
-                  class="mt-4 text-button-large"
-                  @click="showBetaModal = true"
-                >
-                  Apply for Beta Access
-                </v-btn>
-              </v-card-item>
-            </v-card>
-          </v-col>
-          <v-col
-            cols="12"
-            sm="6"
-          >
-            <v-card class="h-100">
-              <v-card-item>
-                <h3 class="text-h5 font-weight-bold mb-4">Join the Waitlist</h3>
-                <v-list>
-                  <v-list-item title="Be first to know when we launch"></v-list-item>
-                  <v-list-item title="Get exclusive early-bird pricing"></v-list-item>
-                  <v-list-item title="Stay updated on our progress"></v-list-item>
-                </v-list>
-                <v-btn
-                  color="secondary"
-                  block
-                  class="mt-4 text-button-large"
-                  @click="showWaitlistModal = true"
-                >
-                  Join Waitlist
-                </v-btn>
-              </v-card-item>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
-    </v-container>
+    <CTASection
+      @showBetaModal="showBetaModal = true"
+      @showWaitlistModal="showWaitlistModal = true"
+    />
+
     <!-- Early Access Modals -->
     <EarlyAccessModal
-    v-model="showBetaModal"
-    :type="AccessRequestType.beta_access"
-  />
-  <EarlyAccessModal
-    v-model="showWaitlistModal"
-    :type="AccessRequestType.ga_waitlist"
-  />
+      v-model="showBetaModal"
+      :type="AccessRequestType.beta_access"
+    />
+    <EarlyAccessModal
+      v-model="showWaitlistModal"
+      :type="AccessRequestType.ga_waitlist"
+    />
   </div>
 </template>
 
@@ -226,10 +174,9 @@ onMounted(() => {
 .hero-section {
   position: relative;
   padding: 200px 0 120px 0;
-    background: linear-gradient(135deg,
-    rgb(138, 220, 235),
-    rgb(178, 242, 245)  
-    );
+  background: linear-gradient(135deg,
+      rgb(138, 220, 235),
+      rgb(178, 242, 245));
   overflow: hidden;
 }
 
@@ -293,22 +240,6 @@ onMounted(() => {
   color: rgb(0, 93, 107);
 }
 
-.text-button-large {
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  text-transform: none;
-  font-weight: 700;
-  padding: 0 32px;
-  min-width: 250px;
-}
-
-.waitlist-button {
-  color: rgb(var(--v-theme-secondary)) !important;
-  border: 2px solid rgb(var(--v-theme-secondary)) !important;
-  background-color: white !important;
-  
-}
-
 /* Rotating text animations */
 .rotating-container {
   height: 1.3em;
@@ -323,6 +254,10 @@ onMounted(() => {
   white-space: nowrap;
 }
 
+ul.list-none {
+  list-style: none;
+  padding: 0;
+}
 
 /* Smooth fade-slide transition */
 .fade-slide-enter-active,
@@ -384,8 +319,5 @@ onMounted(() => {
     text-align: center;
   }
 
-  .text-button-large {
-  min-width: 300px;
-}
 }
 </style>
