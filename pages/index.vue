@@ -79,7 +79,7 @@ onMounted(() => {
           <div class="text-center mt-2">That Sound Like You</div>
         </h1>
         <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
-          From idea to authentic post in seconds.
+          From idea to authentic posts in seconds. <br> Get results across Twitter, LinkedIn, SEO and email<br>in just minutes per week.
         </h2>
         <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
           <v-btn
@@ -238,6 +238,7 @@ onMounted(() => {
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   opacity: 0.9;
   color: rgb(0, 93, 107);
+  line-height: 1.5;
 }
 
 /* Rotating text animations */
@@ -268,7 +269,6 @@ onMounted(() => {
   color: rgb(var(--v-theme-secondary)) !important;
   border: 2px solid rgb(var(--v-theme-secondary)) !important;
   background-color: white !important;
-  
 }
 
 ul.list-none {
@@ -307,14 +307,19 @@ ul.list-none {
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+
+  .hero-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
   .hero-title {
     font-size: clamp(2rem, 4vw, 3rem);
   }
 
   .hero-subtitle {
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-size: 1.3rem !important;
   }
 
 

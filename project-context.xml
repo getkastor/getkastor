@@ -29,6 +29,8 @@
     <![CDATA[
 ├── .DS_Store
 ├── .env
+├── KASTOR_INTERNAL_DESCRIPTION.MD
+├── LANDING_PAGE_STRUCTURE.md
 ├── README.md
 ├── app.vue
 ├── components/
@@ -91,1208 +93,280 @@
   <fileContents>
     
           <file>
-            <path>components/Benefits.vue</path>
-            <content><![CDATA[<!-- components/Benefits.vue -->
+            <path>KASTOR_INTERNAL_DESCRIPTION.MD</path>
+            <content><![CDATA[# Kastor - AI-Powered Content Marketing Platform - Internal Documentation
 
-<script setup lang="ts">
-interface Benefit {
-  title: string;
-  description: string[];
-  icon: string;
-}
+## Overview
 
-const benefits: Benefit[] = [
-  {
-    title: 'Instant Content That Works',
-    description: [
-      'Get perfect posts in seconds',
-      'Multiple options to choose from',
-      'Orchestrate full campaigns in a few clicks'
-    ],
-    icon: 'mdi-creation'
-  },
-  {
-    title: 'Sounds Just Like You',
-    description: [
-      'Show your AI how you write and talk',
-      'Keep your personality in every post',
-      'No more generic AI content'
-    ],
-    icon: 'mdi-account-voice'
-  },
-  {
-    title: 'Surprisingly Simple',
-    description: [
-      'Pick a topic, get content',
-      'No technical skills needed',
-      'Set up once, use forever'
-    ],
-    icon: 'mdi-lightning-bolt'
-  }
-];
-</script>
+Kastor is an AI-powered content marketing platform designed for marketers, solopreneurs, and small companies. It streamlines the content creation process by allowing users to establish consistent brand voices across multiple content types and channels, while leveraging AI to generate high-quality content at scale.
 
-<template>
-  <v-container fluid class="benefits-section py-16">
-    <div class="main-container">
-      <h2 class="text-h3 text-center font-weight-black mb-12">Why Choose Kastor?</h2>
-      <!-- <p class="text-subtitle-1 text-grey-darken-1 text-center mb-12 benefits-subtitle" >
-        Create authentic content at scale without compromising your unique voice
-      </p> -->
-      <v-row justify="center" align="stretch">
-        <v-col v-for="benefit in benefits" :key="benefit.title" cols="12" md="4">
-          <div class="benefit-wrapper">
-            <div class="benefit-icon-container">
-              <v-icon :icon="benefit.icon" size="32" color="primary" />
-            </div>
-            <h3 class="text-h5 font-weight-bold mb-4">{{ benefit.title }}</h3>
-            <ul class="benefit-list">
-              <li v-for="(item, i) in benefit.description" :key="i" class="benefit-item">
-                <v-icon size="16" color="secondary" class="mr-2">mdi-check-circle</v-icon>
-                {{ item }}
-              </li>
-            </ul>
-          </div>
-        </v-col>
-      </v-row>
-    </div>
-  </v-container>
-</template>
+## Target Audience
+Solopreneurs, small business owners, and marketing teams that don't have time to create content for their social media channels, blog, and email marketing campaigns.
+I suspect the smaller end of that target will try first but I don't want to deter larger companies from trying it out.
 
-<style scoped>
+## Key Benefits
 
+### Content Quality & Authenticity
+- Create marketing content and social posts that sound authentically like you or your brand, not generic AI-generated content
+- Maintain consistent voice and tone across all channels through carefully configured voice settings
+- Scale your authentic voice across multiple content types without losing personality
 
-.benefit-wrapper {
-  position: relative;
-  padding: 1rem;
-  height: 100%;
-}
+### Time & Efficiency
+- Turn one piece of content into multiple channel-specific formats automatically
+- Generate full marketing campaigns in minutes instead of hours or days
+- Create content in bulk while maintaining quality and consistency
+- Skip the blank page - get high-quality first drafts instantly
 
-.benefit-icon-container {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, 
-    rgba(0, 179, 197, 0.15),
-    rgba(0, 179, 197, 0.05)
-  );
-}
+### Flexibility & Control
+- Maintain different voices for different purposes (corporate, executive, product-specific)
+- Fine-tune content generation with specific guidelines and examples
+- Get multiple options for each piece of content to choose from
+- Keep full editorial control while automating the heavy lifting
 
-.benefits-subtitle {
-  font-size: 1.125rem;
-}
+### Strategic Value
+- Coordinate multi-channel marketing campaigns with consistent messaging
+- Ensure brand consistency across all team members creating content
+- Scale content marketing efforts without scaling the team
+- Maintain quality even during high-volume content needs (product launches, events, etc.)
 
-.benefit-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+## Core Concepts
 
-.benefit-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  color: rgba(0, 66, 77, 0.9);
-  font-size: 1.1rem;
-  line-height: 1.5;
-}
+### Voices
+A voice represents a content style guide within Kastor. Users can create multiple voices for different purposes (e.g., corporate voice, executive voice).
 
-.benefit-item .v-icon {
-  margin-top: 0.25rem; /* Align icon with first line of text */
-}
+Each voice consists of:
+- General context (e.g., "I am the CEO of startup X")
+- General guidelines (e.g., "never use emojis")
+- Content type-specific settings for:
+  - Twitter posts
+  - LinkedIn posts
+  - Blog posts
+  - Marketing emails
 
-.benefit-item:last-child {
-  margin-bottom: 0;
-}
+For each content type, users must provide:
+- At least one good example (recommended: 3 diverse examples to prevent pattern overfitting)
+- Optional bad examples
+- Optional additional guidelines
+- Optional content type-specific context
 
-@media (max-width: 960px) {
-  .benefit-wrapper {
-    padding: 1.5rem;
-  }
-  
-  .benefit-item {
-    font-size: 1rem;
-  }
-}
-</style>]]></content>
+### Content Types
+Kastor currently supports four content types:
+- Twitter posts
+- LinkedIn posts
+- Blog posts
+- Marketing emails
+
+### Company Profile
+Users can optionally configure:
+- Company name
+- Company website
+- Company description
+- Products information:
+  - Product name
+  - Product description
+  - Product pricing
+
+## Content Creation
+
+### Standalone Content
+Users can create individual pieces of content through the following workflow:
+
+1. Select content type
+2. Choose a configured voice (must be set up for selected content type)
+3. Select action:
+   - Write about a topic
+   - Promote content
+   - Repurpose content
+   - Promote product
+4. Provide necessary inputs based on action:
+   - Topic and additional instructions
+   - Product details (select existing or enter new)
+   - Content to promote/repurpose
+5. Generate content
+   - Twitter/LinkedIn: Generates 3 options
+   - Blog posts/Marketing emails: Generates 2 options
+   - Generation time: 30-60 seconds (longer for blog posts and emails)
+6. Select final version (enables future repurposing/promotion)
+
+### Campaigns
+Campaigns allow users to create multiple pieces of related content around a single topic or goal.
+
+Campaign creation workflow:
+
+1. Create campaign brief:
+   - Name
+   - Action (same options as standalone content)
+   - Topic/content/product details
+   - Optional campaign context and guidelines
+
+2. Set up assets:
+   - Define content type and voice for each asset
+   - Optional: Add asset role in campaign
+   - Optional: Add additional instructions
+   
+3. Generate asset briefs:
+   - Can generate roles and instructions for multiple assets simultaneously
+   - Takes into account campaign brief
+   - Can be done individually or in bulk
+
+4. Generate content:
+   - Same options as standalone content
+   - Can generate multiple assets simultaneously
+   - Select final versions individually
+
+## Best Practices
+
+### Voice Setup
+- Provide 3 diverse examples for each content type to ensure variety
+- Make guidelines specific and actionable
+- Include both "do's" and "don'ts" when possible
+
+### Content Generation
+- Be specific with additional instructions
+- Review and edit generated content before use
+- Mark final versions to enable future repurposing
+
+## Technical Notes
+
+### Generation Times
+- Short-form content (Twitter/LinkedIn): ~30 seconds
+- Long-form content (Blog posts/Emails): ~60 seconds
+- Times may vary based on system improvements
+
+### Minimum Requirements
+- Voice setup requires at least one good example per content type
+- Campaign assets require content type and voice selection
+
+## Future Features (Planned)
+
+- Enhanced content calendar management
+- Automatic campaign asset suggestion
+- Asset scheduling capabilities
+- Campaign date management
+- Expanded content type support
+
+## Usage Flow
+
+1. Initial Setup
+   - Configure company profile
+   - Set up voices for required content types
+   - Add product information if needed
+
+2. Regular Usage
+   - Generate standalone content as needed
+   - Create campaigns for coordinated content efforts
+   - Select and refine generated content
+   - Mark final versions for future reference
+
+This documentation will be expanded as new features are added and existing functionality is enhanced.]]></content>
           </file>
         
           <file>
-            <path>components/ContentTypes.vue</path>
-            <content><![CDATA[<!-- components/ContentTypes.vue -->
-<script setup lang="ts">
-interface ContentType {
-  title: string;
-  icon: string;
-  description: string;
-}
-
-const contentTypes: ContentType[] = [
-  {
-    title: 'LinkedIn Posts',
-    icon: 'mdi-linkedin',
-    description: 'Professional content that builds authority'
-  },
-  {
-    title: 'Tweets',
-    icon: 'mdi-twitter',
-    description: 'Engaging tweets that drive conversation'
-  },
-  {
-    title: 'Marketing Emails',
-    icon: 'mdi-email-newsletter',
-    description: 'Emails that get opened and clicked'
-  },
-  {
-    title: 'Blog Posts',
-    icon: 'mdi-post-outline',
-    description: 'SEO-optimized articles that convert'
-  },
-  {
-    title: 'Full Campaigns',
-    icon: 'mdi-view-grid-plus-outline',
-    description: 'Coordinated content across channels'
-  }
-];
-</script>
-
-<template>
-  <v-container fluid class="content-types-section py-16">
-    <div class="main-container">
-      <h2 class="text-h3 text-center font-weight-black mb-12">Create Any Content</h2>
-
-      
-      <div class="d-flex flex-wrap justify-center">
-        <v-hover v-for="type in contentTypes" :key="type.title" v-slot="{ isHovering, props }">
-          <div 
-            class="content-type-tile"
-            v-bind="props"
-            :class="{ 'tile-hover': isHovering }"
-          >
-            <div class="icon-wrapper" :class="{ 'icon-hover': isHovering }">
-              <v-icon
-                :icon="type.icon"
-                size="32"
-                color="primary"
-                class="icon-transition"
-              ></v-icon>
-            </div>
-            <h3 class="text-h6 font-weight-bold text-center mt-4 mb-2">
-              {{ type.title }}
-            </h3>
-            <p class="text-subtitle-2 text-center description-text" >
-              {{ type.description }}
-            </p>
-          </div>
-        </v-hover>
-      </div>
-    </div>
-  </v-container>
-</template>
-
-<style scoped>
-
-.content-type-tile {
-  padding: 1rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.icon-wrapper {
-  background: linear-gradient(135deg, 
-    rgba(var(--v-theme-primary), 0.12),
-    rgba(var(--v-theme-primary), 0.05)
-  );
-  width: 88px;
-  height: 88px;
-  border-radius: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-bottom: 0.5rem;
-}
-
-.icon-hover {
-  transform: scale(1.05);
-}
-
-.icon-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.description-text {
-  max-width: 180px;
-  margin: 0 auto;
-  line-height: 1.5;
-  transition: color 0.3s ease;
-}
-
-
-
-@media (max-width: 600px) {
-
-  
-  .icon-wrapper {
-    width: 72px;
-    height: 72px;
-    border-radius: 20px;
-  }
-
-  .description-text {
-    font-size: 0.875rem;
-    max-width: 150px;
-  }
-}
-</style>]]></content>
-          </file>
-        
-          <file>
-            <path>components/DemoVideo.vue</path>
-            <content><![CDATA[<!-- components/DemoVideo.vue -->
-
-<template>
-  <v-container
-    fluid
-    class="py-16"
-  >
-    <div class="main-container ">
-    <v-sheet
-      class="mx-auto video-sheet"
-      max-width="800"
-      elevation="4"
-      rounded="lg"
-    >
-      <video
-        controls
-        class="demo-video"
-        width="800"
-        playsinline
-        autoplay
-        muted
-        loop
-      >
-        <source
-          src="/kastor-demo-800.mp4"
-          type="video/mp4"
-        >
-        Your browser does not support the video tag.
-      </video>
-    </v-sheet>
-    </div>
-  </v-container>
-</template>
-
-<style scoped>
-.video-container {
-  position: relative;
-  z-index: 2;
-  line-height: 0;
-  font-size: 0;
-}
-
-.video-sheet {
-  padding: 0 !important;
-  line-height: 0;
-  font-size: 0;
-  overflow: hidden;
-}
-
-.demo-video {
-  display: block;
-  width: 100%;
-  height: auto;
-  line-height: 0;
-  margin: 0;
-  padding: 0;
-}
-</style>]]></content>
-          </file>
-        
-          <file>
-            <path>components/EarlyAccessModal.vue</path>
-            <content><![CDATA[<!-- components/EarlyAccessModal.vue -->
-<template>
-  <v-dialog
-    v-model="dialog"
-    width="500"
-    persistent
-    :scrim="loading ? '#000000' : undefined"
-  >
-    <v-card class="auth-card pb-8">
-      <!-- Close button -->
-      <v-btn
-        icon="mdi-close"
-        variant="text"
-        size="small"
-        class="close-btn"
-        @click="handleClose"
-        :disabled="loading"
-      ></v-btn>
-
-      <!-- Step 1: Email Collection -->
-      <v-card-title
-        v-if="!submitted"
-        class="text-center text-h5 font-weight-bold pt-6 pb-8"
-      >
-        {{ type === 'beta_access' ? 'Join the Beta' : 'Join the Waitlist' }}
-      </v-card-title>
-
-      <v-card-text class="px-4 py-2">
-        <!-- Step 1: Email Form -->
-        <v-form
-          v-if="!submitted"
-          @submit.prevent="handleEmailSubmit"
-          v-model="isEmailValid"
-        >
-          <v-text-field
-            v-model="email"
-            label="Email"
-            type="email"
-            :rules="[rules.required, rules.email]"
-            required
-            variant="outlined"
-            density="compact"
-            bg-color="grey-lighten-5"
-
-            :disabled="loading"
-          />
-          <p class="text-caption text-medium-emphasis mb-8">
-            We'll never share your email or send you spam.
-          </p>
-
-          <v-alert
-            v-if="error"
-            type="error"
-            variant="tonal"
-            class="my-2"
-            density="compact"
-            closable
-          >
-            {{ error }}
-          </v-alert>
-
-          <v-btn
-            block
-            color='primary'
-            type="submit"
-            size="large"
-            :loading="loading"
-            :disabled="!isEmailValid"
-            class="mt-12 px-6"
-          >
-            {{ type === 'beta_access' ? 'Apply for Beta Access' : 'Join Waitlist' }}
-          </v-btn>
-        </v-form>
-
-        <!-- Step 2: Additional Details -->
-        <v-form
-          v-else
-          @submit.prevent="handleDetailsSubmit"
-          class="details-form"
-        >
-          <div class="text-center mb-6">
-            <v-icon
-              color="success"
-              size="64"
-              icon="mdi-check-circle"
-              class="mb-4"
-            />
-            <h3 class="text-h5 font-weight-bold mb-2">Thank you!</h3>
-            <p class="text-body-1 text-medium-emphasis" v-html="detailsMessage"></p>
-          </div>
-
-          <v-textarea
-            v-model="applicationDetails"
-            label="Your message"
-            variant="outlined"
-            density="comfortable"
-            rows="4"
-            :disabled="detailsSubmitted || loading"
-            class="mb-4"
-            :counter="DETAILS_LIMIT"
-            :rules="[rules.detailsLimit]"
-            @input="applicationDetails = ($event.target as HTMLTextAreaElement).value.slice(0, DETAILS_LIMIT)"
-          />
-
-          <v-btn
-            v-if="!detailsSubmitted"
-            block
-            color="primary"
-            type="submit"
-            size="large"
-            :loading="loading"
-            class="px-6 mt-12"
-          >
-            Submit Additional Details
-          </v-btn>
-        </v-form>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
-</template>
-
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import { AccessRequestType } from '~/types/accessRequest'
-
-
-const props = defineProps<{
-  modelValue: boolean
-  type: AccessRequestType
-}>()
-
-const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-}>()
-
-// Form state
-const dialog = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
-})
-const email = ref('')
-const applicationDetails = ref('')
-const loading = ref(false)
-const error = ref('')
-const isEmailValid = ref(false)
-const submitted = ref(false)
-const detailsSubmitted = ref(false)
-const DETAILS_LIMIT = 1000;
-
-const runtimeConfig = useRuntimeConfig()
-const API_BASE_URL = runtimeConfig.public.apiBase
-
-
-// Form validation rules
-const rules = {
-  required: (v: string) => !!v || 'This field is required',
-  email: (v: string) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
-  detailsLimit: (v: string) => v.length <= DETAILS_LIMIT || `Maximum ${DETAILS_LIMIT} characters`
-}
-
-const waitlistDetailsMessage = `
-    We'll notify you when we launch. <br>
-    Optionally: please tell us why you're excited to use Kastor!
-`
-
-const betaDetailsMessage = `
-    Please tell us why you're interested and how you'd be planning on using Kastor.
-`
-
-const detailsMessage = computed(() => {
-  return props.type === AccessRequestType.beta_access ? betaDetailsMessage : waitlistDetailsMessage
-})
-
-// Handle initial email submission
-async function handleEmailSubmit() {
-  if (!isEmailValid.value) return
-
-  loading.value = true
-  error.value = ''
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/early-access-request/create`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email.value,
-        request_type: props.type
-      })
-    })
-
-    if (!response.ok) throw new Error('Failed to submit request')
-
-    submitted.value = true
-  } catch (e) {
-    error.value = 'Something went wrong. Please try again.'
-    console.error('Error submitting email:', e)
-  } finally {
-    loading.value = false
-  }
-}
-
-// Handle additional details submission
-async function handleDetailsSubmit() {
-  if (!applicationDetails.value) return
-
-  loading.value = true
-  error.value = ''
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/early-access-request/update`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email.value,
-        application_details: applicationDetails.value
-      })
-    })
-
-    if (!response.ok) throw new Error('Failed to submit details')
-
-    detailsSubmitted.value = true
-  } catch (e) {
-    error.value = 'Something went wrong. Please try again.'
-    console.error('Error submitting details:', e)
-  } finally {
-    loading.value = false
-  }
-}
-
-// Handle dialog close
-function handleClose() {
-  dialog.value = false
-  // Reset form state after animation completes
-  setTimeout(() => {
-    email.value = ''
-    applicationDetails.value = ''
-    error.value = ''
-    submitted.value = false
-    detailsSubmitted.value = false
-  }, 300)
-}
-</script>
-
-<style scoped>
-.auth-card {
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-
-.modal-gradient {
-  background: linear-gradient(135deg, 
-    rgb(255, 255, 255) 0%,
-    rgb(248, 250, 252) 100%
-  );
-}
-
-.close-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 1;
-}
-
-.details-form {
-  animation: fadeIn 0.3s ease-out;
-}
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Improved Typography */
-.v-card-title {
-  letter-spacing: -0.5px;
-}
-
-.auth-card .v-card-title {
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-.v-card-text {
-  padding-top: 24px;
-  padding-bottom: 24px;
-
-}
-
-@media (max-width: 700px) {
-  .auth-card {
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-  .v-dialog {
-    margin: 0px;
-    width: 100%;
-  }
-  
-  .v-card-text {
-    padding: 16px;
-  }
-}
-
-</style>
-]]></content>
-          </file>
-        
-          <file>
-            <path>components/HowItWorks.vue</path>
-            <content><![CDATA[<!-- components/HowItWorks.vue -->
-<script setup lang="ts">
-
-interface Steps {
-  title: string;
-  details: string[];
-  image: string;
-}
-
-// How it works
-const steps: Steps[] = [
-  {
-    title: 'Show Kastor your style',
-    details: [
-      'Create a voice (or several)',
-      'Share example content',
-      'Tell Kastor your do\'s and don\'ts'
-    ],
-    image: '/voice-creation.png'
-  },
-  {
-    title: 'Create a brief',
-    details: [
-      'Pick what you want to create',
-      'Select a goal: cover a topic, promote a product, recycle another post...',
-      'Give as little or as much detail as you want'
-    ],
-    image: '/content-brief.png'
-  },
-  {
-    title: 'Get your content in seconds',
-    details: [
-      'Choose from multiple options',
-      'Edit, tweak, or publish as is',
-      'Get more content whenever you want'
-    ],
-    image: '/tweet-creation.png'
-  },
-  {
-    title: 'Orchestrate full campaigns',
-    details: [
-      'Set the campaign goal and description',
-      'Let Kastor generate ideas and briefs for each asset',
-      'Tweak if needed, and generate all assets at once',
-    ],
-    image: '/campaign-creation.png'
-  }
-];
-</script>
-
-<template>
-
-  <v-container
-    fluid
-    class="py-16"
-  >
-    <div class="main-container">
-      <h2 class="text-h3 text-center font-weight-black mb-12">How it Works</h2>
-      <div
-        v-for="(type, index) in steps"
-        :key="type.title"
-        class="content-row"
-      >
-        <div class="content-text">
-          <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
-          <div class="checklist">
-            <div
-              v-for="(detail, i) in type.details"
-              :key="i"
-              class="checklist-item"
-            >
-              <v-icon
-                color="tertiary"
-                size="small"
-                class="checklist-icon"
-              >mdi-check-circle</v-icon>
-              <span class="checklist-text">{{ detail }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="content-image">
-          <v-img
-            :src="type.image"
-            cover
-            class="rounded-lg"
-          ></v-img>
-        </div>
-      </div>
-    </div>
-  </v-container>
-
-</template>
-
-<style scoped>
-/* Content card styles */
-.content-row {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 6rem;
-  align-items: center;
-}
-
-.content-row:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-.content-text {
-  flex: 0 0 30%;
-}
-
-.content-image {
-  flex: 0 0 70%;
-  max-width: 70%;
-  /* This ensures the image container doesn't overflow */
-}
-
-.checklist {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.checklist-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.checklist-icon {
-  margin-top: 4px; /* Aligns icon with first line of text */
-}
-
-.checklist-text {
-  line-height: 1.4;
-  flex: 1;
-}
-
-@media (max-width: 959px) {
-  .content-row {
-    flex-direction: column !important;
-    margin-bottom: 4rem;
-    gap: 1rem;
-  }
-
-  .content-text {
-    flex: 0 0 auto;
-    width: 100%;
-    order: -1;
-    padding: 1rem;
-  }
-
-  .content-image {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 100%;
-  }
-}
-</style>]]></content>
-          </file>
-        
-          <file>
-            <path>layouts/default.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-</script>
-
-<template>
-  <v-app>
-    <NavBar />
-
-    <v-main>
-      <slot />
-    </v-main>
-
-    <v-footer class="bg-primary">
-      <v-container>
-        <div class="bg-primary">
-          © {{ new Date().getFullYear() }} Kastor
-        </div>
-      </v-container>
-    </v-footer>
-  </v-app>
-</template>
-
-<style>
-.main-container {
-  max-width: 1200px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 100%;
-  padding: 0 1rem;
-}
-
-@media (max-width: 600px) {
-  .main-container {
-    padding: 0 0.5rem;
-  }
-}
-
-.v-main {
-  padding-top: 0px !important;
-  font-size: 1.125rem;
-}
-
-.v-container main-container {
-  max-width: 1200px;
-}
-</style>]]></content>
-          </file>
-        
-          <file>
-            <path>pages/index.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import DemoVideo from '~/components/DemoVideo.vue';
-import { AccessRequestType } from '~/types/accessRequest';
-
-
-// Interfaces
-
-interface UserType {
-  title: string;
-  benefits: string[];
-}
-
-// Create const object for template use
-const requestTypes = {
-  beta: AccessRequestType.beta_access,
-  waitlist: AccessRequestType.ga_waitlist
-} as const;
-
-// Modal state
-const showBetaModal = ref(false);
-const showWaitlistModal = ref(false);
-
-// Hero section rotating content
-const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
-const currentTypeIndex = ref(0);
-
-// User types data
-const userTypes: UserType[] = [
-  {
-    title: 'Creators & Solopreneurs',
-    benefits: [
-      'Create content for social, email, and blog without the time sink',
-      'Keep your authentic voice while growing your following',
-      'Get real marketing results without hiring a team'
-    ]
-  },
-  {
-    title: 'Marketing Teams',
-    benefits: [
-      'Get everyone writing in your brand\'s voice from day one',
-      'Keep quality high even during product launches and events',
-      'Scale content creation without scaling your team'
-    ]
-  }
-];
-
-// Rotate through content types
-onMounted(() => {
-  setInterval(() => {
-    currentTypeIndex.value = (currentTypeIndex.value + 1) % rotatingContent.length;
-  }, 3000);
-});
-</script>
-
-<template>
-  <div>
-    <!-- Hero Section -->
-    <v-container
-      fluid
-      class="hero-section"
-    >
-      <div class="hero-background"></div>
-      <div class="hero-content main-container text-center">
-        <h1 class="hero-title">
-          <div class="rotating-container">
-            <transition
-              name="fade-slide"
-              mode="out-in"
-            >
-              <div
-                :key="currentTypeIndex"
-                class="gradient-text rotating-text text-secondary"
-              >
-                {{ rotatingContent[currentTypeIndex] }}
-              </div>
-            </transition>
-          </div>
-          <div class="text-center mt-2">That Sound Like You</div>
-        </h1>
-        <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
-          From idea to authentic post in seconds.
-        </h2>
-        <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
-          <v-btn
-            size="x-large"
-            color="secondary"
-            elevation="4"
-            class="text-button-large"
-            :ripple="false"
-            @click="showBetaModal = true"
-          >
-            <v-icon start>mdi-rocket-launch</v-icon>
-            Join the Beta
-          </v-btn>
-          <v-btn
-            size="x-large"
-            variant="flat"
-            class="text-button-large waitlist-button"
-            :ripple="false"
-            @click="showWaitlistModal = true"
-          >
-            <v-icon start>mdi-email-outline</v-icon>
-            Join Waitlist
-          </v-btn>
-        </div>
-      </div>
-    </v-container>
-
-    <Benefits />
-    <DemoVideo />
-    <HowItWorks />
-    <ContentTypes />
-
-
-
-    <!-- Who Uses Kastor -->
-    <v-container
-      fluid
-      class="py-16"
-    >
-      <div class="main-container">
-        <h2 class="text-h3 text-center font-weight-black mb-12">Who Uses Kastor</h2>
-        <v-row>
-          <v-col
-            v-for="user in userTypes"
-            :key="user.title"
-            cols="12"
-            md="6"
-          >
-            <v-card class="h-100">
-              <v-card-item>
-                <h3 class="text-h5 font-weight-bold mb-4">{{ user.title }}</h3>
-                <v-list>
-                  <v-list-item
-                    v-for="(benefit, index) in user.benefits"
-                    :key="index"
-                    :title="benefit"
-                    density="comfortable"
-                  >
-                    <template v-slot:prepend>
-                      <v-icon
-                        color="secondary"
-                        size="small"
-                      >mdi-check-circle</v-icon>
-                    </template>
-                  </v-list-item>
-                </v-list>
-              </v-card-item>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
-    </v-container>
-
-    <CTASection
-      @showBetaModal="showBetaModal = true"
-      @showWaitlistModal="showWaitlistModal = true"
-    />
-
-    <!-- Early Access Modals -->
-    <EarlyAccessModal
-      v-model="showBetaModal"
-      :type="AccessRequestType.beta_access"
-    />
-    <EarlyAccessModal
-      v-model="showWaitlistModal"
-      :type="AccessRequestType.ga_waitlist"
-    />
-  </div>
-</template>
-
-<style scoped>
-.hero-section {
-  position: relative;
-  padding: 200px 0 120px 0;
-  background: linear-gradient(135deg,
-      rgb(138, 220, 235),
-      rgb(178, 242, 245));
-  overflow: hidden;
-}
-
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* Softer overlays with very light colors */
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.7) 0%, transparent 50%),
-    radial-gradient(circle at 90% 90%, rgba(247, 253, 254, 0.7) 0%, transparent 50%);
-  z-index: 1;
-}
-
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  color: rgb(0, 66, 77);
-}
-
-
-.hero-title-wrapper {
-  position: relative;
-  height: 1.2em;
-  margin-bottom: 0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-title-line {
-  margin-top: 0.2em;
-}
-
-.fixed-text {
-  position: absolute;
-  left: 50%;
-  transform: translateX(calc(-50% - 140px));
-  /* Half of rotating-text-container width */
-}
-
-.hero-cta .v-btn.v-btn--outlined {
-  border-color: rgb(0, 179, 197);
-  /* primary */
-  color: rgb(0, 179, 197);
-  /* primary */
-}
-
-.hero-subtitle {
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  opacity: 0.9;
-  color: rgb(0, 93, 107);
-}
-
-/* Rotating text animations */
-.rotating-container {
-  height: 1.3em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.2em 0;
-}
-
-.rotating-text {
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-
-.text-button-large {
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  text-transform: none;
-  font-weight: 700;
-  padding: 0 32px;
-  min-width: 250px;
-}
-
-.waitlist-button {
-  color: rgb(var(--v-theme-secondary)) !important;
-  border: 2px solid rgb(var(--v-theme-secondary)) !important;
-  background-color: white !important;
-  
-}
-
-ul.list-none {
-  list-style: none;
-  padding: 0;
-}
-
-/* Smooth fade-slide transition */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.5s ease;
-}
-
-.fade-slide-enter-from {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-
-  .hero-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
-  }
-
-
-  .hero-title-wrapper {
-    height: 2.4em;
-    /* Double height for stacked layout */
-  }
-
-  .fixed-text {
-    top: 0;
-    transform: translateX(-50%);
-    /* Center align */
-  }
-
-  .rotating-text-container {
-    min-width: 200px;
-    top: 1.2em;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-
-}
-</style>]]></content>
+            <path>LANDING_PAGE_STRUCTURE.md</path>
+            <content><![CDATA[# Landing Page Copy Structure
+
+## Hero Section
+# [Dynamic Text Rotation] That Sound Like You
+- Rotating texts:
+  - "Tweets"
+  - "LinkedIn Posts" 
+  - "Blog Posts"
+  - "Marketing Emails"
+
+### Subtitle
+From idea to authentic post in seconds.
+Get results across Twitter, LinkedIn, SEO and email in just minutes per week.
+
+### CTA Buttons
+- [button: [icon: rocket-launch] Join the Beta]
+- [button: [icon: email-outline] Join Waitlist]
+
+## Why Choose Kastor?
+### Benefit 1: Instant Content At Scale
+[icon: creation]
+- Get perfect posts in seconds
+- Multiple options to choose from
+- Generate full campaigns in a few clicks
+
+### Benefit 2: Sounds Just Like You
+[icon: account-voice]
+- Show Kastor your style or brand
+- Your authentic voice in every post
+- Stand out from AI-generated noise
+
+### Benefit 3: Surprisingly Simple
+[icon: lightning-bolt]
+- Pick a topic, get content
+- No technical skills needed
+- Set up once, use forever
+
+[demo video]
+
+## How it Works
+### 1. Show Kastor your style
+- Create a voice (or several)
+- Share example content
+- Tell Kastor your do's and don'ts
+[image]
+
+### 2. Create a brief
+- Pick what you want to create
+- Select a goal: cover a topic, promote a product, recycle another post...
+- Give as little or as much detail as you want
+[image]
+
+### 3. Get your content in seconds
+- Choose from multiple options
+- Edit, tweak, or publish as is
+- Get more content whenever you want
+[image]
+
+### 4. Orchestrate full campaigns
+- Set the campaign goal and description
+- Let Kastor generate ideas and briefs for each asset
+- Tweak if needed, and generate all assets at once
+[image]
+
+## Create Any Content
+- LinkedIn Posts [icon: linkedin]
+  - Professional content that builds authority
+- Tweets [icon: twitter]
+  - Engaging tweets that drive conversation
+- Marketing Emails [icon: email-newsletter]
+  - Emails that get opened and clicked
+- Blog Posts [icon: post-outline]
+  - SEO-optimized articles that convert
+- Full Campaigns [icon: view-grid-plus-outline]
+  - Coordinated content across channels
+
+## Who Uses Kastor
+### Creators & Solopreneurs
+- Create content for social, email, and blog without the time sink
+- Keep your authentic voice while growing your following
+- Get real marketing results without hiring a team
+[icon: check-circle] for each bullet point
+
+### Marketing Teams
+- Get everyone writing in your brand's voice from day one
+- Keep quality high even during product launches and events
+- Scale content creation without scaling your team
+[icon: check-circle] for each bullet point
+
+## Join Kastor Early
+### Get Beta Access
+[button: Apply for Beta Access]
+- Help shape the product [icon: check-circle]
+- Early access to all features [icon: check-circle]
+- Special beta pricing [icon: check-circle]
+
+### Join the Waitlist
+[button: Join Waitlist]
+- Be first to know when we launch [icon: check-circle]
+- Get exclusive early-bird pricing [icon: check-circle]
+- Stay updated on our progress [icon: check-circle]
+
+## Footer
+© [Current Year] Kastor]]></content>
           </file>
         
   </fileContents>

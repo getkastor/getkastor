@@ -9,29 +9,29 @@ interface Benefit {
 
 const benefits: Benefit[] = [
   {
-    title: 'Instant Content That Works',
+    title: 'Instant Content, Effortlessly',
     description: [
+      'Start creating in minutes',
+      'Give Kastor an idea or a full brief',
       'Get perfect posts in seconds',
-      'Multiple options to choose from',
-      'Orchestrate full campaigns in a few clicks'
     ],
     icon: 'mdi-creation'
   },
   {
     title: 'Sounds Just Like You',
     description: [
-      'Show your AI how you write and talk',
-      'Keep your personality in every post',
-      'No more generic AI content'
+      'Show Kastor your style or brand',
+      'Your authentic voice in every post',
+      'Stand out from AI-generated noise'
     ],
     icon: 'mdi-account-voice'
   },
   {
-    title: 'Surprisingly Simple',
+    title: 'Amplify Your Impact',
     description: [
-      'Pick a topic, get content',
-      'No technical skills needed',
-      'Set up once, use forever'
+      'Generate ideas and content in bulk',
+      'Full campaigns in a few clicks',
+      'Multiply content across every channel'
     ],
     icon: 'mdi-lightning-bolt'
   }
