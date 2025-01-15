@@ -173,11 +173,11 @@ onUnmounted(() => {
     </v-container>
 
     <!-- Modals -->
-    <EarlyAccessModal
+    <landingpageEarlyAccessModal
       v-model="showBetaModal"
       :type="AccessRequestType.beta_access"
     />
-    <EarlyAccessModal
+    <landingpageEarlyAccessModal
       v-model="showWaitlistModal"
       :type="AccessRequestType.ga_waitlist"
     />

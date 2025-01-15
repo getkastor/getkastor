@@ -22,7 +22,7 @@
         v-if="!submitted"
         class="text-center text-h5 font-weight-bold pt-6 pb-8"
       >
-        {{ type === 'beta_access' ? 'Join the Beta' : 'Join the Waitlist' }}
+        {{ type === 'beta_access' ? 'Join the Beta for Free' : 'Join the Waitlist' }}
       </v-card-title>
 
       <v-card-text class="px-4 py-2">
@@ -179,6 +179,27 @@ const rules = {
   email: (v: string) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
   detailsLimit: (v: string) => v.length <= DETAILS_LIMIT || `Maximum ${DETAILS_LIMIT} characters`
 }
+
+const benefits = computed(() => {
+  return props.type === AccessRequestType.beta_access
+    ? [
+        'Use Kastor for free during the beta',
+        'Help shape the product',
+        'Early access to all features',
+      ]
+    : [
+        'Be first to know when we launch',
+        'Get exclusive early-bird pricing',
+        'Stay updated on our progress'
+      ]
+})
+
+const benefitsColor = computed(() => {
+  return props.type === AccessRequestType.beta_access
+    ? 'tertiary-darken-1'
+    : 'secondary'
+})
+
 
 const waitlistDetailsMessage = `
     We'll notify you when we launch. <br>

@@ -104,6 +104,11 @@ const steps: Steps[] = [
   flex-direction: row-reverse;
 }
 
+/* no bottom margin for last content-row */
+.content-row:last-child {
+  margin-bottom: 0;
+}
+
 .content-text {
   flex: 0 0 30%;
 }

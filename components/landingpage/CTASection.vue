@@ -22,9 +22,10 @@ const ctaOptions: CTAOption[] = [
     buttonText: 'Apply for Beta Access',
     buttonColor: 'tertiary-darken-1',
     benefits: [
+      'Use Kastor for free during the beta',
       'Help shape the product',
       'Early access to all features',
-      'Special beta pricing'
+      // 'Limited spots available'
     ],
     type: 'beta'
   },
@@ -35,7 +36,8 @@ const ctaOptions: CTAOption[] = [
     benefits: [
       'Be first to know when we launch',
       'Get exclusive early-bird pricing',
-      'Stay updated on our progress'
+      'Stay updated on our progress',
+      // ''
     ],
     type: 'waitlist'
   }
@@ -51,8 +53,11 @@ const handleClick = (type: 'beta' | 'waitlist') => {
 </script>
 
 <template>
-  <v-container fluid class="bg-primary py-16">
-    <div class="main-container">
+  <v-container
+    fluid
+    class="bg-primary py-16"
+  >
+    <div class="main-container cta-section">
       <h2 class="text-h3 text-white text-center mb-12 font-weight-bold">
         {{ title || 'Join Kastor Early' }}
       </h2>
@@ -65,13 +70,20 @@ const handleClick = (type: 'beta' | 'waitlist') => {
           md="5"
           class="px-4"
         >
-          <v-card class="h-100 elevation-3" rounded="lg">
+          <v-card
+            class="h-100 elevation-3"
+            rounded="lg"
+            :class="option.type"
+          >
             <v-card-item class="pa-8">
               <div class="text-center">
                 <h3 class="text-h5 font-weight-bold mb-6">{{ option.title }}</h3>
               </div>
               <div class="d-flex justify-center">
-                <v-list class="bg-transparent" max-width="350px">
+                <v-list
+                  class="bg-transparent"
+                  max-width="350px"
+                >
                   <v-list-item
                     v-for="(benefit, i) in option.benefits"
                     :key="i"
@@ -113,6 +125,11 @@ const handleClick = (type: 'beta' | 'waitlist') => {
   padding: 0 32px;
   min-width: 250px;
 }
+
+
+/* .waitlist .v-list-item:last-child .v-icon {
+  display: none;
+} */
 
 @media (max-width: 600px) {
   .text-button-large {

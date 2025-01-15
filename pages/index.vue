@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import DemoVideo from '~/components/DemoVideo.vue';
 import { AccessRequestType } from '~/types/accessRequest';
 
 
@@ -107,10 +106,12 @@ onMounted(() => {
       </div>
     </v-container>
 
-    <Benefits />
-    <DemoVideo />
-    <HowItWorks />
-    <ContentTypes />
+    <landingpageBenefits />
+    <landingpageDemoVideo />
+    <landingpageScrollCTA />
+    <landingpageHowItWorks />
+    <landingpageScrollCTA />
+    <landingpageContentTypes />
 
 
 
@@ -153,17 +154,17 @@ onMounted(() => {
       </div>
     </v-container>
 
-    <CTASection
+    <landingpageCTASection
       @showBetaModal="showBetaModal = true"
       @showWaitlistModal="showWaitlistModal = true"
     />
 
     <!-- Early Access Modals -->
-    <EarlyAccessModal
+    <landingpageEarlyAccessModal
       v-model="showBetaModal"
       :type="AccessRequestType.beta_access"
     />
-    <EarlyAccessModal
+    <landingpageEarlyAccessModal
       v-model="showWaitlistModal"
       :type="AccessRequestType.ga_waitlist"
     />
