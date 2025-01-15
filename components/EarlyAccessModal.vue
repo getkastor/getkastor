@@ -41,7 +41,6 @@
             variant="outlined"
             density="compact"
             bg-color="grey-lighten-5"
-
             :disabled="loading"
           />
           <p class="text-caption text-medium-emphasis mb-8">
@@ -78,7 +77,10 @@
           @submit.prevent="handleDetailsSubmit"
           class="details-form"
         >
-          <div class="text-center mb-6">
+          <div
+            v-if="!detailsSubmitted"
+            class="text-center mb-6"
+          >
             <v-icon
               color="success"
               size="64"
@@ -86,33 +88,52 @@
               class="mb-4"
             />
             <h3 class="text-h5 font-weight-bold mb-2">Thank you!</h3>
-            <p class="text-body-1 text-medium-emphasis" v-html="detailsMessage"></p>
+            <p
+              class="text-body-1 text-medium-emphasis"
+              v-html="detailsMessage"
+            ></p>
           </div>
 
-          <v-textarea
-            v-model="applicationDetails"
-            label="Your message"
-            variant="outlined"
-            density="comfortable"
-            rows="4"
-            :disabled="detailsSubmitted || loading"
-            class="mb-4"
-            :counter="DETAILS_LIMIT"
-            :rules="[rules.detailsLimit]"
-            @input="applicationDetails = ($event.target as HTMLTextAreaElement).value.slice(0, DETAILS_LIMIT)"
-          />
-
-          <v-btn
-            v-if="!detailsSubmitted"
-            block
-            color="primary"
-            type="submit"
-            size="large"
-            :loading="loading"
-            class="px-6 mt-12"
+          <div
+            v-else
+            class="text-center"
           >
-            Submit Additional Details
-          </v-btn>
+            <v-icon
+              color="success"
+              size="64"
+              icon="mdi-check-circle"
+              class="mb-4"
+            />
+            <h3 class="text-h5 font-weight-bold mb-2">Thank you!</h3>
+            <p class="text-body-1 text-medium-emphasis">{{ finalMessage }}</p>
+          </div>
+
+          <template v-if="!detailsSubmitted">
+            <v-textarea
+              v-model="applicationDetails"
+              label="Your message"
+              variant="outlined"
+              density="comfortable"
+              rows="4"
+              :disabled="detailsSubmitted || loading"
+              class="mb-4"
+              :counter="DETAILS_LIMIT"
+              :rules="[rules.detailsLimit]"
+              @input="applicationDetails = ($event.target as HTMLTextAreaElement).value.slice(0, DETAILS_LIMIT)"
+            />
+
+            <v-btn
+              v-if="!detailsSubmitted"
+              block
+              color="primary"
+              type="submit"
+              size="large"
+              :loading="loading"
+              class="px-6 mt-12"
+            >
+              Submit Additional Details
+            </v-btn>
+          </template>
         </v-form>
       </v-card-text>
     </v-card>
@@ -170,6 +191,12 @@ const betaDetailsMessage = `
 
 const detailsMessage = computed(() => {
   return props.type === AccessRequestType.beta_access ? betaDetailsMessage : waitlistDetailsMessage
+})
+
+const finalMessage = computed(() => {
+  return props.type === AccessRequestType.beta_access
+    ? "We'll review your application and get back to you within 48 hours."
+    : "We'll notify you when we launch."
 })
 
 // Handle initial email submission
@@ -254,10 +281,9 @@ function handleClose() {
 }
 
 .modal-gradient {
-  background: linear-gradient(135deg, 
-    rgb(255, 255, 255) 0%,
-    rgb(248, 250, 252) 100%
-  );
+  background: linear-gradient(135deg,
+      rgb(255, 255, 255) 0%,
+      rgb(248, 250, 252) 100%);
 }
 
 .close-btn {
@@ -277,6 +303,7 @@ function handleClose() {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -301,18 +328,17 @@ function handleClose() {
 
 @media (max-width: 700px) {
   .auth-card {
-  padding-left: 4px;
-  padding-right: 4px;
-}
+    padding-left: 4px;
+    padding-right: 4px;
+  }
 
   .v-dialog {
     margin: 0px;
     width: 100%;
   }
-  
+
   .v-card-text {
     padding: 16px;
   }
 }
-
 </style>
