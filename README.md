@@ -64,3 +64,15 @@ Remove these arguments if you don't need background transparency:
 ```bash
 magick "your-svg-name.svg" -background transparent -transparent white -define icon:auto-resize=256,128,64,48,32,16 "favicon.ico"
 ```
+
+## Github Pages
+
+### Naming
+
+If you wany to deploy a github pages for an organization with a custom domain, you need to make the repo public and use the same name as the organization. I.e. if the org is "myorg" then the repo needs to be "myorg".
+
+### Deploying
+
+Use the github actions like in this repo, but also you need to allow the actions read/write access to *both* the org settings and the repo settings (look in the actions tabs of each).
+
+You need to set the env vars in the *repo* settings, not the org settings.
