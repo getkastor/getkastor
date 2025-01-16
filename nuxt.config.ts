@@ -7,10 +7,18 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  site: {
+    name: process.env.NUXT_SITE_NAME,
+    domain: process.env.NUXT_SITE_URL,
+    sitemap: {
+      hostname: process.env.NUXT_SITE_URL,
+    },
+  },
   app: {
-    baseURL: '/kastor-lp/'
+    baseURL: '/'
   },
   modules: [
+    '@nuxtjs/sitemap',
     '@nuxt/content',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
@@ -33,6 +41,9 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+  },
+  experimental: {
+    inlineRouteRules: true
   },
 })
 
