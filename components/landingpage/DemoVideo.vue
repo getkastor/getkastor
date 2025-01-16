@@ -8,21 +8,21 @@
     <div class="main-container ">
       <v-sheet
         class="mx-auto video-sheet"
-        max-width="800"
+        max-width="900"
         elevation="4"
         rounded="lg"
       >
         <video
           controls
           class="demo-video"
-          width="800"
+          width="900"
           playsinline
           autoplay
           muted
           loop
         >
           <source
-            src="/kastor-demo-800.mp4"
+            src="/kastor-demo-900.mp4"
             type="video/mp4"
           >
           Your browser does not support the video tag.
