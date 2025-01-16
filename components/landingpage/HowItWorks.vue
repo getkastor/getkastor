@@ -95,7 +95,7 @@ const steps: Steps[] = [
 /* Content card styles */
 .content-row {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   margin-bottom: 6rem;
   align-items: center;
 }
