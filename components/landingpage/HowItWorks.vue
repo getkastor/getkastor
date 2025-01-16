@@ -2,6 +2,7 @@
 <script setup lang="ts">
 
 interface Steps {
+  overline: string;
   title: string;
   details: string[];
   image: string;
@@ -10,7 +11,8 @@ interface Steps {
 // How it works
 const steps: Steps[] = [
   {
-    title: 'Show Kastor your style',
+    overline: '5-minute, one-time setup',
+    title: 'Describe your style',
     details: [
       'Create a voice (or several)',
       'Share example content',
@@ -19,28 +21,31 @@ const steps: Steps[] = [
     image: '/voice-creation.png'
   },
   {
+    overline: 'Any content, any time',
     title: 'Create a brief',
     details: [
-      'Pick what you want to create',
-      'Select a goal: cover a topic, promote a product, recycle another post...',
-      'Give as little or as much detail as you want'
+      'Choose your content type and voice',
+      'Pick your goal: new topics, product promotion, content recycling...',
+      'Add as much guidance as you want (or keep it minimal)'
     ],
     image: '/content-brief.png'
   },
   {
+    overline: 'Instant results',
     title: 'Get your content in seconds',
     details: [
       'Choose from multiple options',
-      'Edit, tweak, or publish as is',
+      'Fine-tune to perfection or publish instantly',
       'Get more content whenever you want'
     ],
     image: '/tweet-creation.png'
   },
   {
+    overline: 'One idea, endless content',
     title: 'Orchestrate full campaigns',
     details: [
       'Set the campaign goal and description',
-      'Let Kastor generate ideas and briefs for each asset',
+      'Let Kastor suggest ideas and briefs for each asset',
       'Tweak if needed, and generate all assets at once',
     ],
     image: '/campaign-creation.png'
@@ -62,6 +67,7 @@ const steps: Steps[] = [
         class="content-row"
       >
         <div class="content-text">
+          <h4 class="font-weight-bold text-overline mb-2 text-secondary-darken-1">{{ type.overline }}</h4>
           <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
           <div class="checklist">
             <div
@@ -107,6 +113,10 @@ const steps: Steps[] = [
 /* no bottom margin for last content-row */
 .content-row:last-child {
   margin-bottom: 0;
+}
+
+.text-overline {
+  font-size: 0.875rem !important;
 }
 
 .content-text {
