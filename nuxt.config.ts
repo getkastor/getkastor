@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    '/': { 
+    '/': {
       prerender: true,
       sitemap: {
         lastmod: '2025-01-16',
@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     }
   },
   app: {
-    baseURL: '/kastor-lp/',
+    baseURL: '/',
   },
   modules: [
     '@nuxtjs/sitemap',
