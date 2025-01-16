@@ -7,12 +7,28 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/sitemap.xml']
+    }
+  },
   site: {
-    name: process.env.NUXT_SITE_NAME,
+    name: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
     domain: process.env.NUXT_SITE_URL,
     sitemap: {
       hostname: process.env.NUXT_SITE_URL,
     },
+  },
+  routeRules: {
+    '/': { 
+      prerender: true,
+      sitemap: {
+        lastmod: '2025-01-16',
+        changefreq: 'weekly',
+        priority: 1
+      }
+    }
   },
   app: {
     baseURL: '/kastor-lp/',
@@ -41,9 +57,6 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
-  },
-  experimental: {
-    inlineRouteRules: true
   },
 })
 
