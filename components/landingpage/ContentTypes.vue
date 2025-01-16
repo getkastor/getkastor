@@ -36,19 +36,29 @@ const contentTypes: ContentType[] = [
 </script>
 
 <template>
-  <v-container fluid class="content-types-section py-16">
+  <v-container
+    fluid
+    class="content-types-section py-16"
+  >
     <div class="main-container">
       <h2 class="text-h3 text-center font-weight-black mb-12">Create Any Content</h2>
 
-      
+
       <div class="d-flex flex-wrap justify-center">
-        <v-hover v-for="type in contentTypes" :key="type.title" v-slot="{ isHovering, props }">
-          <div 
+        <v-hover
+          v-for="type in contentTypes"
+          :key="type.title"
+          v-slot="{ isHovering, props }"
+        >
+          <div
             class="content-type-tile"
             v-bind="props"
             :class="{ 'tile-hover': isHovering }"
           >
-            <div class="icon-wrapper" :class="{ 'icon-hover': isHovering }">
+            <div
+              class="icon-wrapper"
+              :class="{ 'icon-hover': isHovering }"
+            >
               <v-icon
                 :icon="type.icon"
                 size="32"
@@ -59,7 +69,7 @@ const contentTypes: ContentType[] = [
             <h3 class="text-h6 font-weight-bold text-center mt-4 mb-2">
               {{ type.title }}
             </h3>
-            <p class="text-subtitle-2 text-center description-text" >
+            <p class="text-subtitle-2 text-center description-text">
               {{ type.description }}
             </p>
           </div>
@@ -70,7 +80,6 @@ const contentTypes: ContentType[] = [
 </template>
 
 <style scoped>
-
 .content-type-tile {
   padding: 1rem;
   text-align: center;
@@ -81,10 +90,9 @@ const contentTypes: ContentType[] = [
 }
 
 .icon-wrapper {
-  background: linear-gradient(135deg, 
-    rgba(var(--v-theme-primary), 0.12),
-    rgba(var(--v-theme-primary), 0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(var(--v-theme-primary), 0.12),
+      rgba(var(--v-theme-primary), 0.05));
   width: 88px;
   height: 88px;
   border-radius: 24px;
@@ -114,7 +122,7 @@ const contentTypes: ContentType[] = [
 
 @media (max-width: 600px) {
 
-  
+
   .icon-wrapper {
     width: 72px;
     height: 72px;

@@ -87,7 +87,8 @@ onMounted(() => {
           <div class="text-center mt-2">That Sound Like You</div>
         </h1>
         <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
-          From idea to authentic posts in seconds. <br> Get results across Twitter, LinkedIn, SEO and email<br>in just minutes per week.
+          From idea to authentic posts in seconds. <br> Get results across Twitter, LinkedIn, SEO and email<br>in just
+          minutes per week.
         </h2>
         <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
           <v-btn

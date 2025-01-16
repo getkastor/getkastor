@@ -6,28 +6,28 @@
     class="py-16"
   >
     <div class="main-container ">
-    <v-sheet
-      class="mx-auto video-sheet"
-      max-width="800"
-      elevation="4"
-      rounded="lg"
-    >
-      <video
-        controls
-        class="demo-video"
-        width="800"
-        playsinline
-        autoplay
-        muted
-        loop
+      <v-sheet
+        class="mx-auto video-sheet"
+        max-width="800"
+        elevation="4"
+        rounded="lg"
       >
-        <source
-          src="/kastor-demo-800.mp4"
-          type="video/mp4"
+        <video
+          controls
+          class="demo-video"
+          width="800"
+          playsinline
+          autoplay
+          muted
+          loop
         >
-        Your browser does not support the video tag.
-      </video>
-    </v-sheet>
+          <source
+            src="/kastor-demo-800.mp4"
+            type="video/mp4"
+          >
+          Your browser does not support the video tag.
+        </video>
+      </v-sheet>
     </div>
   </v-container>
 </template>

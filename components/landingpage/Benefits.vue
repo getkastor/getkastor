@@ -39,22 +39,45 @@ const benefits: Benefit[] = [
 </script>
 
 <template>
-  <v-container fluid class="benefits-section py-16">
+  <v-container
+    fluid
+    class="benefits-section py-16"
+  >
     <div class="main-container">
       <h2 class="text-h3 text-center font-weight-black mb-12">Why Choose Kastor?</h2>
       <!-- <p class="text-subtitle-1 text-grey-darken-1 text-center mb-12 benefits-subtitle" >
         Create authentic content at scale without compromising your unique voice
       </p> -->
-      <v-row justify="center" align="stretch">
-        <v-col v-for="benefit in benefits" :key="benefit.title" cols="12" md="4">
+      <v-row
+        justify="center"
+        align="stretch"
+      >
+        <v-col
+          v-for="benefit in benefits"
+          :key="benefit.title"
+          cols="12"
+          md="4"
+        >
           <div class="benefit-wrapper">
             <div class="benefit-icon-container">
-              <v-icon :icon="benefit.icon" size="32" color="primary" />
+              <v-icon
+                :icon="benefit.icon"
+                size="32"
+                color="primary"
+              />
             </div>
             <h3 class="text-h5 font-weight-bold mb-4">{{ benefit.title }}</h3>
             <ul class="benefit-list">
-              <li v-for="(item, i) in benefit.description" :key="i" class="benefit-item">
-                <v-icon size="16" color="secondary" class="mr-2">mdi-check-circle</v-icon>
+              <li
+                v-for="(item, i) in benefit.description"
+                :key="i"
+                class="benefit-item"
+              >
+                <v-icon
+                  size="16"
+                  color="secondary"
+                  class="mr-2"
+                >mdi-check-circle</v-icon>
                 {{ item }}
               </li>
             </ul>
@@ -66,8 +89,6 @@ const benefits: Benefit[] = [
 </template>
 
 <style scoped>
-
-
 .benefit-wrapper {
   position: relative;
   padding: 1rem;
@@ -82,10 +103,9 @@ const benefits: Benefit[] = [
   height: 72px;
   border-radius: 16px;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, 
-    rgba(0, 179, 197, 0.15),
-    rgba(0, 179, 197, 0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(0, 179, 197, 0.15),
+      rgba(0, 179, 197, 0.05));
 }
 
 .benefits-subtitle {
@@ -109,7 +129,8 @@ const benefits: Benefit[] = [
 }
 
 .benefit-item .v-icon {
-  margin-top: 0.25rem; /* Align icon with first line of text */
+  margin-top: 0.25rem;
+  /* Align icon with first line of text */
 }
 
 .benefit-item:last-child {
@@ -120,7 +141,7 @@ const benefits: Benefit[] = [
   .benefit-wrapper {
     padding: 1.5rem;
   }
-  
+
   .benefit-item {
     font-size: 1rem;
   }

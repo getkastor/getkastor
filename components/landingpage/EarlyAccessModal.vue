@@ -183,15 +183,15 @@ const rules = {
 const benefits = computed(() => {
   return props.type === AccessRequestType.beta_access
     ? [
-        'Use Kastor for free during the beta',
-        'Help shape the product',
-        'Early access to all features',
-      ]
+      'Use Kastor for free during the beta',
+      'Help shape the product',
+      'Early access to all features',
+    ]
     : [
-        'Be first to know when we launch',
-        'Get exclusive early-bird pricing',
-        'Stay updated on our progress'
-      ]
+      'Be first to know when we launch',
+      'Get exclusive early-bird pricing',
+      'Stay updated on our progress'
+    ]
 })
 
 const benefitsColor = computed(() => {

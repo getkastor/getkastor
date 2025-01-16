@@ -142,7 +142,8 @@ const steps: Steps[] = [
 }
 
 .checklist-icon {
-  margin-top: 4px; /* Aligns icon with first line of text */
+  margin-top: 4px;
+  /* Aligns icon with first line of text */
 }
 
 .checklist-text {

@@ -1,16 +1,16 @@
 <!-- components/CTAs.vue -->
 <script setup lang="ts">
-  import { useGoTo } from 'vuetify'
-  
-  const goTo = useGoTo()
-  
-  const scrollToCTA = () => {
-    goTo('.cta-section', {
-      duration: 500,
-      offset: 0,
-      easing: 'easeInOutCubic'
-    })
-  }
+import { useGoTo } from 'vuetify'
+
+const goTo = useGoTo()
+
+const scrollToCTA = () => {
+  goTo('.cta-section', {
+    duration: 500,
+    offset: 0,
+    easing: 'easeInOutCubic'
+  })
+}
 </script>
 
 <template>
@@ -19,7 +19,7 @@
       color="secondary"
       size="x-large"
       class="text-button-large"
-      elevation="4" 
+      elevation="4"
       :ripple="false"
       @click="scrollToCTA"
     >
