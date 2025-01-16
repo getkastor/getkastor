@@ -102,6 +102,7 @@ const handleClick = (type: 'beta' | 'waitlist') => {
                 <v-btn
                   :color="option.buttonColor"
                   class="mt-8 text-button-large w-75"
+                  :class="option.type"
                   height="56"
                   @click="handleClick(option.type)"
                 >
