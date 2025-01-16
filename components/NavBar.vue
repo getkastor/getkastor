@@ -7,7 +7,6 @@ const showWhiteBg = ref(false)
 const showBetaModal = ref(false)
 const showWaitlistModal = ref(false)
 const drawer = ref(false)
-const windowWidth = ref(0)
 
 import { useDisplay } from 'vuetify'
 
@@ -44,6 +43,7 @@ const handleScroll = () => {
 
 // Add scroll event listener when component is mounted
 onMounted(() => {
+  handleScroll()
   window.addEventListener('scroll', handleScroll)
 })
 
