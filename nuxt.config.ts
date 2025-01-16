@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/'
+    baseURL: '/kastor-lp/',
   },
   modules: [
     '@nuxtjs/sitemap',
