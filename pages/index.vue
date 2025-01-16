@@ -103,7 +103,7 @@ onMounted(() => {
             size="x-large"
             color="secondary"
             elevation="4"
-            class="text-button-large"
+            class="text-button-large beta"
             :ripple="false"
             @click="showBetaModal = true"
           >
@@ -113,7 +113,7 @@ onMounted(() => {
           <v-btn
             size="x-large"
             variant="flat"
-            class="text-button-large waitlist-button"
+            class="text-button-large waitlist-button waitlist"
             :ripple="false"
             @click="showWaitlistModal = true"
           >

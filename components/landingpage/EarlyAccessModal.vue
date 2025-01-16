@@ -66,6 +66,10 @@
             :loading="loading"
             :disabled="!isEmailValid"
             class="mt-12 px-6"
+            :class="{
+              'submit-email-beta': type === 'beta_access',
+              'submit-email-waitlist': type !== 'beta_access'
+             }"
           >
             {{ type === 'beta_access' ? 'Apply for Beta Access' : 'Join Waitlist' }}
           </v-btn>
@@ -130,6 +134,10 @@
               size="large"
               :loading="loading"
               class="px-6 mt-12"
+              :class="{
+              'submit-details-beta': type === 'beta_access',
+              'submit-details-waitlist': type !== 'beta_access'
+             }"
             >
               Submit Additional Details
             </v-btn>
