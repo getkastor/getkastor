@@ -2,6 +2,14 @@
 import { ref, onMounted } from 'vue';
 import { AccessRequestType } from '~/types/accessRequest';
 
+defineRouteRules({
+  sitemap: {
+    lastmod: '2025-01-16',
+    changefreq: 'weekly',
+    priority: 1
+  }
+})
+
 useSeoMeta({
   title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
   ogTitle: 'Instant, Authentic Social Media & Blog Content',
