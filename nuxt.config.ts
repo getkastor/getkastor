@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     name: process.env.NUXT_SITE_NAME,
     domain: process.env.NUXT_SITE_URL,
     sitemap: {
-      hostname: 'https://myawesomewebsite.com',
+      hostname: process.env.NUXT_SITE_URL,
     },
   },
   app: {
