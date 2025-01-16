@@ -1,28 +1,45 @@
+<script setup lang="ts">
+</script>
+
 <template>
   <v-app>
-    <v-app-bar>
-      <v-container class="d-flex align-center">
-        <v-app-bar-title>
-          <NuxtLink to="/" class="text-decoration-none">Kastor</NuxtLink>
-        </v-app-bar-title>
-        <v-spacer></v-spacer>
-        <v-btn to="/" variant="text">Home</v-btn>
-        <v-btn to="/blog" variant="text">Blog</v-btn>
-      </v-container>
-    </v-app-bar>
+    <NavBar />
 
     <v-main>
-      <v-container>
-        <slot />
-      </v-container>
+      <slot />
     </v-main>
 
-    <v-footer app>
+    <v-footer class="bg-primary">
       <v-container>
-        <div class="text-center">
+        <div class="bg-primary">
           © {{ new Date().getFullYear() }} Kastor
         </div>
       </v-container>
     </v-footer>
   </v-app>
 </template>
+
+<style>
+.main-container {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    padding: 0 0.5rem;
+  }
+}
+
+.v-main {
+  padding-top: 0px !important;
+  font-size: 1.125rem;
+}
+
+.v-container main-container {
+  max-width: 1200px;
+}
+</style>

@@ -21,6 +21,12 @@ export default defineNuxtConfig({
     //...
   ],
   ssr: true,
+  runtimeConfig: {
+    // Keys within public, will be also exposed to the client-side
+    public: {
+      apiBase: process.env.API_BASE_URL
+    }
+  },
   vite: {
     vue: {
       template: {
