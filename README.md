@@ -42,7 +42,7 @@ yarn preview
 this will resize the video to 800px wide and keep the aspect ratio
 
 ```bash
-[clairebesset:~/kastor-lp] draftLP(+1/-1) ± ffmpeg -i ./public/kastor-demo.mp4 -filter:v scale=800:-1 -c:a copy ./public/kastor-demo-800.mp4
+ffmpeg -i ./public/kastor-demo.mp4 -filter:v scale=800:-1 -c:a copy ./public/kastor-demo-800.mp4
 ```
 
 ## how to create a favicon.ico file

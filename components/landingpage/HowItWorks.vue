@@ -14,7 +14,7 @@ const steps: Steps[] = [
     overline: '5-minute, one-time setup',
     title: 'Describe your style',
     details: [
-      'Create a voice (or several)',
+      'Create a voice (or several) to illustrate your or your brand\'s style',
       'Share example content',
       'Tell Kastor your do\'s and don\'ts'
     ],

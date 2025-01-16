@@ -2,6 +2,15 @@
 import { ref, onMounted } from 'vue';
 import { AccessRequestType } from '~/types/accessRequest';
 
+useSeoMeta({
+  title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
+  ogTitle: 'Instant, Authentic Social Media & Blog Content',
+  description: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
+  ogDescription: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
+  // ogImage: 'https://example.com/image.png',
+  // twitterCard: 'summary_large_image',
+})
+
 
 // Interfaces
 
