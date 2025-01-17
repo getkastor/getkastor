@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, inject, watch, watchEffect } from 'vue'
 import { AccessRequestType } from '~/types/accessRequest'
+import { useDisplay } from 'vuetify'
 
 const isScrolled = ref(false)
 const showWhiteBg = ref(false)
-const showBetaModal = ref(false)
-const showWaitlistModal = ref(false)
 const drawer = ref(false)
 
-import { useDisplay } from 'vuetify'
+// Inject modal states and methods
+const showBetaModal = inject('showBetaModal', ref(false))
+const showWaitlistModal = inject('showWaitlistModal', ref(false))
+const openBetaModal = inject('openBetaModal', () => {})
+const openWaitlistModal = inject('openWaitlistModal', () => {})
+
 
 const { width } = useDisplay()
+
 
 const appBarHeight = 150 // Default v-app-bar height in pixels
 const drawerWidth = computed(() => {
@@ -19,27 +24,33 @@ const drawerWidth = computed(() => {
   return width.value < 700 ? width.value : 256
 })
 
+// Compute if any modal is open
+const isAnyModalOpen = computed(() => showBetaModal.value || showWaitlistModal.value)
+
 
 const handleScroll = () => {
   const isNowScrolled = window.scrollY > appBarHeight
 
   if (isNowScrolled !== isScrolled.value) {
     isScrolled.value = isNowScrolled
-
-    if (!isNowScrolled) {
-      // When scrolling back to top, remove dark bg immediately
-      showWhiteBg.value = false
-    } else {
-      // When scrolling down, delay the dark bg slightly
-      setTimeout(() => {
-        if (isScrolled.value) { // Check if still scrolled
-          showWhiteBg.value = true
-        }
-        // Adjust this timing to match your hide animation
-      }, 150)
-    }
+    updateBackground()
   }
 }
+
+const updateBackground = () => {
+  // Show white background if either scrolled down or any modal is open
+  if (isAnyModalOpen.value || isScrolled.value) {
+    showWhiteBg.value = true
+  } else {
+    // Only hide background if we're at the top and no modal is open
+    showWhiteBg.value = false
+  }
+}
+
+// Watch for changes in modal state
+watch(isAnyModalOpen, () => {
+  updateBackground()
+}, { immediate: true })
 
 // Add scroll event listener when component is mounted
 onMounted(() => {
@@ -93,7 +104,7 @@ onUnmounted(() => {
           class="navButton beta my-4"
           variant="elevated"
           size="x-large"
-          @click="showBetaModal = true"
+          @click="openBetaModal"
         >
           <v-icon start>mdi-rocket-launch</v-icon>
           Join Beta
@@ -107,7 +118,7 @@ onUnmounted(() => {
           size="x-large"
           class="navButton waitlist"
           :class="{ 'border-primary text-primary': showWhiteBg }"
-          @click="showWaitlistModal = true"
+          @click="openWaitlistModal"
         >
           <v-icon start>mdi-email-outline</v-icon>
           Join Waitlist
@@ -149,7 +160,7 @@ onUnmounted(() => {
           color="secondary"
           class="navButton beta"
           variant="elevated"
-          @click="showBetaModal = true"
+          @click="openBetaModal"
         >
           <v-icon start>mdi-rocket-launch</v-icon>
           Join Beta
@@ -158,7 +169,7 @@ onUnmounted(() => {
           variant="outlined"
           class="ml-6 navButton waitlist"
           :class="{ 'border-primary text-primary': showWhiteBg }"
-          @click="showWaitlistModal = true"
+          @click="openWaitlistModal"
         >
           <v-icon start>mdi-email-outline</v-icon>
           Join Waitlist
@@ -171,16 +182,6 @@ onUnmounted(() => {
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
     </v-container>
-
-    <!-- Modals -->
-    <landingpageEarlyAccessModal
-      v-model="showBetaModal"
-      :type="AccessRequestType.beta_access"
-    />
-    <landingpageEarlyAccessModal
-      v-model="showWaitlistModal"
-      :type="AccessRequestType.ga_waitlist"
-    />
   </v-app-bar>
 </template>
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { inject } from 'vue';
+
 interface CTAOption {
   title: string;
   buttonText: string;
@@ -9,11 +11,6 @@ interface CTAOption {
 
 const props = defineProps<{
   title?: string;
-}>();
-
-const emit = defineEmits<{
-  (e: 'showBetaModal'): void;
-  (e: 'showWaitlistModal'): void;
 }>();
 
 const ctaOptions: CTAOption[] = [
@@ -43,13 +40,18 @@ const ctaOptions: CTAOption[] = [
   }
 ];
 
+// Type the injected functions
+const openBetaModal = inject('openBetaModal', () => {}) as () => void
+const openWaitlistModal = inject('openWaitlistModal', () => {}) as () => void
+
 const handleClick = (type: 'beta' | 'waitlist') => {
   if (type === 'beta') {
-    emit('showBetaModal');
+    openBetaModal()
   } else {
-    emit('showWaitlistModal');
+    openWaitlistModal()
   }
 };
+
 </script>
 
 <template>
