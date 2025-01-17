@@ -6,6 +6,7 @@ interface Steps {
   title: string;
   details: string[];
   image: string;
+  alt: string;
 }
 
 // How it works
@@ -18,7 +19,8 @@ const steps: Steps[] = [
       'Share example content',
       'Tell Kastor your do\'s and don\'ts'
     ],
-    image: '/voice-creation.png'
+    image: '/voice-creation.png',
+    alt: 'Voice creation: describe your writing style and add examples'
   },
   {
     overline: 'Any content, any time',
@@ -28,7 +30,8 @@ const steps: Steps[] = [
       'Pick your goal: new topics, product promotion, content recycling...',
       'Add as much guidance as you want (or keep it minimal)'
     ],
-    image: '/content-brief.png'
+    image: '/content-brief.png',
+    alt: 'Content brief creation: choose content type, voice, and goal'
   },
   {
     overline: 'Instant results',
@@ -38,7 +41,8 @@ const steps: Steps[] = [
       'Fine-tune to perfection or publish instantly',
       'Get more content whenever you want'
     ],
-    image: '/tweet-creation.png'
+    image: '/tweet-creation.png',
+    alt: 'In seconds, you get multiple options for posts that match your style'
   },
   {
     overline: 'One idea, endless content',
@@ -48,7 +52,8 @@ const steps: Steps[] = [
       'Let Kastor suggest ideas and briefs for each asset',
       'Tweak if needed, and generate all assets at once',
     ],
-    image: '/campaign-creation.png'
+    image: '/campaign-creation.png',
+    alt: 'Campaign creation: define a campaign brief and generate all assets briefs and content'
   }
 ];
 </script>
@@ -89,6 +94,7 @@ const steps: Steps[] = [
             :src="type.image"
             cover
             class="rounded-lg"
+            :alt="type.alt"
           ></v-img>
         </div>
       </div>
