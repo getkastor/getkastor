@@ -108,15 +108,31 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/sitemap.xml']
+    }
+  },
   site: {
-    name: process.env.NUXT_SITE_NAME,
+    name: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
     domain: process.env.NUXT_SITE_URL,
     sitemap: {
       hostname: process.env.NUXT_SITE_URL,
     },
   },
+  routeRules: {
+    '/': {
+      prerender: true,
+      sitemap: {
+        lastmod: '2025-01-16',
+        changefreq: 'weekly',
+        priority: 1
+      }
+    }
+  },
   app: {
-    baseURL: '/'
+    baseURL: '/',
   },
   modules: [
     '@nuxtjs/sitemap',
@@ -133,7 +149,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Keys within public, will be also exposed to the client-side
     public: {
-      apiBase: process.env.API_BASE_URL
+      apiBase: process.env.NUXT_PUBLIC_API_BASE_URL
     }
   },
   vite: {
@@ -142,9 +158,6 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
-  },
-  experimental: {
-    inlineRouteRules: true
   },
 })
 
@@ -156,14 +169,6 @@ export default defineNuxtConfig({
             <content><![CDATA[<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { AccessRequestType } from '~/types/accessRequest';
-
-defineRouteRules({
-  sitemap: {
-    lastmod: '2025-01-16',
-    changefreq: 'weekly',
-    priority: 1
-  }
-})
 
 useSeoMeta({
   title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
