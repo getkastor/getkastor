@@ -150,8 +150,10 @@
 
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { AccessRequestType } from '~/types/accessRequest'
+const dataLayer = useDataLayer()
+
 
 
 const props = defineProps<{
@@ -168,6 +170,17 @@ const dialog = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value)
 })
+
+watch(dialog, (newValue) => {
+  if (newValue) {
+    dataLayer.push({
+      event: 'modal_open',
+      modal_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist'
+    })
+  }
+})
+
+
 const email = ref('')
 const applicationDetails = ref('')
 const loading = ref(false)
@@ -247,8 +260,23 @@ async function handleEmailSubmit() {
 
     if (!response.ok) throw new Error('Failed to submit request')
 
+    // Track successful email submission
+    dataLayer.push({
+      event: 'email_submit',
+      form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
+      status: 'success'
+    })
+
     submitted.value = true
   } catch (e) {
+    // Track failed submission
+    dataLayer.push({
+      event: 'email_submit',
+      form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
+      status: 'error',
+      error_message: error.value
+    })
+
     error.value = 'Something went wrong. Please try again.'
     console.error('Error submitting email:', e)
   } finally {
@@ -275,8 +303,24 @@ async function handleDetailsSubmit() {
 
     if (!response.ok) throw new Error('Failed to submit details')
 
+    // Track successful details submission
+    dataLayer.push({
+      event: 'details_submit',
+      form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
+      status: 'success',
+      details_length: applicationDetails.value.length
+    })
+
     detailsSubmitted.value = true
   } catch (e) {
+    // Track failed submission
+    dataLayer.push({
+      event: 'details_submit',
+      form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
+      status: 'error',
+      error_message: error.value
+    })
+
     error.value = 'Something went wrong. Please try again.'
     console.error('Error submitting details:', e)
   } finally {
@@ -286,6 +330,16 @@ async function handleDetailsSubmit() {
 
 // Handle dialog close
 function handleClose() {
+  const formState = submitted.value 
+    ? (detailsSubmitted.value ? 'completed' : 'details_pending')
+    : 'email_pending'
+
+  dataLayer.push({
+    event: 'modal_close',
+    modal_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
+    form_state: formState
+  })
+  
   dialog.value = false
   // Reset form state after animation completes
   setTimeout(() => {
