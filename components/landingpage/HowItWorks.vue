@@ -88,6 +88,7 @@ const steps: Steps[] = [
           <v-img
             :src="type.image"
             cover
+            eager
             class="rounded-lg"
           ></v-img>
         </div>

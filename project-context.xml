@@ -49,6 +49,8 @@
 │       ├── EarlyAccessModal.vue
 │       ├── HowItWorks.vue
 │       └── ScrollCTA.vue
+├── composables/
+│   └── useDataLayer.ts
 ├── content/
 │   └── blog/
 │       ├── content-marketing/
@@ -90,7 +92,8 @@
 │   └── tsconfig.json
 ├── tsconfig.json
 ├── types/
-│   └── accessRequest.ts
+│   ├── accessRequest.ts
+│   └── global.d.ts
 └── yarn.lock
 
     ]]>
@@ -134,797 +137,178 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
           </file>
         
           <file>
-            <path>components/NavBar.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { AccessRequestType } from '~/types/accessRequest'
+            <path>components/landingpage/HowItWorks.vue</path>
+            <content><![CDATA[<!-- components/HowItWorks.vue -->
+<script setup lang="ts">
 
-const isScrolled = ref(false)
-const showWhiteBg = ref(false)
-const showBetaModal = ref(false)
-const showWaitlistModal = ref(false)
-const drawer = ref(false)
-
-import { useDisplay } from 'vuetify'
-
-const { width } = useDisplay()
-
-const appBarHeight = 150 // Default v-app-bar height in pixels
-const drawerWidth = computed(() => {
-  // If mobile breakpoint (< 600px), return full width
-  // Otherwise return default width (256px is Vuetify's default)
-  return width.value < 700 ? width.value : 256
-})
-
-
-const handleScroll = () => {
-  const isNowScrolled = window.scrollY > appBarHeight
-
-  if (isNowScrolled !== isScrolled.value) {
-    isScrolled.value = isNowScrolled
-
-    if (!isNowScrolled) {
-      // When scrolling back to top, remove dark bg immediately
-      showWhiteBg.value = false
-    } else {
-      // When scrolling down, delay the dark bg slightly
-      setTimeout(() => {
-        if (isScrolled.value) { // Check if still scrolled
-          showWhiteBg.value = true
-        }
-        // Adjust this timing to match your hide animation
-      }, 150)
-    }
-  }
-}
-
-// Add scroll event listener when component is mounted
-onMounted(() => {
-  handleScroll()
-  window.addEventListener('scroll', handleScroll)
-})
-
-
-// Clean up event listener when component is unmounted
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
-</script>
-
-<template>
-  <!-- Navigation drawer for mobile -->
-  <v-navigation-drawer
-    v-model="drawer"
-    location="right"
-    :width="drawerWidth"
-    temporary
-  >
-
-    <div class="drawer-header">
-      <NuxtLink
-        to="/"
-        class="text-decoration-none drawer-logo pl-2"
-        @click="drawer = false"
-      >
-        <img
-          src="/Kastor_wordmark_light_bg.svg"
-          alt="Kastor Logo"
-          height="32"
-          class="logo"
-        />
-      </NuxtLink>
-      <v-btn
-        icon="mdi-close"
-        size="small"
-        variant="text"
-        @click="drawer = false"
-        class="close-btn"
-      ></v-btn>
-    </div>
-
-    <v-list>
-      <v-list-item>
-        <v-btn
-          block
-          color="secondary"
-          class="navButton beta my-4"
-          variant="elevated"
-          size="x-large"
-          @click="showBetaModal = true"
-        >
-          <v-icon start>mdi-rocket-launch</v-icon>
-          Join Beta
-        </v-btn>
-      </v-list-item>
-
-      <v-list-item>
-        <v-btn
-          block
-          variant="outlined"
-          size="x-large"
-          class="navButton waitlist"
-          :class="{ 'border-primary text-primary': showWhiteBg }"
-          @click="showWaitlistModal = true"
-        >
-          <v-icon start>mdi-email-outline</v-icon>
-          Join Waitlist
-        </v-btn>
-      </v-list-item>
-    </v-list>
-  </v-navigation-drawer>
-
-
-  <v-app-bar
-    :elevation="isScrolled ? 1 : 0"
-    scroll-behavior="hide"
-    scroll-threshold="100"
-    :class="{
-      'bg-transparent': !showWhiteBg,
-      'bg-white': showWhiteBg,
-      'bg-transition': true
-    }"
-  >
-    <v-container class="d-flex align-center main-container">
-      <v-app-bar-title>
-        <NuxtLink
-          to="/"
-          class="text-decoration-none d-flex align-center pl-4"
-        >
-          <img
-            src="/Kastor_wordmark_light_bg.svg"
-            alt="Kastor Logo"
-            height="32"
-            class="logo"
-          />
-        </NuxtLink>
-      </v-app-bar-title>
-      <v-spacer></v-spacer>
-
-      <!-- Desktop buttons -->
-      <div class="d-none d-md-flex">
-        <v-btn
-          color="secondary"
-          class="navButton beta"
-          variant="elevated"
-          @click="showBetaModal = true"
-        >
-          <v-icon start>mdi-rocket-launch</v-icon>
-          Join Beta
-        </v-btn>
-        <v-btn
-          variant="outlined"
-          class="ml-6 navButton waitlist"
-          :class="{ 'border-primary text-primary': showWhiteBg }"
-          @click="showWaitlistModal = true"
-        >
-          <v-icon start>mdi-email-outline</v-icon>
-          Join Waitlist
-        </v-btn>
-      </div>
-
-      <!-- Mobile menu icon -->
-      <v-app-bar-nav-icon
-        class="d-md-none"
-        @click="drawer = !drawer"
-      ></v-app-bar-nav-icon>
-    </v-container>
-
-    <!-- Modals -->
-    <landingpageEarlyAccessModal
-      v-model="showBetaModal"
-      :type="AccessRequestType.beta_access"
-    />
-    <landingpageEarlyAccessModal
-      v-model="showWaitlistModal"
-      :type="AccessRequestType.ga_waitlist"
-    />
-  </v-app-bar>
-</template>
-
-<style scoped>
-.main-container {
-  max-width: 1200px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 100%;
-  padding: 0 1rem;
-}
-
-.logo {
-  height: 32px;
-  width: auto;
-  transition: opacity 0.3s ease;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  -webkit-font-smoothing: antialiased;
-  shape-rendering: geometricPrecision;
-  will-change: transform;
-  stroke-width: 1px;
-}
-
-.bg-transition {
-  transition: background-color 0.3s ease !important;
-}
-
-
-.opacity-0 {
-  opacity: 0;
-}
-
-.navButton {
-  text-transform: none;
-  font-weight: 700;
-  min-width: 170px;
-  font-size: 1rem;
-}
-
-.navButton.waitlist {
-  color: rgb(var(--v-theme-primary-darken-1)) !important;
-  border: 2px solid rgb(var(--v-theme-primary)) !important;
-  background-color: white !important;
-}
-
-
-.v-navigation-drawer .navButton {
-  width: 100%;
-  margin: 0;
-}
-
-.v-toolbar-title {
-  /* logo width + some padding */
-  min-width: 200px;
-}
-
-.drawer-header {
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  background: white;
-  z-index: 1;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-/* Responsive adjustments */
-@media (max-width: 960px) {
-  .v-btn {
-    padding: 0 12px !important;
-  }
-
-  .v-divider {
-    display: none;
-  }
-}
-
-@media (max-width: 600px) {
-  .main-container {
-    padding: 0 0.5rem;
-  }
-
-}
-</style>
-]]></content>
-          </file>
-        
-          <file>
-            <path>components/landingpage/CTASection.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-interface CTAOption {
+interface Steps {
+  overline: string;
   title: string;
-  buttonText: string;
-  buttonColor: string;
-  benefits: string[];
-  type: 'beta' | 'waitlist';
+  details: string[];
+  image: string;
 }
 
-const props = defineProps<{
-  title?: string;
-}>();
-
-const emit = defineEmits<{
-  (e: 'showBetaModal'): void;
-  (e: 'showWaitlistModal'): void;
-}>();
-
-const ctaOptions: CTAOption[] = [
+// How it works
+const steps: Steps[] = [
   {
-    title: 'Get Beta Access',
-    buttonText: 'Apply for Beta Access',
-    buttonColor: 'tertiary-darken-1',
-    benefits: [
-      'Use Kastor for free during the beta',
-      'Help shape the product',
-      'Early access to all features',
-      // 'Limited spots available'
+    overline: '5-minute, one-time setup',
+    title: 'Describe your style',
+    details: [
+      'Create a voice (or several) to illustrate your or your brand\'s style',
+      'Share example content',
+      'Tell Kastor your do\'s and don\'ts'
     ],
-    type: 'beta'
+    image: '/voice-creation.png'
   },
   {
-    title: 'Join the Waitlist',
-    buttonText: 'Join Waitlist',
-    buttonColor: 'secondary',
-    benefits: [
-      'Be first to know when we launch',
-      'Get exclusive early-bird pricing',
-      'Stay updated on our progress',
-      // ''
+    overline: 'Any content, any time',
+    title: 'Create a brief',
+    details: [
+      'Choose your content type and voice',
+      'Pick your goal: new topics, product promotion, content recycling...',
+      'Add as much guidance as you want (or keep it minimal)'
     ],
-    type: 'waitlist'
+    image: '/content-brief.png'
+  },
+  {
+    overline: 'Instant results',
+    title: 'Get your content in seconds',
+    details: [
+      'Choose from multiple options',
+      'Fine-tune to perfection or publish instantly',
+      'Get more content whenever you want'
+    ],
+    image: '/tweet-creation.png'
+  },
+  {
+    overline: 'One idea, endless content',
+    title: 'Orchestrate full campaigns',
+    details: [
+      'Set the campaign goal and description',
+      'Let Kastor suggest ideas and briefs for each asset',
+      'Tweak if needed, and generate all assets at once',
+    ],
+    image: '/campaign-creation.png'
   }
 ];
-
-const handleClick = (type: 'beta' | 'waitlist') => {
-  if (type === 'beta') {
-    emit('showBetaModal');
-  } else {
-    emit('showWaitlistModal');
-  }
-};
 </script>
 
 <template>
+
   <v-container
     fluid
-    class="bg-primary py-16"
+    class="py-16"
   >
-    <div class="main-container cta-section">
-      <h2 class="text-h3 text-white text-center mb-12 font-weight-bold">
-        {{ title || 'Join Kastor Early' }}
-      </h2>
-      <v-row class="justify-center">
-        <v-col
-          v-for="option in ctaOptions"
-          :key="option.type"
-          cols="12"
-          sm="6"
-          md="5"
-          class="px-4"
-        >
-          <v-card
-            class="h-100 elevation-3"
-            rounded="lg"
-            :class="option.type"
-          >
-            <v-card-item class="pa-8">
-              <div class="text-center">
-                <h3 class="text-h5 font-weight-bold mb-6">{{ option.title }}</h3>
-              </div>
-              <div class="d-flex justify-center">
-                <v-list
-                  class="bg-transparent"
-                  max-width="350px"
-                >
-                  <v-list-item
-                    v-for="(benefit, i) in option.benefits"
-                    :key="i"
-                    :title="benefit"
-                    :slim="true"
-                  >
-                    <template v-slot:prepend>
-                      <v-icon :color="option.buttonColor">
-                        mdi-check-circle
-                      </v-icon>
-                    </template>
-                  </v-list-item>
-                </v-list>
-              </div>
-              <div class="d-flex justify-center">
-                <v-btn
-                  :color="option.buttonColor"
-                  class="mt-8 text-button-large w-75"
-                  :class="option.type"
-                  height="56"
-                  @click="handleClick(option.type)"
-                >
-                  {{ option.buttonText }}
-                </v-btn>
-              </div>
-            </v-card-item>
-          </v-card>
-        </v-col>
-      </v-row>
+    <div class="main-container">
+      <h2 class="text-h3 text-center font-weight-black mb-12">How it Works</h2>
+      <div
+        v-for="(type, index) in steps"
+        :key="type.title"
+        class="content-row"
+      >
+        <div class="content-text">
+          <h4 class="font-weight-bold text-overline mb-2 text-secondary-darken-1">{{ type.overline }}</h4>
+          <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
+          <div class="checklist">
+            <div
+              v-for="(detail, i) in type.details"
+              :key="i"
+              class="checklist-item"
+            >
+              <v-icon
+                color="tertiary"
+                size="small"
+                class="checklist-icon"
+              >mdi-check-circle</v-icon>
+              <span class="checklist-text">{{ detail }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="content-image">
+          <v-img
+            :src="type.image"
+            cover
+            class="rounded-lg"
+          ></v-img>
+        </div>
+      </div>
     </div>
   </v-container>
+
 </template>
 
 <style scoped>
-.text-button-large {
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  text-transform: none;
-  font-weight: 700;
-  padding: 0 32px;
-  min-width: 250px;
+/* Content card styles */
+.content-row {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 6rem;
+  align-items: center;
 }
 
-
-/* .waitlist .v-list-item:last-child .v-icon {
-  display: none;
-} */
-
-@media (max-width: 600px) {
-  .text-button-large {
-    min-width: 300px;
-  }
-}
-</style>
-]]></content>
-          </file>
-        
-          <file>
-            <path>components/landingpage/EarlyAccessModal.vue</path>
-            <content><![CDATA[<!-- components/EarlyAccessModal.vue -->
-<template>
-  <v-dialog
-    v-model="dialog"
-    width="500"
-    persistent
-    :scrim="loading ? '#000000' : undefined"
-  >
-    <v-card class="auth-card pb-8">
-      <!-- Close button -->
-      <v-btn
-        icon="mdi-close"
-        variant="text"
-        size="small"
-        class="close-btn"
-        @click="handleClose"
-        :disabled="loading"
-      ></v-btn>
-
-      <!-- Step 1: Email Collection -->
-      <v-card-title
-        v-if="!submitted"
-        class="text-center text-h5 font-weight-bold pt-6 pb-8"
-      >
-        {{ type === 'beta_access' ? 'Join the Beta for Free' : 'Join the Waitlist' }}
-      </v-card-title>
-
-      <v-card-text class="px-4 py-2">
-        <!-- Step 1: Email Form -->
-        <v-form
-          v-if="!submitted"
-          @submit.prevent="handleEmailSubmit"
-          v-model="isEmailValid"
-        >
-          <v-text-field
-            v-model="email"
-            label="Email"
-            type="email"
-            :rules="[rules.required, rules.email]"
-            required
-            variant="outlined"
-            density="compact"
-            bg-color="grey-lighten-5"
-            :disabled="loading"
-          />
-          <p class="text-caption text-medium-emphasis mb-8">
-            We'll never share your email or send you spam.
-          </p>
-
-          <v-alert
-            v-if="error"
-            type="error"
-            variant="tonal"
-            class="my-2"
-            density="compact"
-            closable
-          >
-            {{ error }}
-          </v-alert>
-
-          <v-btn
-            block
-            color='primary'
-            type="submit"
-            size="large"
-            :loading="loading"
-            :disabled="!isEmailValid"
-            class="mt-12 px-6"
-            :class="{
-              'submit-email-beta': type === 'beta_access',
-              'submit-email-waitlist': type !== 'beta_access'
-             }"
-          >
-            {{ type === 'beta_access' ? 'Apply for Beta Access' : 'Join Waitlist' }}
-          </v-btn>
-        </v-form>
-
-        <!-- Step 2: Additional Details -->
-        <v-form
-          v-else
-          @submit.prevent="handleDetailsSubmit"
-          class="details-form"
-        >
-          <div
-            v-if="!detailsSubmitted"
-            class="text-center mb-6"
-          >
-            <v-icon
-              color="success"
-              size="64"
-              icon="mdi-check-circle"
-              class="mb-4"
-            />
-            <h3 class="text-h5 font-weight-bold mb-2">Thank you!</h3>
-            <p
-              class="text-body-1 text-medium-emphasis"
-              v-html="detailsMessage"
-            ></p>
-          </div>
-
-          <div
-            v-else
-            class="text-center"
-          >
-            <v-icon
-              color="success"
-              size="64"
-              icon="mdi-check-circle"
-              class="mb-4"
-            />
-            <h3 class="text-h5 font-weight-bold mb-2">Thank you!</h3>
-            <p class="text-body-1 text-medium-emphasis">{{ finalMessage }}</p>
-          </div>
-
-          <template v-if="!detailsSubmitted">
-            <v-textarea
-              v-model="applicationDetails"
-              label="Your message"
-              variant="outlined"
-              density="comfortable"
-              rows="4"
-              :disabled="detailsSubmitted || loading"
-              class="mb-4"
-              :counter="DETAILS_LIMIT"
-              :rules="[rules.detailsLimit]"
-              @input="applicationDetails = ($event.target as HTMLTextAreaElement).value.slice(0, DETAILS_LIMIT)"
-            />
-
-            <v-btn
-              v-if="!detailsSubmitted"
-              block
-              color="primary"
-              type="submit"
-              size="large"
-              :loading="loading"
-              class="px-6 mt-12"
-              :class="{
-              'submit-details-beta': type === 'beta_access',
-              'submit-details-waitlist': type !== 'beta_access'
-             }"
-            >
-              Submit Additional Details
-            </v-btn>
-          </template>
-        </v-form>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
-</template>
-
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import { AccessRequestType } from '~/types/accessRequest'
-
-
-const props = defineProps<{
-  modelValue: boolean
-  type: AccessRequestType
-}>()
-
-const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-}>()
-
-// Form state
-const dialog = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
-})
-const email = ref('')
-const applicationDetails = ref('')
-const loading = ref(false)
-const error = ref('')
-const isEmailValid = ref(false)
-const submitted = ref(false)
-const detailsSubmitted = ref(false)
-const DETAILS_LIMIT = 1000;
-
-const runtimeConfig = useRuntimeConfig()
-const API_BASE_URL = runtimeConfig.public.apiBase
-
-
-// Form validation rules
-const rules = {
-  required: (v: string) => !!v || 'This field is required',
-  email: (v: string) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
-  detailsLimit: (v: string) => v.length <= DETAILS_LIMIT || `Maximum ${DETAILS_LIMIT} characters`
+.content-row:nth-child(even) {
+  flex-direction: row-reverse;
 }
 
-const benefits = computed(() => {
-  return props.type === AccessRequestType.beta_access
-    ? [
-      'Use Kastor for free during the beta',
-      'Help shape the product',
-      'Early access to all features',
-    ]
-    : [
-      'Be first to know when we launch',
-      'Get exclusive early-bird pricing',
-      'Stay updated on our progress'
-    ]
-})
-
-const benefitsColor = computed(() => {
-  return props.type === AccessRequestType.beta_access
-    ? 'tertiary-darken-1'
-    : 'secondary'
-})
-
-
-const waitlistDetailsMessage = `
-    We'll notify you when we launch. <br>
-    Optionally: please tell us why you're excited to use Kastor!
-`
-
-const betaDetailsMessage = `
-    Please tell us why you're interested and how you'd be planning on using Kastor.
-`
-
-const detailsMessage = computed(() => {
-  return props.type === AccessRequestType.beta_access ? betaDetailsMessage : waitlistDetailsMessage
-})
-
-const finalMessage = computed(() => {
-  return props.type === AccessRequestType.beta_access
-    ? "We'll review your application and get back to you within 48 hours."
-    : "We'll notify you when we launch."
-})
-
-// Handle initial email submission
-async function handleEmailSubmit() {
-  if (!isEmailValid.value) return
-
-  loading.value = true
-  error.value = ''
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/early-access-request/create`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email.value,
-        request_type: props.type
-      })
-    })
-
-    if (!response.ok) throw new Error('Failed to submit request')
-
-    submitted.value = true
-  } catch (e) {
-    error.value = 'Something went wrong. Please try again.'
-    console.error('Error submitting email:', e)
-  } finally {
-    loading.value = false
-  }
+/* no bottom margin for last content-row */
+.content-row:last-child {
+  margin-bottom: 0;
 }
 
-// Handle additional details submission
-async function handleDetailsSubmit() {
-  if (!applicationDetails.value) return
-
-  loading.value = true
-  error.value = ''
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/early-access-request/update`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email.value,
-        application_details: applicationDetails.value
-      })
-    })
-
-    if (!response.ok) throw new Error('Failed to submit details')
-
-    detailsSubmitted.value = true
-  } catch (e) {
-    error.value = 'Something went wrong. Please try again.'
-    console.error('Error submitting details:', e)
-  } finally {
-    loading.value = false
-  }
+.text-overline {
+  font-size: 0.875rem !important;
 }
 
-// Handle dialog close
-function handleClose() {
-  dialog.value = false
-  // Reset form state after animation completes
-  setTimeout(() => {
-    email.value = ''
-    applicationDetails.value = ''
-    error.value = ''
-    submitted.value = false
-    detailsSubmitted.value = false
-  }, 300)
-}
-</script>
-
-<style scoped>
-.auth-card {
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-  padding-left: 24px;
-  padding-right: 24px;
+.content-text {
+  flex: 0 0 30%;
 }
 
-.modal-gradient {
-  background: linear-gradient(135deg,
-      rgb(255, 255, 255) 0%,
-      rgb(248, 250, 252) 100%);
+.content-image {
+  flex: 0 0 70%;
+  max-width: 70%;
+  /* This ensures the image container doesn't overflow */
 }
 
-.close-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 1;
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.details-form {
-  animation: fadeIn 0.3s ease-out;
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
+.checklist-icon {
+  margin-top: 4px;
+  /* Aligns icon with first line of text */
+}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+.checklist-text {
+  line-height: 1.4;
+  flex: 1;
+}
+
+@media (max-width: 959px) {
+  .content-row {
+    flex-direction: column !important;
+    margin-bottom: 4rem;
+    gap: 1rem;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Improved Typography */
-.v-card-title {
-  letter-spacing: -0.5px;
-}
-
-.auth-card .v-card-title {
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-.v-card-text {
-  padding-top: 24px;
-  padding-bottom: 24px;
-
-}
-
-@media (max-width: 700px) {
-  .auth-card {
-    padding-left: 4px;
-    padding-right: 4px;
-  }
-
-  .v-dialog {
-    margin: 0px;
+  .content-text {
+    flex: 0 0 auto;
     width: 100%;
+    order: -1;
+    padding: 1rem;
   }
 
-  .v-card-text {
-    padding: 16px;
+  .content-image {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
   }
 }
 </style>
@@ -934,7 +318,19 @@ function handleClose() {
           <file>
             <path>layouts/default.vue</path>
             <content><![CDATA[<script setup lang="ts">
+import { ref } from 'vue'
+import { AccessRequestType } from '~/types/accessRequest'
+
+const showBetaModal = ref(false)
+const showWaitlistModal = ref(false)
+
+// Provide both the state and the methods to open modals
+provide('showBetaModal', showBetaModal)
+provide('showWaitlistModal', showWaitlistModal)
+provide('openBetaModal', () => showBetaModal.value = true)
+provide('openWaitlistModal', () => showWaitlistModal.value = true)
 </script>
+
 
 <template>
   <v-app>
@@ -951,6 +347,15 @@ function handleClose() {
         </div>
       </v-container>
     </v-footer>
+    <!-- Early Access Modals -->
+    <landingpageEarlyAccessModal
+      v-model="showBetaModal"
+      :type="AccessRequestType.beta_access"
+    />
+    <landingpageEarlyAccessModal
+      v-model="showWaitlistModal"
+      :type="AccessRequestType.ga_waitlist"
+    />
   </v-app>
 </template>
 
@@ -983,8 +388,7 @@ function handleClose() {
           <file>
             <path>pages/index.vue</path>
             <content><![CDATA[<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { AccessRequestType } from '~/types/accessRequest';
+import { ref, onMounted, inject } from 'vue';
 
 useSeoMeta({
   title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
@@ -1003,15 +407,10 @@ interface UserType {
   benefits: string[];
 }
 
-// Create const object for template use
-const requestTypes = {
-  beta: AccessRequestType.beta_access,
-  waitlist: AccessRequestType.ga_waitlist
-} as const;
+// Inject Modal state functions
+const openBetaModal = inject('openBetaModal')
+const openWaitlistModal = inject('openWaitlistModal')
 
-// Modal state
-const showBetaModal = ref(false);
-const showWaitlistModal = ref(false);
 
 // Hero section rotating content
 const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
@@ -1081,7 +480,7 @@ onMounted(() => {
             elevation="4"
             class="text-button-large beta"
             :ripple="false"
-            @click="showBetaModal = true"
+            @click="openBetaModal"
           >
             <v-icon start>mdi-rocket-launch</v-icon>
             Join the Beta
@@ -1091,7 +490,7 @@ onMounted(() => {
             variant="flat"
             class="text-button-large waitlist-button waitlist"
             :ripple="false"
-            @click="showWaitlistModal = true"
+            @click="openWaitlistModal"
           >
             <v-icon start>mdi-email-outline</v-icon>
             Join Waitlist
@@ -1148,20 +547,7 @@ onMounted(() => {
       </div>
     </v-container>
 
-    <landingpageCTASection
-      @showBetaModal="showBetaModal = true"
-      @showWaitlistModal="showWaitlistModal = true"
-    />
-
-    <!-- Early Access Modals -->
-    <landingpageEarlyAccessModal
-      v-model="showBetaModal"
-      :type="AccessRequestType.beta_access"
-    />
-    <landingpageEarlyAccessModal
-      v-model="showWaitlistModal"
-      :type="AccessRequestType.ga_waitlist"
-    />
+    <landingpageCTASection />
   </div>
 </template>
 
