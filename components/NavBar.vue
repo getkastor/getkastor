@@ -2,6 +2,8 @@
 import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
 import { useDisplay } from 'vuetify'
 
+const showNavBar = ref(false)
+
 const isScrolled = ref(false)
 const showWhiteBg = ref(false)
 const drawer = ref(false)
@@ -54,6 +56,7 @@ watch(isAnyModalOpen, () => {
 // Add scroll event listener when component is mounted
 onMounted(() => {
   handleScroll()
+  const showNavBar = ref(true)
   window.addEventListener('scroll', handleScroll)
 })
 
@@ -128,6 +131,7 @@ onUnmounted(() => {
 
 
   <v-app-bar
+    :v-show="showNavBar"
     :elevation="isScrolled ? 1 : 0"
     scroll-behavior="hide"
     scroll-threshold="100"
