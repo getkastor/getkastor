@@ -176,7 +176,7 @@ watch(dialog, (newValue) => {
     dataLayer.push({
       event: 'modal_action',
       action: 'open',
-      modal_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist'
+      form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist'
     })
   }
 })
