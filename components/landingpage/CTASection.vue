@@ -41,8 +41,8 @@ const ctaOptions: CTAOption[] = [
 ];
 
 // Type the injected functions
-const openBetaModal = inject('openBetaModal', () => {}) as () => void
-const openWaitlistModal = inject('openWaitlistModal', () => {}) as () => void
+const openBetaModal = inject('openBetaModal', () => { }) as () => void
+const openWaitlistModal = inject('openWaitlistModal', () => { }) as () => void
 
 const handleClick = (type: 'beta' | 'waitlist') => {
   if (type === 'beta') {

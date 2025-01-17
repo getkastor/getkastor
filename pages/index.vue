@@ -165,7 +165,7 @@ onMounted(() => {
       </div>
     </v-container>
 
-    <landingpageCTASection/>
+    <landingpageCTASection />
   </div>
 </template>
 

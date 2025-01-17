@@ -7,12 +7,6 @@
 </template>
 
 <script setup>
-import { ref, provide } from 'vue'
-
-// Create a shared modal state (to use by the navbar)
-const isAnyModalOpen = ref(false)
-provide('isAnyModalOpen', isAnyModalOpen)
-
 // Add GTM script to head
 useHead({
   script: [
