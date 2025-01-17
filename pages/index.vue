@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { AccessRequestType } from '~/types/accessRequest';
+import { ref, onMounted, inject } from 'vue';
 
 useSeoMeta({
   title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
@@ -19,15 +18,10 @@ interface UserType {
   benefits: string[];
 }
 
-// Create const object for template use
-const requestTypes = {
-  beta: AccessRequestType.beta_access,
-  waitlist: AccessRequestType.ga_waitlist
-} as const;
+// Inject Modal state functions
+const openBetaModal = inject('openBetaModal')
+const openWaitlistModal = inject('openWaitlistModal')
 
-// Modal state
-const showBetaModal = ref(false);
-const showWaitlistModal = ref(false);
 
 // Hero section rotating content
 const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
@@ -97,7 +91,7 @@ onMounted(() => {
             elevation="4"
             class="text-button-large beta"
             :ripple="false"
-            @click="showBetaModal = true"
+            @click="openBetaModal"
           >
             <v-icon start>mdi-rocket-launch</v-icon>
             Join the Beta
@@ -107,7 +101,7 @@ onMounted(() => {
             variant="flat"
             class="text-button-large waitlist-button waitlist"
             :ripple="false"
-            @click="showWaitlistModal = true"
+            @click="openWaitlistModal"
           >
             <v-icon start>mdi-email-outline</v-icon>
             Join Waitlist
@@ -164,20 +158,7 @@ onMounted(() => {
       </div>
     </v-container>
 
-    <landingpageCTASection
-      @showBetaModal="showBetaModal = true"
-      @showWaitlistModal="showWaitlistModal = true"
-    />
-
-    <!-- Early Access Modals -->
-    <landingpageEarlyAccessModal
-      v-model="showBetaModal"
-      :type="AccessRequestType.beta_access"
-    />
-    <landingpageEarlyAccessModal
-      v-model="showWaitlistModal"
-      :type="AccessRequestType.ga_waitlist"
-    />
+    <landingpageCTASection />
   </div>
 </template>
 
