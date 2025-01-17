@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, inject, watch, watchEffect } from 'vue'
-import { AccessRequestType } from '~/types/accessRequest'
+import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
 import { useDisplay } from 'vuetify'
 
 const isScrolled = ref(false)

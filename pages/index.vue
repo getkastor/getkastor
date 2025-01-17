@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
-import { AccessRequestType } from '~/types/accessRequest';
 
 useSeoMeta({
   title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
@@ -18,12 +17,6 @@ interface UserType {
   title: string;
   benefits: string[];
 }
-
-// Create const object for template use
-const requestTypes = {
-  beta: AccessRequestType.beta_access,
-  waitlist: AccessRequestType.ga_waitlist
-} as const;
 
 // Inject Modal state functions
 const openBetaModal = inject('openBetaModal')
