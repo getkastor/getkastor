@@ -88,7 +88,6 @@ const steps: Steps[] = [
           <v-img
             :src="type.image"
             cover
-            eager
             class="rounded-lg"
           ></v-img>
         </div>
@@ -127,6 +126,7 @@ const steps: Steps[] = [
 .content-image {
   flex: 0 0 70%;
   max-width: 70%;
+  min-height: 400px;
   /* This ensures the image container doesn't overflow */
 }
 
