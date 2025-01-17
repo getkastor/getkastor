@@ -174,7 +174,8 @@ const dialog = computed({
 watch(dialog, (newValue) => {
   if (newValue) {
     dataLayer.push({
-      event: 'modal_open',
+      event: 'modal_action',
+      action: 'open',
       modal_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist'
     })
   }
@@ -262,7 +263,8 @@ async function handleEmailSubmit() {
 
     // Track successful email submission
     dataLayer.push({
-      event: 'email_submit',
+      event: 'modal_action',
+      action: 'email_submit',
       form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
       status: 'success'
     })
@@ -271,7 +273,8 @@ async function handleEmailSubmit() {
   } catch (e) {
     // Track failed submission
     dataLayer.push({
-      event: 'email_submit',
+      event: 'modal_action',
+      action: 'email_submit',
       form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
       status: 'error',
       error_message: error.value
@@ -305,7 +308,8 @@ async function handleDetailsSubmit() {
 
     // Track successful details submission
     dataLayer.push({
-      event: 'details_submit',
+      event: 'modal_action',
+      action: 'details_submit',
       form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
       status: 'success',
       details_length: applicationDetails.value.length
@@ -315,7 +319,8 @@ async function handleDetailsSubmit() {
   } catch (e) {
     // Track failed submission
     dataLayer.push({
-      event: 'details_submit',
+      event: 'modal_action',
+      action: 'details_submit',
       form_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
       status: 'error',
       error_message: error.value
@@ -335,7 +340,8 @@ function handleClose() {
     : 'email_pending'
 
   dataLayer.push({
-    event: 'modal_close',
+    event: 'modal_action',
+    action: 'close',
     modal_type: props.type === AccessRequestType.beta_access ? 'beta' : 'waitlist',
     form_state: formState
   })
