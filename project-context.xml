@@ -37,6 +37,9 @@
 ├── LANDING_PAGE_STRUCTURE.md
 ├── README.md
 ├── app.vue
+├── assets/
+│   └── css/
+│       └── global.css
 ├── components/
 │   ├── BlogCard.vue
 │   ├── BlogList.vue
@@ -57,17 +60,17 @@
 │       │   └── testPost2.md
 │       └── tutorials/
 │           └── testPost.md
-├── draft-pages/
-│   └── blog/
-│       ├── [category]/
-│       │   ├── [...slug].vue
-│       │   └── index.vue
-│       └── index.vue
 ├── layouts/
-│   └── default.vue
+│   ├── default.vue
+│   └── landingpage.vue
 ├── nuxt.config.ts
 ├── package.json
 ├── pages/
+│   ├── blog/
+│   │   ├── [category]/
+│   │   │   ├── [...slug].vue
+│   │   │   └── index.vue
+│   │   └── index.vue
 │   └── index.vue
 ├── plugins/
 │   └── vuetify.ts
@@ -78,6 +81,7 @@
 │   ├── Kastor_square_light_bg.svg
 │   ├── Kastor_wordmark_dark_bg.svg
 │   ├── Kastor_wordmark_light_bg.svg
+│   ├── OG_image.png
 │   ├── campaign-creation.png
 │   ├── content-brief.png
 │   ├── content-type.png
@@ -101,215 +105,303 @@
   <fileContents>
     
           <file>
-            <path>app.vue</path>
-            <content><![CDATA[<template>
-  <NuxtLayout>
-    <v-app>
-      <NuxtPage />
-    </v-app>
-  </NuxtLayout>
-</template>
+            <path>components/NavBar.vue</path>
+            <content><![CDATA[<script setup lang="ts">
+import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
+import { useDisplay } from 'vuetify'
 
-<script setup>
-// Add GTM script to head
-useHead({
-  script: [
-    {
-      children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MTWJQJ5V');`,
-      tagPriority: 'high'
-    }
-  ],
-  noscript: [
-    {
-      children: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MTWJQJ5V"
-height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
-      tagPosition: 'bodyOpen'
-    }
-  ]
+// define prop optional:isblog
+const props = defineProps({
+  isBlog: {
+    type: Boolean,
+    default: false
+  }
 })
 
-</script>
-]]></content>
-          </file>
-        
-          <file>
-            <path>components/landingpage/HowItWorks.vue</path>
-            <content><![CDATA[<!-- components/HowItWorks.vue -->
-<script setup lang="ts">
+const isHydrated = ref(false)
 
-interface Steps {
-  overline: string;
-  title: string;
-  details: string[];
-  image: string;
+const isScrolled = ref(false)
+const showWhiteBg = ref(false)
+const drawer = ref(false)
+
+// Inject modal states and methods
+const showBetaModal = inject('showBetaModal', ref(false))
+const showWaitlistModal = inject('showWaitlistModal', ref(false))
+const openBetaModal = inject('openBetaModal', () => {})
+const openWaitlistModal = inject('openWaitlistModal', () => {})
+
+
+const { width } = useDisplay()
+
+
+const appBarHeight = 150 // Default v-app-bar height in pixels
+const drawerWidth = computed(() => {
+  // If mobile breakpoint (< 600px), return full width
+  // Otherwise return default width (256px is Vuetify's default)
+  return width.value < 700 ? width.value : 256
+})
+
+// Compute if any modal is open
+const isAnyModalOpen = computed(() => showBetaModal.value || showWaitlistModal.value)
+
+
+const handleScroll = () => {
+  const isNowScrolled = window.scrollY > appBarHeight
+
+  if (isNowScrolled !== isScrolled.value) {
+    isScrolled.value = isNowScrolled
+    updateBackground()
+  }
 }
 
-// How it works
-const steps: Steps[] = [
-  {
-    overline: '5-minute, one-time setup',
-    title: 'Describe your style',
-    details: [
-      'Create a voice (or several) to illustrate your or your brand\'s style',
-      'Share example content',
-      'Tell Kastor your do\'s and don\'ts'
-    ],
-    image: '/voice-creation.png'
-  },
-  {
-    overline: 'Any content, any time',
-    title: 'Create a brief',
-    details: [
-      'Choose your content type and voice',
-      'Pick your goal: new topics, product promotion, content recycling...',
-      'Add as much guidance as you want (or keep it minimal)'
-    ],
-    image: '/content-brief.png'
-  },
-  {
-    overline: 'Instant results',
-    title: 'Get your content in seconds',
-    details: [
-      'Choose from multiple options',
-      'Fine-tune to perfection or publish instantly',
-      'Get more content whenever you want'
-    ],
-    image: '/tweet-creation.png'
-  },
-  {
-    overline: 'One idea, endless content',
-    title: 'Orchestrate full campaigns',
-    details: [
-      'Set the campaign goal and description',
-      'Let Kastor suggest ideas and briefs for each asset',
-      'Tweak if needed, and generate all assets at once',
-    ],
-    image: '/campaign-creation.png'
+const updateBackground = () => {
+  // Show white background if either scrolled down or any modal is open
+  if (isAnyModalOpen.value || isScrolled.value || props.isBlog) {
+    showWhiteBg.value = true
+  } else {
+    // Only hide background if we're at the top and no modal is open
+    showWhiteBg.value = false
   }
-];
+}
+
+// Watch for changes in modal state
+watch(isAnyModalOpen, () => {
+  updateBackground()
+}, { immediate: true })
+
+// Add scroll event listener when component is mounted
+onMounted(() => {
+  handleScroll()
+  updateBackground()
+  // Small delay to ensure all Vuetify styles are applied
+  setTimeout(() => {
+    isHydrated.value = true
+  }, 50)
+  window.addEventListener('scroll', handleScroll)
+})
+
+
+// Clean up event listener when component is unmounted
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-
-  <v-container
-    fluid
-    class="py-16"
+  <!-- Navigation drawer for mobile -->
+  <v-navigation-drawer
+    v-model="drawer"
+    location="right"
+    :width="drawerWidth"
+    temporary
   >
-    <div class="main-container">
-      <h2 class="text-h3 text-center font-weight-black mb-12">How it Works</h2>
-      <div
-        v-for="(type, index) in steps"
-        :key="type.title"
-        class="content-row"
-      >
-        <div class="content-text">
-          <h4 class="font-weight-bold text-overline mb-2 text-secondary-darken-1">{{ type.overline }}</h4>
-          <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
-          <div class="checklist">
-            <div
-              v-for="(detail, i) in type.details"
-              :key="i"
-              class="checklist-item"
-            >
-              <v-icon
-                color="tertiary"
-                size="small"
-                class="checklist-icon"
-              >mdi-check-circle</v-icon>
-              <span class="checklist-text">{{ detail }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="content-image">
-          <v-img
-            :src="type.image"
-            cover
-            class="rounded-lg"
-          ></v-img>
-        </div>
-      </div>
-    </div>
-  </v-container>
 
+    <div class="drawer-header">
+      <NuxtLink
+        to="/"
+        class="text-decoration-none drawer-logo pl-2"
+        @click="drawer = false"
+      >
+        <img
+          src="/Kastor_wordmark_light_bg.svg"
+          alt="Kastor Logo"
+          height="32"
+          class="logo"
+        />
+      </NuxtLink>
+      <v-btn
+        icon="mdi-close"
+        size="small"
+        variant="text"
+        @click="drawer = false"
+        class="close-btn"
+      ></v-btn>
+    </div>
+
+    <v-list>
+      <v-list-item>
+        <v-btn
+          block
+          color="secondary"
+          class="navButton beta my-4"
+          variant="elevated"
+          size="x-large"
+          @click="openBetaModal"
+        >
+          <v-icon start>mdi-rocket-launch</v-icon>
+          Join Beta
+        </v-btn>
+      </v-list-item>
+
+      <v-list-item>
+        <v-btn
+          block
+          variant="outlined"
+          size="x-large"
+          class="navButton waitlist"
+          :class="{ 'border-primary text-primary': showWhiteBg }"
+          @click="openWaitlistModal"
+        >
+          <v-icon start>mdi-email-outline</v-icon>
+          Join Waitlist
+        </v-btn>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
+
+
+  <v-app-bar
+    :elevation="isScrolled || isBlog ? 1 : 0"
+    scroll-behavior="hide"
+    scroll-threshold="100"
+    :class="{
+      'bg-transparent': !showWhiteBg && !isBlog,
+      'bg-white': showWhiteBg || isBlog,
+      'bg-transition': true,
+      'navbar-ready': isHydrated
+    }"
+  >
+    <v-container class="navbar-content main-container">
+      <!-- Logo section -->
+      <v-app-bar-title class="flex-grow-0">
+        <NuxtLink
+          to="/"
+          class="text-decoration-none d-flex align-center pl-4"
+        >
+          <img
+            src="/Kastor_wordmark_light_bg.svg"
+            alt="Kastor Logo"
+            height="32"
+            class="logo"
+          />
+        </NuxtLink>
+      </v-app-bar-title>
+      <v-spacer></v-spacer>
+
+      <!-- Desktop buttons -->
+      <div class="d-none d-md-flex button-container">
+        <v-btn
+          color="secondary"
+          class="navButton beta"
+          variant="elevated"
+          @click="openBetaModal"
+        >
+          <v-icon start>mdi-rocket-launch</v-icon>
+          Join Beta
+        </v-btn>
+        <v-btn
+          variant="outlined"
+          class="ml-6 navButton waitlist"
+          :class="{ 'border-primary text-primary': showWhiteBg }"
+          @click="openWaitlistModal"
+        >
+          <v-icon start>mdi-email-outline</v-icon>
+          Join Waitlist
+        </v-btn>
+      </div>
+
+      <!-- Mobile menu icon -->
+      <v-app-bar-nav-icon
+        class="d-md-none mobile-menu"
+        @click="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+    </v-container>
+  </v-app-bar>
 </template>
 
 <style scoped>
-/* Content card styles */
-.content-row {
+/* Initial state - entire navbar content is invisible */
+.navbar-content {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* After hydration - fade in everything */
+.navbar-ready .navbar-content {
+  opacity: 1;
+}
+
+/* Make logo area non-flexible */
+.v-app-bar-title {
+  flex: 0 0 auto !important;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+  transition: opacity 0.3s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-font-smoothing: antialiased;
+  shape-rendering: geometricPrecision;
+  will-change: transform;
+  stroke-width: 1px;
+}
+
+.bg-transition {
+  transition: background-color 0.3s ease !important;
+}
+
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.navButton {
+  text-transform: none;
+  font-weight: 700;
+  min-width: 170px;
+  font-size: 1rem;
+}
+
+.navButton.waitlist {
+  color: rgb(var(--v-theme-primary-darken-1)) !important;
+  border: 2px solid rgb(var(--v-theme-primary)) !important;
+  background-color: white !important;
+}
+
+
+.v-navigation-drawer .navButton {
+  width: 100%;
+  margin: 0;
+}
+
+.v-toolbar-title {
+  /* logo width + some padding */
+  min-width: 200px;
+}
+
+.drawer-header {
+  padding: 1rem;
   display: flex;
-  gap: 3rem;
-  margin-bottom: 6rem;
+  justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.content-row:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-/* no bottom margin for last content-row */
-.content-row:last-child {
-  margin-bottom: 0;
-}
-
-.text-overline {
-  font-size: 0.875rem !important;
-}
-
-.content-text {
-  flex: 0 0 30%;
-}
-
-.content-image {
-  flex: 0 0 70%;
-  max-width: 70%;
-  /* This ensures the image container doesn't overflow */
-}
-
-.checklist {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.checklist-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.checklist-icon {
-  margin-top: 4px;
-  /* Aligns icon with first line of text */
-}
-
-.checklist-text {
-  line-height: 1.4;
-  flex: 1;
-}
-
-@media (max-width: 959px) {
-  .content-row {
-    flex-direction: column !important;
-    margin-bottom: 4rem;
-    gap: 1rem;
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .v-btn {
+    padding: 0 12px !important;
   }
 
-  .content-text {
-    flex: 0 0 auto;
-    width: 100%;
-    order: -1;
-    padding: 1rem;
+  .v-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    padding: 0 0.5rem;
   }
 
-  .content-image {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 100%;
-  }
 }
 </style>
 ]]></content>
@@ -317,413 +409,280 @@ const steps: Steps[] = [
         
           <file>
             <path>layouts/default.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-import { ref } from 'vue'
-import { AccessRequestType } from '~/types/accessRequest'
-
-const showBetaModal = ref(false)
-const showWaitlistModal = ref(false)
-
-// Provide both the state and the methods to open modals
-provide('showBetaModal', showBetaModal)
-provide('showWaitlistModal', showWaitlistModal)
-provide('openBetaModal', () => showBetaModal.value = true)
-provide('openWaitlistModal', () => showWaitlistModal.value = true)
-</script>
-
-
-<template>
+            <content><![CDATA[<template>
   <v-app>
-    <NavBar />
+    <NavBar :isBlog="true"/>
 
     <v-main>
-      <slot />
+      <v-container>
+        <slot />
+      </v-container>
     </v-main>
 
-    <v-footer class="bg-primary">
+    <v-footer app>
       <v-container>
-        <div class="bg-primary">
+        <div class="text-center">
           © {{ new Date().getFullYear() }} Kastor
         </div>
       </v-container>
     </v-footer>
-    <!-- Early Access Modals -->
-    <landingpageEarlyAccessModal
-      v-model="showBetaModal"
-      :type="AccessRequestType.beta_access"
-    />
-    <landingpageEarlyAccessModal
-      v-model="showWaitlistModal"
-      :type="AccessRequestType.ga_waitlist"
-    />
   </v-app>
 </template>
 
+
 <style>
-.main-container {
-  max-width: 1200px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 100%;
-  padding: 0 1rem;
-}
-
-@media (max-width: 600px) {
-  .main-container {
-    padding: 0 0.5rem;
-  }
-}
-
 .v-main {
-  padding-top: 0px !important;
+  padding-top: 68px !important;
   font-size: 1.125rem;
-}
-
-.v-container main-container {
-  max-width: 1200px;
 }
 </style>]]></content>
           </file>
         
           <file>
-            <path>pages/index.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-import { ref, onMounted, inject } from 'vue';
+            <path>pages/blog/[category]/[...slug].vue</path>
+            <content><![CDATA[<script setup>
+const { path } = useRoute()
+const { data } = await useAsyncData(`content-${path}`, () => queryContent(path).findOne())
+</script>
 
-useSeoMeta({
-  title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
-  ogTitle: 'Instant, Authentic Social Media & Blog Content',
-  description: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
-  ogDescription: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
-  // ogImage: 'https://example.com/image.png',
-  // twitterCard: 'summary_large_image',
-})
+<template>
+  <article>
+    <v-btn
+      :to="`/blog/${path.split('/')[2]}`"
+      prepend-icon="mdi-arrow-left"
+      variant="text"
+      class="mb-4"
+    >
+      Back to Category
+    </v-btn>
 
+    <div v-if="data">
+      <h1 class="text-h2 mb-4">{{ data.title }}</h1>
+      
+      <div class="d-flex align-center mb-6">
+        <v-chip>{{ path.split('/')[2] }}</v-chip>
+        <div class="ml-4 text-subtitle-1">
+          {{ new Date(data.date).toLocaleDateString() }}
+        </div>
+      </div>
 
-// Interfaces
+      <div class="prose">
+        <ContentRenderer :value="data" />
+      </div>
+    </div>
+  </article>
+</template>
 
-interface UserType {
-  title: string;
-  benefits: string[];
+<style>
+.prose {
+  max-width: 65ch;
+  margin: 0 auto;
 }
 
-// Inject Modal state functions
-const openBetaModal = inject('openBetaModal')
-const openWaitlistModal = inject('openWaitlistModal')
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
 
+.prose h2 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
 
-// Hero section rotating content
-const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
-const currentTypeIndex = ref(0);
+.prose p {
+  margin-bottom: 1.5em;
+  line-height: 1.6;
+}
+</style>
+]]></content>
+          </file>
+        
+          <file>
+            <path>pages/blog/[category]/index.vue</path>
+            <content><![CDATA[<script setup>
+const route = useRoute()
+const category = route.params.category
 
-// User types data
-const userTypes: UserType[] = [
-  {
-    title: 'Creators & Solopreneurs',
-    benefits: [
-      'Create content for social, email, and blog without the time sink',
-      'Keep your authentic voice while growing your following',
-      'Get real marketing results without hiring a team'
-    ]
-  },
-  {
-    title: 'Marketing Teams',
-    benefits: [
-      'Get everyone writing in your brand\'s voice from day one',
-      'Keep quality high even during product launches and events',
-      'Scale content creation without scaling your team'
-    ]
-  }
-];
-
-// Rotate through content types
-onMounted(() => {
-  setInterval(() => {
-    currentTypeIndex.value = (currentTypeIndex.value + 1) % rotatingContent.length;
-  }, 3000);
-});
+const { data: articles } = await useAsyncData(
+  `articles-${category}`,
+  () => queryContent('blog', category).find()
+)
 </script>
 
 <template>
   <div>
-    <!-- Hero Section -->
-    <v-container
-      fluid
-      class="hero-section"
+    <v-btn
+      to="/blog"
+      prepend-icon="mdi-arrow-left"
+      variant="text"
+      class="mb-4"
     >
-      <div class="hero-background"></div>
-      <div class="hero-content main-container text-center">
-        <h1 class="hero-title">
-          <div class="rotating-container">
-            <transition
-              name="fade-slide"
-              mode="out-in"
-            >
-              <div
-                :key="currentTypeIndex"
-                class="gradient-text rotating-text text-secondary"
-              >
-                {{ rotatingContent[currentTypeIndex] }}
-              </div>
-            </transition>
-          </div>
-          <div class="text-center mt-2">That Sound Like You</div>
-        </h1>
-        <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
-          From idea to authentic posts in seconds. <br> Get results across Twitter, LinkedIn, SEO and email<br>in just
-          minutes per week.
-        </h2>
-        <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
-          <v-btn
-            size="x-large"
-            color="secondary"
-            elevation="4"
-            class="text-button-large beta"
-            :ripple="false"
-            @click="openBetaModal"
-          >
-            <v-icon start>mdi-rocket-launch</v-icon>
-            Join the Beta
-          </v-btn>
-          <v-btn
-            size="x-large"
-            variant="flat"
-            class="text-button-large waitlist-button waitlist"
-            :ripple="false"
-            @click="openWaitlistModal"
-          >
-            <v-icon start>mdi-email-outline</v-icon>
-            Join Waitlist
-          </v-btn>
-        </div>
-      </div>
-    </v-container>
+      Back to Blog
+    </v-btn>
 
-    <landingpageBenefits />
-    <landingpageDemoVideo />
-    <landingpageScrollCTA />
-    <landingpageHowItWorks />
-    <landingpageScrollCTA />
-    <landingpageContentTypes />
+    <h1 class="text-h2 mb-6 text-capitalize">{{ category }}</h1>
 
-
-
-    <!-- Who Uses Kastor -->
-    <v-container
-      fluid
-      class="py-16"
-    >
-      <div class="main-container">
-        <h2 class="text-h3 text-center font-weight-black mb-12">Who Uses Kastor</h2>
-        <v-row>
-          <v-col
-            v-for="user in userTypes"
-            :key="user.title"
-            cols="12"
-            md="6"
-          >
-            <v-card class="h-100">
-              <v-card-item>
-                <h3 class="text-h5 font-weight-bold mb-4">{{ user.title }}</h3>
-                <v-list>
-                  <v-list-item
-                    v-for="(benefit, index) in user.benefits"
-                    :key="index"
-                    :title="benefit"
-                    density="comfortable"
-                  >
-                    <template v-slot:prepend>
-                      <v-icon
-                        color="secondary"
-                        size="small"
-                      >mdi-check-circle</v-icon>
-                    </template>
-                  </v-list-item>
-                </v-list>
-              </v-card-item>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
-    </v-container>
-
-    <landingpageCTASection />
+    <v-row>
+      <v-col
+        v-for="article in articles"
+        :key="article._path"
+        cols="12"
+        md="6"
+        lg="4"
+      >
+        <v-card :to="article._path" height="100%">
+          <v-card-title>{{ article.title }}</v-card-title>
+          <v-card-subtitle>{{ new Date(article.date).toLocaleDateString() }}</v-card-subtitle>
+          <v-card-text>
+            {{ article.description }}
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
+]]></content>
+          </file>
+        
+          <file>
+            <path>pages/blog/index.vue</path>
+            <content><![CDATA[<script setup>
+const { data: articles } = await useAsyncData('articles', () => queryContent('blog').find(), {
+  // Add cache options
+  watch: true,
+  // Refresh on route change
+  refresh: true
+});
+const categories = [...new Set(articles.value.map(article => article._path.split('/')[2]))]
+</script>
 
-<style scoped>
-.hero-section {
-  position: relative;
-  padding: 200px 0 120px 0;
-  background: linear-gradient(135deg,
-      rgb(138, 220, 235),
-      rgb(178, 242, 245));
-  overflow: hidden;
-}
+<template>
+  <div>
+    <h1 class="text-h2 mb-6">Blog</h1>
+    
+    <!-- Categories -->
+    <v-row class="mb-6">
+      <v-col>
+        <v-chip-group>
+          <v-chip
+            v-for="category in categories"
+            :key="category"
+            :to="`/blog/${category}`"
+            link
+          >
+            {{ category }}
+          </v-chip>
+        </v-chip-group>
+      </v-col>
+    </v-row>
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* Softer overlays with very light colors */
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.7) 0%, transparent 50%),
-    radial-gradient(circle at 90% 90%, rgba(247, 253, 254, 0.7) 0%, transparent 50%);
-  z-index: 1;
-}
+    <!-- Articles -->
+    <v-row>
+      <v-col
+        v-for="article in articles"
+        :key="article._path"
+        cols="12"
+        md="6"
+        lg="4"
+      >
+        <v-card :to="article._path" height="100%">
+          <v-card-title>{{ article.title }}</v-card-title>
+          <v-card-subtitle>{{ new Date(article.date).toLocaleDateString() }}</v-card-subtitle>
+          <v-card-text>
+            {{ article.description }}
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
+</template>
+]]></content>
+          </file>
+        
+          <file>
+            <path>plugins/vuetify.ts</path>
+            <content><![CDATA[// import this after install `@mdi/font` package
+import '@mdi/font/css/materialdesignicons.css'
 
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import { defineNuxtPlugin } from '#app'
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
+const myCustomLightTheme = {
+  dark: false,
+  colors: {
+    background: '#FFFFFF',
+    surface: '#FFFFFF',
+    'surface-bright': '#FFFFFF',
+    'surface-light': '#F5F7F8',    // Slightly blue-tinted light gray for subtle depth
+    'surface-variant': '#EC407A',   // pink for tooltips
+    'on-surface-variant': '#FFFFFF', // white for text on pink surfaces
+    'surface-dark': '#2D3436',      // Charcoal for navbars and navdrawers
 
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  color: rgb(0, 66, 77);
-}
+    // Primary (Teal) family
+    'primary-lighten-4': '#F7FDFE',
+    'primary-lighten-3': '#E0F7FA',
+    'primary-lighten-2': '#80DEEB',
+    'primary-lighten-1': '#26C6DA',
+    'primary': '#00B3C5',
+    'primary-darken-1': '#007A8A',
+    'primary-darken-2': '#005D6B',
+    'primary-darken-3': '#00424D',
+    'primary-darken-4': '#002A33',
 
+    // Secondary (Pink) family
+    'secondary-lighten-3': '#FCE4EC',  // Very pale pink
+    'secondary-lighten-2': '#FFA4C1',
+    'secondary-lighten-1': '#FF719B',
+    'secondary': '#EC407A',
+    'secondary-darken-1': '#D81B60',
+    'secondary-darken-2': '#B0003A',
 
-.hero-title-wrapper {
-  position: relative;
-  height: 1.2em;
-  margin-bottom: 0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    // Tertiary (Yellow) family
+    'tertiary-lighten-3': '#FFF8E1',  // Very pale yellow
+    'tertiary-lighten-2': '#FFE082',
+    'tertiary-lighten-1': '#FFD54F',
+    'tertiary': '#FFB300',
+    'tertiary-darken-1': '#FB8C00',
+    'tertiary-darken-2': '#EF6C00',
 
-.hero-title-line {
-  margin-top: 0.2em;
-}
-
-.fixed-text {
-  position: absolute;
-  left: 50%;
-  transform: translateX(calc(-50% - 140px));
-  /* Half of rotating-text-container width */
-}
-
-.hero-cta .v-btn.v-btn--outlined {
-  border-color: rgb(0, 179, 197);
-  /* primary */
-  color: rgb(0, 179, 197);
-  /* primary */
-}
-
-.hero-subtitle {
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  opacity: 0.9;
-  color: rgb(0, 93, 107);
-  line-height: 1.5;
-}
-
-/* Rotating text animations */
-.rotating-container {
-  height: 1.3em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.2em 0;
-}
-
-.rotating-text {
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-
-.text-button-large {
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  text-transform: none;
-  font-weight: 700;
-  padding: 0 32px;
-  min-width: 250px;
-}
-
-.waitlist-button {
-  color: rgb(var(--v-theme-secondary)) !important;
-  border: 2px solid rgb(var(--v-theme-secondary)) !important;
-  background-color: white !important;
-}
-
-ul.list-none {
-  list-style: none;
-  padding: 0;
-}
-
-/* Smooth fade-slide transition */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.5s ease;
-}
-
-.fade-slide-enter-from {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-
-  100% {
-    transform: translateY(0px);
+    error: '#FF4D4D',     
+    info: '#0099E6',      
+    success: '#00B894',   
+    warning: '#FF9800'   
+  },
+  variables: {
+    'border-color': '#000000',
+    'border-opacity': 0.12,
+    'high-emphasis-opacity': 0.87,
+    'medium-emphasis-opacity': 0.60,
+    'disabled-opacity': 0.38,
+    'idle-opacity': 0.04,
+    'hover-opacity': 0.04,
+    'focus-opacity': 0.12,
+    'selected-opacity': 0.08,
+    'activated-opacity': 0.12,
+    'pressed-opacity': 0.12,
+    'dragged-opacity': 0.08,
+    'theme-kbd': '#212529',
+    'theme-on-kbd': '#FFFFFF',
+    'theme-code': '#F5F5F5',
+    'theme-on-code': '#000000',
   }
 }
 
-/* Responsive adjustments */
-@media (max-width: 700px) {
-
-  .hero-content {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .hero-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
-
-  .hero-subtitle {
-    font-size: 1.3rem !important;
-  }
-
-
-  .hero-title-wrapper {
-    height: 2.4em;
-    /* Double height for stacked layout */
-  }
-
-  .fixed-text {
-    top: 0;
-    transform: translateX(-50%);
-    /* Center align */
-  }
-
-  .rotating-text-container {
-    min-width: 200px;
-    top: 1.2em;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-
-}
-</style>
+export default defineNuxtPlugin((app) => {
+  const vuetify = createVuetify({
+    ssr: true,
+    theme: {
+      defaultTheme: 'myCustomLightTheme',
+      themes: {
+        myCustomLightTheme,
+      },
+    },
+  })
+  app.vueApp.use(vuetify)
+})
 ]]></content>
           </file>
         
