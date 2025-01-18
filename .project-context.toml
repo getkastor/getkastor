@@ -37,6 +37,7 @@ included_paths = [
   # "components/BlogCard.vue",
   # "components/BlogList.vue",
   "components/NavBar.vue",
+  # "components/blog/breadcrumb.vue",
   # "components/landingpage/Benefits.vue",
   # "components/landingpage/CTASection.vue",
   # "components/landingpage/ContentTypes.vue",
