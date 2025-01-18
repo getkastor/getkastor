@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
 import { useDisplay } from 'vuetify'
 
-const showNavBar = ref(true)
+const isHydrated = ref(false)
 
 const isScrolled = ref(false)
 const showWhiteBg = ref(false)
@@ -56,7 +56,10 @@ watch(isAnyModalOpen, () => {
 // Add scroll event listener when component is mounted
 onMounted(() => {
   handleScroll()
-  showNavBar.value = true
+  // Small delay to ensure all Vuetify styles are applied
+  setTimeout(() => {
+    isHydrated.value = true
+  }, 50)
   window.addEventListener('scroll', handleScroll)
 })
 
@@ -131,18 +134,19 @@ onUnmounted(() => {
 
 
   <v-app-bar
-    v-show="showNavBar"
     :elevation="isScrolled ? 1 : 0"
     scroll-behavior="hide"
     scroll-threshold="100"
     :class="{
       'bg-transparent': !showWhiteBg,
       'bg-white': showWhiteBg,
-      'bg-transition': true
+      'bg-transition': true,
+      'navbar-ready': isHydrated
     }"
   >
-    <v-container class="d-flex align-center main-container">
-      <v-app-bar-title>
+    <v-container class="navbar-content main-container">
+      <!-- Logo section -->
+      <v-app-bar-title class="flex-grow-0">
         <NuxtLink
           to="/"
           class="text-decoration-none d-flex align-center pl-4"
@@ -158,7 +162,7 @@ onUnmounted(() => {
       <v-spacer></v-spacer>
 
       <!-- Desktop buttons -->
-      <div class="d-none d-md-flex">
+      <div class="d-none d-md-flex button-container">
         <v-btn
           color="secondary"
           class="navButton beta"
@@ -181,7 +185,7 @@ onUnmounted(() => {
 
       <!-- Mobile menu icon -->
       <v-app-bar-nav-icon
-        class="d-md-none"
+        class="d-md-none mobile-menu"
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
     </v-container>
@@ -189,6 +193,24 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* Initial state - entire navbar content is invisible */
+.navbar-content {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* After hydration - fade in everything */
+.navbar-ready .navbar-content {
+  opacity: 1;
+}
+
+/* Make logo area non-flexible */
+.v-app-bar-title {
+  flex: 0 0 auto !important;
+}
 
 .logo {
   height: 32px;
