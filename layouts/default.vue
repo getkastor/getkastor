@@ -22,4 +22,8 @@
   padding-top: 68px !important;
   font-size: 1.125rem;
 }
+
+a {
+  color: rgb(var(--v-theme-secondary-darken-1)) !important;
+}
 </style>

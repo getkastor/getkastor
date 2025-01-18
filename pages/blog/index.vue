@@ -36,7 +36,7 @@ const formatDate = (date) => {
             link
             color="primary"
             variant="elevated"
-            class="text-capitalize"
+            class="text-capitalize text-white"
           >
             {{ category }}
           </v-chip>
