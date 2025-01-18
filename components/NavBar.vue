@@ -56,6 +56,7 @@ watch(isAnyModalOpen, () => {
 // Add scroll event listener when component is mounted
 onMounted(() => {
   handleScroll()
+  // Small delay to ensure all Vuetify styles are applied
   setTimeout(() => {
     isHydrated.value = true
   }, 50)
