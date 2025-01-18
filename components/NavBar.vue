@@ -131,7 +131,7 @@ onUnmounted(() => {
 
 
   <v-app-bar
-    :v-show="showNavBar"
+    v-show="showNavBar"
     :elevation="isScrolled ? 1 : 0"
     scroll-behavior="hide"
     scroll-threshold="100"
@@ -189,13 +189,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.main-container {
-  max-width: 1200px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 100%;
-  padding: 0 1rem;
-}
 
 .logo {
   height: 32px;

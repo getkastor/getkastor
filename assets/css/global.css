@@ -1,0 +1,22 @@
+/* assets/css/global.css */
+
+.main-container {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Add this to prevent layout shift */
+.v-app-bar .main-container {
+  display: flex;
+  align-items: center;
+  min-height: 64px; /* Standard Vuetify toolbar height */
+}
