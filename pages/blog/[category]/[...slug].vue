@@ -16,30 +16,34 @@ const formatDate = (date) => {
     <v-container>
       <!-- Header Section -->
       <div class="header-content py-8">
-        <blogBreadcrumb />
-        
-        <div v-if="data" class="post-header">
+        <blogBreadcrumb :current-title="data?.title"/>
+
+        <div
+          v-if="data"
+          class="post-header"
+        >
           <h1 class="text-h2 mb-4">{{ data.title }}</h1>
-          
+
           <p class="text-subtitle-1 text-medium-emphasis mb-8">
             {{ formatDate(data.date) }}
           </p>
-          
+
           <v-divider class="mb-8"></v-divider>
         </div>
       </div>
 
       <!-- Article Content -->
-      <div v-if="data" class="article-container">
-        <div class="article-content">
-          <ContentRenderer :value="data" />
-        </div>
+      <div
+        v-if="data"
+        class="article-container"
+      >
+        <ContentRenderer :value="data" />
       </div>
 
       <!-- Navigation Footer -->
       <div class="navigation-footer mt-16 mb-8">
         <v-divider class="mb-8"></v-divider>
-        
+
         <div class="d-flex justify-space-between align-center">
           <v-btn
             :to="`/blog/${path.split('/')[2]}`"
@@ -50,7 +54,7 @@ const formatDate = (date) => {
           >
             Back to {{ path.split('/')[2] }}
           </v-btn>
-          
+
           <v-btn
             to="/blog"
             append-icon="mdi-post"
@@ -86,13 +90,6 @@ const formatDate = (date) => {
   max-width: 900px;
   margin: 0 auto;
   padding: 0;
-}
-
-.article-content {
-  /* background: white; */
-  /* border-radius: 8px; */
-  /* padding: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04); */
 }
 
 .post-header h1 {

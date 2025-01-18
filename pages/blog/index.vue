@@ -1,4 +1,8 @@
 <script setup>
+
+// Flag to change later
+const showCategories = computed(() => false)
+
 const { data: articles } = await useAsyncData('articles', () => queryContent('blog').find(), {
   // Add cache options
   watch: true,
@@ -26,10 +30,11 @@ const formatDate = (date) => {
         <p class="text-subtitle-1 text-medium-emphasis">
           Explore our latest articles, tutorials, and insights
         </p>
-      
+
         <!-- Categories -->
         <v-chip-group class="mt-6">
           <v-chip
+            v-if="showCategories"
             v-for="category in categories"
             :key="category"
             :to="`/blog/${category}`"
@@ -50,7 +55,7 @@ const formatDate = (date) => {
           :key="article._path"
           class="article-item pa-6 mb-4"
         >
-          <NuxtLink 
+          <NuxtLink
             :to="article._path"
             class="text-decoration-none"
           >
@@ -58,8 +63,12 @@ const formatDate = (date) => {
               <div>
                 <h2 class="text-h5 mb-2 text-surface-dark">{{ article.title }}</h2>
                 <p class="text-subtitle-2 text-medium-emphasis mb-2">
-                  {{ formatDate(article.date) }} • 
-                  <span class="text-capitalize text-primary-darken-1">
+                  {{ formatDate(article.date) }}
+                  <span v-if="showCategories"> • </span>
+                  <span
+                    v-if="showCategories"
+                    class="text-capitalize text-primary-darken-1"
+                  >
                     {{ article._path.split('/')[2] }}
                   </span>
                 </p>
@@ -87,7 +96,8 @@ const formatDate = (date) => {
   min-height: calc(100vh - 64px);
   width: 100%;
   padding: 1px;
-  background: #f8fafc;  /* Light gray with slight blue tint */
+  background: #f8fafc;
+  /* Light gray with slight blue tint */
 }
 
 .header-content,
@@ -101,7 +111,8 @@ const formatDate = (date) => {
   border-radius: 8px;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
-  border-left: 4px solid #00B3C5;  /* Your primary color from the theme */
+  border-left: 4px solid #00B3C5;
+  /* Your primary color from the theme */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -117,12 +128,15 @@ const formatDate = (date) => {
 }
 
 .article-item .text-medium-emphasis {
-  color: rgba(0, 0, 0, 0.75) !important; /* Darker than default medium emphasis */
+  color: rgba(0, 0, 0, 0.75) !important;
+  /* Darker than default medium emphasis */
 }
 
 .article-item .primary--text {
-  color: rgb(0, 99, 144) !important; /* Darker primary color for better contrast */
+  color: rgb(0, 99, 144) !important;
+  /* Darker primary color for better contrast */
 }
+
 .article-item a {
   color: inherit;
 }

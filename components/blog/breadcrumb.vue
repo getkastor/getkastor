@@ -2,6 +2,10 @@
 import { computed } from 'vue'
 const route = useRoute()
 
+// Flag to change later
+const showCategories = computed(() => false) 
+
+
 const items = computed(() => {
   const pathSegments = route.path.split('/').filter(segment => segment)
   const breadcrumbs = [
@@ -12,8 +16,8 @@ const items = computed(() => {
     }
   ]
 
-  if (pathSegments.length > 1) {
-    // Add category
+  // Wrap the category logic in a condition
+  if (pathSegments.length > 1 && showCategories.value) {
     const category = pathSegments[1]
     breadcrumbs.push({
       title: category.charAt(0).toUpperCase() + category.slice(1),
@@ -22,15 +26,13 @@ const items = computed(() => {
     })
   }
 
-  if (pathSegments.length > 2) {
-    // Add article title - we'll pass this as a prop since we need to get it from the content
-    if (props.currentTitle) {
-      breadcrumbs.push({
-        title: props.currentTitle,
-        href: route.path,
-        disabled: true
-      })
-    }
+  // Adjust the article title logic to work without categories
+  if (props.currentTitle) {
+    breadcrumbs.push({
+      title: props.currentTitle,
+      href: route.path,
+      disabled: true
+    })
   }
 
   return breadcrumbs
