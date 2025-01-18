@@ -2,7 +2,7 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/global.css'],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   build: {
