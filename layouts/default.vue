@@ -3,14 +3,12 @@
     <NavBar :isBlog="true"/>
 
     <v-main>
-      <v-container>
         <slot />
-      </v-container>
     </v-main>
 
-    <v-footer app>
+    <v-footer class="bg-primary">
       <v-container>
-        <div class="text-center">
+        <div class="bg-primary">
           © {{ new Date().getFullYear() }} Kastor
         </div>
       </v-container>
