@@ -19,8 +19,8 @@ const drawer = ref(false)
 // Inject modal states and methods
 const showBetaModal = inject('showBetaModal', ref(false))
 const showWaitlistModal = inject('showWaitlistModal', ref(false))
-const openBetaModal = inject('openBetaModal', () => {})
-const openWaitlistModal = inject('openWaitlistModal', () => {})
+const openBetaModal = inject('openBetaModal', () => { })
+const openWaitlistModal = inject('openWaitlistModal', () => { })
 
 
 const { width } = useDisplay()
@@ -110,7 +110,16 @@ onUnmounted(() => {
       ></v-btn>
     </div>
 
-    <v-list>
+    <v-list class="mt-6">
+      <v-list-item class="blog-list-item">
+        <NuxtLink
+          to="/blog"
+          class="text-decoration-none blog-link d-block text-center py-2"
+          @click="drawer = false"
+        >
+          BLOG
+        </NuxtLink>
+      </v-list-item>
       <v-list-item>
         <v-btn
           block
@@ -171,7 +180,13 @@ onUnmounted(() => {
       <v-spacer></v-spacer>
 
       <!-- Desktop buttons -->
-      <div class="d-none d-md-flex button-container">
+      <div class="d-none d-md-flex button-container align-center">
+        <NuxtLink
+          to="/blog"
+          class="text-decoration-none blog-link mr-8"
+        >
+          BLOG
+        </NuxtLink>
         <v-btn
           color="secondary"
           class="navButton beta"
@@ -276,6 +291,21 @@ onUnmounted(() => {
   background: white;
   z-index: 1;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.blog-link {
+  color: rgba(var(--v-theme-surface-dark)) !important;
+  font-weight: 700 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.blog-link:hover {
+  opacity: 0.8;
+}
+
+/* For mobile */
+.v-list-item .blog-link {
+  font-size: 1rem;
 }
 
 /* Responsive adjustments */
