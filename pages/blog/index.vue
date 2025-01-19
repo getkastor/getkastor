@@ -3,10 +3,10 @@
 // Flag to change later
 const showCategories = computed(() => false)
 
-const { data: articles } = await useAsyncData('articles', () => 
+const { data: articles } = await useAsyncData('articles', () =>
   queryContent('blog')
     .sort({ date: -1 }) // Sort by date in descending order
-    .find(), 
+    .find(),
   {
     // Add cache options
     watch: true,
@@ -29,10 +29,10 @@ Real talk about social media, writing, and building an authentic online presence
 </script>
 
 <template>
-  <div class="blog-wrapper">
+  <div class="blog-wrapper fill-height">
     <v-container class="main-content">
       <!-- Header Section -->
-      <div class="header-content py-16">
+      <div class="header-content py-16 mt-16">
         <h1 class="text-h2 mb-4">The Kastor Blog</h1>
         <p class="text-subtitle-1 text-medium-emphasis blog-description">
           {{ blogDescription }}
@@ -102,7 +102,6 @@ Real talk about social media, writing, and building an authentic online presence
 .blog-wrapper {
   min-height: calc(100vh - 64px);
   width: 100%;
-  padding: 1px;
   background: #f8fafc;
   /* Light gray with slight blue tint */
 }

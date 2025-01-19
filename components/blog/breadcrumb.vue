@@ -3,7 +3,7 @@ import { computed } from 'vue'
 const route = useRoute()
 
 // Flag to change later
-const showCategories = computed(() => false) 
+const showCategories = computed(() => false)
 
 
 const items = computed(() => {

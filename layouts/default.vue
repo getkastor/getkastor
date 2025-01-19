@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <NavBar :isBlog="true"/>
+    <NavBar :isBlog="true" />
 
     <v-main>
-        <slot />
+      <slot />
     </v-main>
 
     <v-footer class="bg-primary">
@@ -19,7 +19,6 @@
 
 <style>
 .v-main {
-  padding-top: 68px !important;
   font-size: 1.125rem;
 }
 

@@ -2,6 +2,17 @@
 const { path } = useRoute()
 const { data } = await useAsyncData(`content-${path}`, () => queryContent(path).findOne())
 
+useHead(() => ({
+  title: data.value?.title ? `${data.value.title} | Kastor Blog` : 'Kastor Blog',
+  meta: [
+    { name: 'description', content: data.value?.description || '' },
+    { property: 'og:title', content: data.value?.title || '' },
+    { property: 'og:description', content: data.value?.description || '' },
+  ]
+}))
+
+
+
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -15,8 +26,8 @@ const formatDate = (date) => {
   <div class="blog-wrapper">
     <v-container>
       <!-- Header Section -->
-      <div class="header-content py-8">
-        <blogBreadcrumb :current-title="data?.title"/>
+      <div class="header-content py-8  mt-16">
+        <blogBreadcrumb :current-title="data?.title" />
 
         <div
           v-if="data"
@@ -27,8 +38,6 @@ const formatDate = (date) => {
           <p class="text-subtitle-1 text-medium-emphasis mb-8">
             {{ formatDate(data.date) }}
           </p>
-
-          <v-divider class="mb-8"></v-divider>
         </div>
       </div>
 
@@ -46,16 +55,17 @@ const formatDate = (date) => {
 
         <div class="d-flex justify-space-between align-center">
           <v-btn
-            :to="`/blog/${path.split('/')[2]}`"
+            :to="`/blog`"
             prepend-icon="mdi-arrow-left"
             variant="text"
             color="primary"
             class="font-weight-bold"
           >
-            Back to {{ path.split('/')[2] }}
+            Back to blog
           </v-btn>
 
           <v-btn
+            v-if="false"
             to="/blog"
             append-icon="mdi-post"
             variant="text"
@@ -73,6 +83,7 @@ const formatDate = (date) => {
 <style>
 .blog-wrapper {
   min-height: calc(100vh - 64px);
+  padding-top: 64px;
   width: 100%;
   padding: 1px;
   background: #f8fafc;
@@ -99,71 +110,72 @@ const formatDate = (date) => {
 }
 
 
-/* Typography improvements for the content */
-.article-content {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.7;
-  color: rgba(0, 0, 0, 0.85);
+/* Typography improvements for MDC Prose components */
+/* Direct element targeting for content */
+.article-container p {
+  margin: 1.5rem 0 !important;
+  font-size: 1.125rem !important;
+  line-height: 1.8 !important;
+  color: rgba(0, 0, 0, 0.85) !important;
 }
 
-.article-content h2 {
-  font-size: 1.75rem;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  color: rgba(0, 0, 0, 0.9);
+.article-container h1 {
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  margin: 3rem 0 2rem 0 !important;
+  color: rgb(var(--v-theme-primary-darken-1)) !important;
+  cursor: default !important;
+  pointer-events: none !important;
 }
 
-.article-content h3 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-  color: rgba(0, 0, 0, 0.9);
+.article-container h2 {
+  font-size: 1.875rem !important;
+  font-weight: 600 !important;
+  margin: 3.5rem 0 1.5rem 0 !important;
+  color: rgb(var(--v-theme-primary-darken-1)) !important;
+  cursor: default !important;
+  pointer-events: none !important;
 }
 
-.article-content p {
-  margin-bottom: 1.5rem;
-  font-size: 1.125rem;
+.article-container h3 {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin: 2.5rem 0 1.25rem 0 !important;
+  color: rgb(var(--v-theme-primary-darken-1)) !important;
+  cursor: default !important;
+  pointer-events: none !important;
 }
 
-.article-content ul,
-.article-content ol {
-  margin-bottom: 1.5rem;
-  padding-left: 1.5rem;
+/* To prevent any anchor behavior in headings */
+.article-container h1 a,
+.article-container h2 a,
+.article-container h3 a {
+  color: inherit !important;
+  text-decoration: none !important;
+  pointer-events: none !important;
+  cursor: default !important;
 }
 
-.article-content li {
-  margin-bottom: 0.5rem;
+.article-container ul,
+.article-container ol {
+  margin: 1.5rem 0 !important;
+  padding-left: 2.5rem !important;
 }
 
-.article-content img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 2rem 0;
+.article-container li {
+  margin: 0.75rem 0 !important;
+  padding-left: 0.5rem !important;
 }
 
-.article-content pre {
-  background: #f8fafc;
-  padding: 1rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  margin: 1.5rem 0;
-}
 
-.article-content code {
-  background: #f1f5f9;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
 
-.article-content blockquote {
-  border-left: 4px solid #00B3C5;
-  margin: 1.5rem 0;
-  padding: 0.5rem 0 0.5rem 1.5rem;
-  background: #f0f4f8;
-  border-radius: 0 8px 8px 0;
-  font-style: italic;
+.article-container blockquote {
+  margin: 2rem 0 !important;
+  padding: 1rem 1.5rem !important;
+  border-left: 4px solid var(--v-primary-base) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+  font-style: italic !important;
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Responsive adjustments */

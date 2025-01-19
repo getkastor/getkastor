@@ -21,7 +21,7 @@ const formatDate = (date) => {
   <div class="blog-wrapper">
     <v-container class="main-content">
       <!-- Header Section -->
-      <div class="header-content py-16">
+      <div class="header-content py-16 mt-16">
         <blogBreadcrumb />
 
         <h1 class="text-h2 mb-4 text-capitalize">{{ category }}</h1>
@@ -37,7 +37,7 @@ const formatDate = (date) => {
           :key="article._path"
           class="article-item pa-6 mb-4"
         >
-          <NuxtLink 
+          <NuxtLink
             :to="article._path"
             class="text-decoration-none"
           >
@@ -69,6 +69,7 @@ const formatDate = (date) => {
 <style>
 .blog-wrapper {
   min-height: calc(100vh - 64px);
+  padding-top: 64px;
   width: 100%;
   padding: 1px;
   background: #f8fafc;
