@@ -3,12 +3,17 @@
 // Flag to change later
 const showCategories = computed(() => false)
 
-const { data: articles } = await useAsyncData('articles', () => queryContent('blog').find(), {
-  // Add cache options
-  watch: true,
-  // Refresh on route change
-  refresh: true
-});
+const { data: articles } = await useAsyncData('articles', () => 
+  queryContent('blog')
+    .sort({ date: -1 }) // Sort by date in descending order
+    .find(), 
+  {
+    // Add cache options
+    watch: true,
+    // Refresh on route change
+    refresh: true
+  }
+);
 const categories = [...new Set(articles.value.map(article => article._path.split('/')[2]))]
 
 const formatDate = (date) => {
@@ -19,6 +24,8 @@ const formatDate = (date) => {
   })
 }
 
+const blogDescription = `Tips and tutorials on using Kastor to generate social posts and marketing content that sound like YOU and help grow your audience and your business.
+Real talk about social media, writing, and building an authentic online presence.`;
 </script>
 
 <template>
@@ -26,9 +33,9 @@ const formatDate = (date) => {
     <v-container class="main-content">
       <!-- Header Section -->
       <div class="header-content py-16">
-        <h1 class="text-h2 mb-4">Blog</h1>
-        <p class="text-subtitle-1 text-medium-emphasis">
-          Explore our latest articles, tutorials, and insights
+        <h1 class="text-h2 mb-4">The Kastor Blog</h1>
+        <p class="text-subtitle-1 text-medium-emphasis blog-description">
+          {{ blogDescription }}
         </p>
 
         <!-- Categories -->
@@ -98,6 +105,10 @@ const formatDate = (date) => {
   padding: 1px;
   background: #f8fafc;
   /* Light gray with slight blue tint */
+}
+
+.blog-description {
+  white-space: pre-wrap;
 }
 
 .header-content,
