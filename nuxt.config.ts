@@ -29,7 +29,23 @@ export default defineNuxtConfig({
         changefreq: 'weekly',
         priority: 1
       }
-    }
+    },
+    '/blog': {
+      prerender: true,
+      sitemap: {
+        lastmod: '2025-01-19',
+        changefreq: 'weekly',
+        priority: 0.8
+      }
+    },
+    '/blog/kastor/kastor-beta-live': {
+      prerender: true,
+      sitemap: {
+        lastmod: '2025-01-19',
+        changefreq: 'monthly',
+        priority: 0.5
+      }
+    },
   },
   app: {
     baseURL: '/',
