@@ -2,7 +2,7 @@
 title: Kastor's Beta is Live!
 description: Learn why we built Kastor, and how you can use it to create authentic social posts, blogs, and marketing content in minutes. Join the beta today.
 metaDescription: Create authentic social posts, blogs, and marketing content that sounds like you or your brand - in minutes instead of hours. Learn why we built it, and join the beta today.
-date: 2024-01-18
+date: 2024-01-19
 ---
 
 # Introducing Kastor: social media and marketing content that sounds like you
