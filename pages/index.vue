@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
 
+definePageMeta({
+  layout: 'landingpage',
+})
+
 useSeoMeta({
   title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
   ogTitle: 'Instant, Authentic Social Media & Blog Content',

@@ -37,10 +37,15 @@
 ├── LANDING_PAGE_STRUCTURE.md
 ├── README.md
 ├── app.vue
+├── assets/
+│   └── css/
+│       └── global.css
 ├── components/
 │   ├── BlogCard.vue
 │   ├── BlogList.vue
 │   ├── NavBar.vue
+│   ├── blog/
+│   │   └── breadcrumb.vue
 │   └── landingpage/
 │       ├── Benefits.vue
 │       ├── CTASection.vue
@@ -55,19 +60,21 @@
 │   └── blog/
 │       ├── content-marketing/
 │       │   └── testPost2.md
+│       ├── kastor/
+│       │   └── testPost.md
 │       └── tutorials/
 │           └── testPost.md
-├── draft-pages/
-│   └── blog/
-│       ├── [category]/
-│       │   ├── [...slug].vue
-│       │   └── index.vue
-│       └── index.vue
 ├── layouts/
-│   └── default.vue
+│   ├── default.vue
+│   └── landingpage.vue
 ├── nuxt.config.ts
 ├── package.json
 ├── pages/
+│   ├── blog/
+│   │   ├── [category]/
+│   │   │   ├── [...slug].vue
+│   │   │   └── index.vue
+│   │   └── index.vue
 │   └── index.vue
 ├── plugins/
 │   └── vuetify.ts
@@ -78,6 +85,7 @@
 │   ├── Kastor_square_light_bg.svg
 │   ├── Kastor_wordmark_dark_bg.svg
 │   ├── Kastor_wordmark_light_bg.svg
+│   ├── OG_image.png
 │   ├── campaign-creation.png
 │   ├── content-brief.png
 │   ├── content-type.png
@@ -101,243 +109,13 @@
   <fileContents>
     
           <file>
-            <path>app.vue</path>
-            <content><![CDATA[<template>
-  <NuxtLayout>
-    <v-app>
-      <NuxtPage />
-    </v-app>
-  </NuxtLayout>
-</template>
-
-<script setup>
-// Add GTM script to head
-useHead({
-  script: [
-    {
-      children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MTWJQJ5V');`,
-      tagPriority: 'high'
-    }
-  ],
-  noscript: [
-    {
-      children: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MTWJQJ5V"
-height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
-      tagPosition: 'bodyOpen'
-    }
-  ]
-})
-
-</script>
-]]></content>
-          </file>
-        
-          <file>
-            <path>components/landingpage/HowItWorks.vue</path>
-            <content><![CDATA[<!-- components/HowItWorks.vue -->
-<script setup lang="ts">
-
-interface Steps {
-  overline: string;
-  title: string;
-  details: string[];
-  image: string;
-}
-
-// How it works
-const steps: Steps[] = [
-  {
-    overline: '5-minute, one-time setup',
-    title: 'Describe your style',
-    details: [
-      'Create a voice (or several) to illustrate your or your brand\'s style',
-      'Share example content',
-      'Tell Kastor your do\'s and don\'ts'
-    ],
-    image: '/voice-creation.png'
-  },
-  {
-    overline: 'Any content, any time',
-    title: 'Create a brief',
-    details: [
-      'Choose your content type and voice',
-      'Pick your goal: new topics, product promotion, content recycling...',
-      'Add as much guidance as you want (or keep it minimal)'
-    ],
-    image: '/content-brief.png'
-  },
-  {
-    overline: 'Instant results',
-    title: 'Get your content in seconds',
-    details: [
-      'Choose from multiple options',
-      'Fine-tune to perfection or publish instantly',
-      'Get more content whenever you want'
-    ],
-    image: '/tweet-creation.png'
-  },
-  {
-    overline: 'One idea, endless content',
-    title: 'Orchestrate full campaigns',
-    details: [
-      'Set the campaign goal and description',
-      'Let Kastor suggest ideas and briefs for each asset',
-      'Tweak if needed, and generate all assets at once',
-    ],
-    image: '/campaign-creation.png'
-  }
-];
-</script>
-
-<template>
-
-  <v-container
-    fluid
-    class="py-16"
-  >
-    <div class="main-container">
-      <h2 class="text-h3 text-center font-weight-black mb-12">How it Works</h2>
-      <div
-        v-for="(type, index) in steps"
-        :key="type.title"
-        class="content-row"
-      >
-        <div class="content-text">
-          <h4 class="font-weight-bold text-overline mb-2 text-secondary-darken-1">{{ type.overline }}</h4>
-          <h3 class="text-h4 font-weight-bold mb-4">{{ type.title }}</h3>
-          <div class="checklist">
-            <div
-              v-for="(detail, i) in type.details"
-              :key="i"
-              class="checklist-item"
-            >
-              <v-icon
-                color="tertiary"
-                size="small"
-                class="checklist-icon"
-              >mdi-check-circle</v-icon>
-              <span class="checklist-text">{{ detail }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="content-image">
-          <v-img
-            :src="type.image"
-            cover
-            class="rounded-lg"
-          ></v-img>
-        </div>
-      </div>
-    </div>
-  </v-container>
-
-</template>
-
-<style scoped>
-/* Content card styles */
-.content-row {
-  display: flex;
-  gap: 3rem;
-  margin-bottom: 6rem;
-  align-items: center;
-}
-
-.content-row:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-/* no bottom margin for last content-row */
-.content-row:last-child {
-  margin-bottom: 0;
-}
-
-.text-overline {
-  font-size: 0.875rem !important;
-}
-
-.content-text {
-  flex: 0 0 30%;
-}
-
-.content-image {
-  flex: 0 0 70%;
-  max-width: 70%;
-  /* This ensures the image container doesn't overflow */
-}
-
-.checklist {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.checklist-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.checklist-icon {
-  margin-top: 4px;
-  /* Aligns icon with first line of text */
-}
-
-.checklist-text {
-  line-height: 1.4;
-  flex: 1;
-}
-
-@media (max-width: 959px) {
-  .content-row {
-    flex-direction: column !important;
-    margin-bottom: 4rem;
-    gap: 1rem;
-  }
-
-  .content-text {
-    flex: 0 0 auto;
-    width: 100%;
-    order: -1;
-    padding: 1rem;
-  }
-
-  .content-image {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 100%;
-  }
-}
-</style>
-]]></content>
-          </file>
-        
-          <file>
             <path>layouts/default.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-import { ref } from 'vue'
-import { AccessRequestType } from '~/types/accessRequest'
-
-const showBetaModal = ref(false)
-const showWaitlistModal = ref(false)
-
-// Provide both the state and the methods to open modals
-provide('showBetaModal', showBetaModal)
-provide('showWaitlistModal', showWaitlistModal)
-provide('openBetaModal', () => showBetaModal.value = true)
-provide('openWaitlistModal', () => showWaitlistModal.value = true)
-</script>
-
-
-<template>
+            <content><![CDATA[<template>
   <v-app>
-    <NavBar />
+    <NavBar :isBlog="true"/>
 
     <v-main>
-      <slot />
+        <slot />
     </v-main>
 
     <v-footer class="bg-primary">
@@ -347,383 +125,290 @@ provide('openWaitlistModal', () => showWaitlistModal.value = true)
         </div>
       </v-container>
     </v-footer>
-    <!-- Early Access Modals -->
-    <landingpageEarlyAccessModal
-      v-model="showBetaModal"
-      :type="AccessRequestType.beta_access"
-    />
-    <landingpageEarlyAccessModal
-      v-model="showWaitlistModal"
-      :type="AccessRequestType.ga_waitlist"
-    />
   </v-app>
 </template>
 
+
 <style>
-.main-container {
-  max-width: 1200px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 100%;
-  padding: 0 1rem;
-}
-
-@media (max-width: 600px) {
-  .main-container {
-    padding: 0 0.5rem;
-  }
-}
-
 .v-main {
-  padding-top: 0px !important;
+  padding-top: 68px !important;
   font-size: 1.125rem;
 }
 
-.v-container main-container {
-  max-width: 1200px;
+a {
+  color: rgb(var(--v-theme-secondary-darken-1)) !important;
 }
 </style>]]></content>
           </file>
         
           <file>
-            <path>pages/index.vue</path>
-            <content><![CDATA[<script setup lang="ts">
-import { ref, onMounted, inject } from 'vue';
+            <path>pages/blog/[category]/[...slug].vue</path>
+            <content><![CDATA[<script setup>
+const { path } = useRoute()
+const { data } = await useAsyncData(`content-${path}`, () => queryContent(path).findOne())
 
-useSeoMeta({
-  title: 'Kastor AI | Instant, Authentic Social Media & Blog Content',
-  ogTitle: 'Instant, Authentic Social Media & Blog Content',
-  description: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
-  ogDescription: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
-  // ogImage: 'https://example.com/image.png',
-  // twitterCard: 'summary_large_image',
-})
-
-
-// Interfaces
-
-interface UserType {
-  title: string;
-  benefits: string[];
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
 }
-
-// Inject Modal state functions
-const openBetaModal = inject('openBetaModal')
-const openWaitlistModal = inject('openWaitlistModal')
-
-
-// Hero section rotating content
-const rotatingContent = ['Tweets', 'LinkedIn Posts', 'Blog Posts', 'Marketing Emails'];
-const currentTypeIndex = ref(0);
-
-// User types data
-const userTypes: UserType[] = [
-  {
-    title: 'Creators & Solopreneurs',
-    benefits: [
-      'Create content for social, email, and blog without the time sink',
-      'Keep your authentic voice while growing your following',
-      'Get real marketing results without hiring a team'
-    ]
-  },
-  {
-    title: 'Marketing Teams',
-    benefits: [
-      'Get everyone writing in your brand\'s voice from day one',
-      'Keep quality high even during product launches and events',
-      'Scale content creation without scaling your team'
-    ]
-  }
-];
-
-// Rotate through content types
-onMounted(() => {
-  setInterval(() => {
-    currentTypeIndex.value = (currentTypeIndex.value + 1) % rotatingContent.length;
-  }, 3000);
-});
 </script>
 
 <template>
-  <div>
-    <!-- Hero Section -->
-    <v-container
-      fluid
-      class="hero-section"
-    >
-      <div class="hero-background"></div>
-      <div class="hero-content main-container text-center">
-        <h1 class="hero-title">
-          <div class="rotating-container">
-            <transition
-              name="fade-slide"
-              mode="out-in"
-            >
-              <div
-                :key="currentTypeIndex"
-                class="gradient-text rotating-text text-secondary"
-              >
-                {{ rotatingContent[currentTypeIndex] }}
-              </div>
-            </transition>
-          </div>
-          <div class="text-center mt-2">That Sound Like You</div>
-        </h1>
-        <h2 class="text-h4 font-weight-regular white--text mt-12 mb-16 hero-subtitle">
-          From idea to authentic posts in seconds. <br> Get results across Twitter, LinkedIn, SEO and email<br>in just
-          minutes per week.
-        </h2>
-        <div class="d-flex flex-wrap justify-center ga-4 hero-cta">
+  <div class="blog-wrapper">
+    <v-container>
+      <!-- Header Section -->
+      <div class="header-content py-8">
+        <blogBreadcrumb :current-title="data?.title"/>
+
+        <div
+          v-if="data"
+          class="post-header"
+        >
+          <h1 class="text-h2 mb-4">{{ data.title }}</h1>
+
+          <p class="text-subtitle-1 text-medium-emphasis mb-8">
+            {{ formatDate(data.date) }}
+          </p>
+
+          <v-divider class="mb-8"></v-divider>
+        </div>
+      </div>
+
+      <!-- Article Content -->
+      <div
+        v-if="data"
+        class="article-container"
+      >
+        <ContentRenderer :value="data" />
+      </div>
+
+      <!-- Navigation Footer -->
+      <div class="navigation-footer mt-16 mb-8">
+        <v-divider class="mb-8"></v-divider>
+
+        <div class="d-flex justify-space-between align-center">
           <v-btn
-            size="x-large"
-            color="secondary"
-            elevation="4"
-            class="text-button-large beta"
-            :ripple="false"
-            @click="openBetaModal"
+            :to="`/blog/${path.split('/')[2]}`"
+            prepend-icon="mdi-arrow-left"
+            variant="text"
+            color="primary"
+            class="font-weight-bold"
           >
-            <v-icon start>mdi-rocket-launch</v-icon>
-            Join the Beta
+            Back to {{ path.split('/')[2] }}
           </v-btn>
+
           <v-btn
-            size="x-large"
-            variant="flat"
-            class="text-button-large waitlist-button waitlist"
-            :ripple="false"
-            @click="openWaitlistModal"
+            to="/blog"
+            append-icon="mdi-post"
+            variant="text"
+            color="primary"
+            class="font-weight-bold"
           >
-            <v-icon start>mdi-email-outline</v-icon>
-            Join Waitlist
+            All Posts
           </v-btn>
         </div>
       </div>
     </v-container>
-
-    <landingpageBenefits />
-    <landingpageDemoVideo />
-    <landingpageScrollCTA />
-    <landingpageHowItWorks />
-    <landingpageScrollCTA />
-    <landingpageContentTypes />
-
-
-
-    <!-- Who Uses Kastor -->
-    <v-container
-      fluid
-      class="py-16"
-    >
-      <div class="main-container">
-        <h2 class="text-h3 text-center font-weight-black mb-12">Who Uses Kastor</h2>
-        <v-row>
-          <v-col
-            v-for="user in userTypes"
-            :key="user.title"
-            cols="12"
-            md="6"
-          >
-            <v-card class="h-100">
-              <v-card-item>
-                <h3 class="text-h5 font-weight-bold mb-4">{{ user.title }}</h3>
-                <v-list>
-                  <v-list-item
-                    v-for="(benefit, index) in user.benefits"
-                    :key="index"
-                    :title="benefit"
-                    density="comfortable"
-                  >
-                    <template v-slot:prepend>
-                      <v-icon
-                        color="secondary"
-                        size="small"
-                      >mdi-check-circle</v-icon>
-                    </template>
-                  </v-list-item>
-                </v-list>
-              </v-card-item>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
-    </v-container>
-
-    <landingpageCTASection />
   </div>
 </template>
 
-<style scoped>
-.hero-section {
-  position: relative;
-  padding: 200px 0 120px 0;
-  background: linear-gradient(135deg,
-      rgb(138, 220, 235),
-      rgb(178, 242, 245));
-  overflow: hidden;
+<style>
+.blog-wrapper {
+  min-height: calc(100vh - 64px);
+  width: 100%;
+  padding: 1px;
+  background: #f8fafc;
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* Softer overlays with very light colors */
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(224, 247, 250, 0.7) 0%, transparent 50%),
-    radial-gradient(circle at 90% 90%, rgba(247, 253, 254, 0.7) 0%, transparent 50%);
-  z-index: 1;
+/* Header and footer max width */
+.header-content,
+.navigation-footer {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  color: rgb(0, 66, 77);
-}
-
-
-.hero-title-wrapper {
-  position: relative;
-  height: 1.2em;
-  margin-bottom: 0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-title-line {
-  margin-top: 0.2em;
-}
-
-.fixed-text {
-  position: absolute;
-  left: 50%;
-  transform: translateX(calc(-50% - 140px));
-  /* Half of rotating-text-container width */
-}
-
-.hero-cta .v-btn.v-btn--outlined {
-  border-color: rgb(0, 179, 197);
-  /* primary */
-  color: rgb(0, 179, 197);
-  /* primary */
-}
-
-.hero-subtitle {
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  opacity: 0.9;
-  color: rgb(0, 93, 107);
-  line-height: 1.5;
-}
-
-/* Rotating text animations */
-.rotating-container {
-  height: 1.3em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.2em 0;
-}
-
-.rotating-text {
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-
-.text-button-large {
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  text-transform: none;
-  font-weight: 700;
-  padding: 0 32px;
-  min-width: 250px;
-}
-
-.waitlist-button {
-  color: rgb(var(--v-theme-secondary)) !important;
-  border: 2px solid rgb(var(--v-theme-secondary)) !important;
-  background-color: white !important;
-}
-
-ul.list-none {
-  list-style: none;
+/* Article container and content styling */
+.article-container {
+  max-width: 900px;
+  margin: 0 auto;
   padding: 0;
 }
 
-/* Smooth fade-slide transition */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.5s ease;
+.post-header h1 {
+  color: rgba(0, 0, 0, 0.95);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+  line-height: 1.2;
 }
 
-.fade-slide-enter-from {
-  opacity: 0;
-  transform: translateY(-20px);
+
+/* Typography improvements for the content */
+.article-content {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.7;
+  color: rgba(0, 0, 0, 0.85);
 }
 
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(20px);
+.article-content h2 {
+  font-size: 1.75rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: rgba(0, 0, 0, 0.9);
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
+.article-content h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: rgba(0, 0, 0, 0.9);
+}
 
-  50% {
-    transform: translateY(-10px);
-  }
+.article-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.125rem;
+}
 
-  100% {
-    transform: translateY(0px);
-  }
+.article-content ul,
+.article-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.article-content li {
+  margin-bottom: 0.5rem;
+}
+
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.article-content pre {
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.article-content code {
+  background: #f1f5f9;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.article-content blockquote {
+  border-left: 4px solid #00B3C5;
+  margin: 1.5rem 0;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  background: #f0f4f8;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
 }
 
 /* Responsive adjustments */
-@media (max-width: 700px) {
-
-  .hero-content {
-    padding-left: 20px;
-    padding-right: 20px;
+@media (max-width: 600px) {
+  .article-content {
+    padding: 1.5rem;
   }
 
-  .hero-title {
-    font-size: clamp(2rem, 4vw, 3rem);
+  .post-header h1 {
+    font-size: 2rem;
   }
-
-  .hero-subtitle {
-    font-size: 1.3rem !important;
-  }
-
-
-  .hero-title-wrapper {
-    height: 2.4em;
-    /* Double height for stacked layout */
-  }
-
-  .fixed-text {
-    top: 0;
-    transform: translateX(-50%);
-    /* Center align */
-  }
-
-  .rotating-text-container {
-    min-width: 200px;
-    top: 1.2em;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-
 }
 </style>
+]]></content>
+          </file>
+        
+          <file>
+            <path>plugins/vuetify.ts</path>
+            <content><![CDATA[// import this after install `@mdi/font` package
+import '@mdi/font/css/materialdesignicons.css'
+
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import { defineNuxtPlugin } from '#app'
+
+const myCustomLightTheme = {
+  dark: false,
+  colors: {
+    background: '#FFFFFF',
+    surface: '#FFFFFF',
+    'surface-bright': '#FFFFFF',
+    'surface-light': '#F5F7F8',    // Slightly blue-tinted light gray for subtle depth
+    'surface-variant': '#EC407A',   // pink for tooltips
+    'on-surface-variant': '#FFFFFF', // white for text on pink surfaces
+    'surface-dark': '#2D3436',      // Charcoal for navbars and navdrawers
+
+    // Primary (Teal) family
+    'primary-lighten-4': '#F7FDFE',
+    'primary-lighten-3': '#E0F7FA',
+    'primary-lighten-2': '#80DEEB',
+    'primary-lighten-1': '#26C6DA',
+    'primary': '#00B3C5',
+    'primary-darken-1': '#007A8A',
+    'primary-darken-2': '#005D6B',
+    'primary-darken-3': '#00424D',
+    'primary-darken-4': '#002A33',
+
+    // Secondary (Pink) family
+    'secondary-lighten-3': '#FCE4EC',  // Very pale pink
+    'secondary-lighten-2': '#FFA4C1',
+    'secondary-lighten-1': '#FF719B',
+    'secondary': '#EC407A',
+    'secondary-darken-1': '#D81B60',
+    'secondary-darken-2': '#B0003A',
+
+    // Tertiary (Yellow) family
+    'tertiary-lighten-3': '#FFF8E1',  // Very pale yellow
+    'tertiary-lighten-2': '#FFE082',
+    'tertiary-lighten-1': '#FFD54F',
+    'tertiary': '#FFB300',
+    'tertiary-darken-1': '#FB8C00',
+    'tertiary-darken-2': '#EF6C00',
+
+    error: '#FF4D4D',     
+    info: '#0099E6',      
+    success: '#00B894',   
+    warning: '#FF9800'   
+  },
+  variables: {
+    'border-color': '#000000',
+    'border-opacity': 0.12,
+    'high-emphasis-opacity': 0.87,
+    'medium-emphasis-opacity': 0.60,
+    'disabled-opacity': 0.38,
+    'idle-opacity': 0.04,
+    'hover-opacity': 0.04,
+    'focus-opacity': 0.12,
+    'selected-opacity': 0.08,
+    'activated-opacity': 0.12,
+    'pressed-opacity': 0.12,
+    'dragged-opacity': 0.08,
+    'theme-kbd': '#212529',
+    'theme-on-kbd': '#FFFFFF',
+    'theme-code': '#F5F5F5',
+    'theme-on-code': '#000000',
+  }
+}
+
+export default defineNuxtPlugin((app) => {
+  const vuetify = createVuetify({
+    ssr: true,
+    theme: {
+      defaultTheme: 'myCustomLightTheme',
+      themes: {
+        myCustomLightTheme,
+      },
+    },
+  })
+  app.vueApp.use(vuetify)
+})
 ]]></content>
           </file>
         

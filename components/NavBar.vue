@@ -2,6 +2,14 @@
 import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
 import { useDisplay } from 'vuetify'
 
+// define prop optional:isblog
+const props = defineProps({
+  isBlog: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const isHydrated = ref(false)
 
 const isScrolled = ref(false)
@@ -11,8 +19,8 @@ const drawer = ref(false)
 // Inject modal states and methods
 const showBetaModal = inject('showBetaModal', ref(false))
 const showWaitlistModal = inject('showWaitlistModal', ref(false))
-const openBetaModal = inject('openBetaModal', () => {})
-const openWaitlistModal = inject('openWaitlistModal', () => {})
+const openBetaModal = inject('openBetaModal', () => { })
+const openWaitlistModal = inject('openWaitlistModal', () => { })
 
 
 const { width } = useDisplay()
@@ -40,7 +48,7 @@ const handleScroll = () => {
 
 const updateBackground = () => {
   // Show white background if either scrolled down or any modal is open
-  if (isAnyModalOpen.value || isScrolled.value) {
+  if (isAnyModalOpen.value || isScrolled.value || props.isBlog) {
     showWhiteBg.value = true
   } else {
     // Only hide background if we're at the top and no modal is open
@@ -56,6 +64,7 @@ watch(isAnyModalOpen, () => {
 // Add scroll event listener when component is mounted
 onMounted(() => {
   handleScroll()
+  updateBackground()
   // Small delay to ensure all Vuetify styles are applied
   setTimeout(() => {
     isHydrated.value = true
@@ -101,7 +110,16 @@ onUnmounted(() => {
       ></v-btn>
     </div>
 
-    <v-list>
+    <v-list class="mt-6">
+      <v-list-item class="blog-list-item">
+        <NuxtLink
+          to="/blog"
+          class="text-decoration-none blog-link d-block text-center py-2"
+          @click="drawer = false"
+        >
+          BLOG
+        </NuxtLink>
+      </v-list-item>
       <v-list-item>
         <v-btn
           block
@@ -134,12 +152,12 @@ onUnmounted(() => {
 
 
   <v-app-bar
-    :elevation="isScrolled ? 1 : 0"
+    :elevation="isScrolled || isBlog ? 1 : 0"
     scroll-behavior="hide"
     scroll-threshold="100"
     :class="{
-      'bg-transparent': !showWhiteBg,
-      'bg-white': showWhiteBg,
+      'bg-transparent': !showWhiteBg && !isBlog,
+      'bg-white': showWhiteBg || isBlog,
       'bg-transition': true,
       'navbar-ready': isHydrated
     }"
@@ -162,7 +180,13 @@ onUnmounted(() => {
       <v-spacer></v-spacer>
 
       <!-- Desktop buttons -->
-      <div class="d-none d-md-flex button-container">
+      <div class="d-none d-md-flex button-container align-center">
+        <NuxtLink
+          to="/blog"
+          class="text-decoration-none blog-link mr-8"
+        >
+          BLOG
+        </NuxtLink>
         <v-btn
           color="secondary"
           class="navButton beta"
@@ -267,6 +291,21 @@ onUnmounted(() => {
   background: white;
   z-index: 1;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.blog-link {
+  color: rgba(var(--v-theme-surface-dark)) !important;
+  font-weight: 700 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.blog-link:hover {
+  opacity: 0.8;
+}
+
+/* For mobile */
+.v-list-item .blog-link {
+  font-size: 1rem;
 }
 
 /* Responsive adjustments */
