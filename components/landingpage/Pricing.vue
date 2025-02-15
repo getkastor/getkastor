@@ -102,6 +102,9 @@ import { ref } from 'vue';
 
 const isAnnual = ref(true);
 
+const runtimeConfig = useRuntimeConfig()
+const SITE_URL = runtimeConfig.public.siteURL
+
 const plans = [
   {
     name: 'Creator',
@@ -150,8 +153,15 @@ const selectPlan = (plan) => {
     return;
   }
   
-  // Handle trial start
-  console.log(`Starting trial for ${plan.name} plan`);
+  // Construct register URL with plan parameters
+  const params = new URLSearchParams({
+    plan: plan.name.toLowerCase(),
+    billing: isAnnual.value ? 'yearly' : 'monthly',
+    price: isAnnual.value ? plan.yearlyPrice.toString() : plan.monthlyPrice.toString()
+  });
+  
+  // Redirect to your app's register page with parameters
+  window.location.href = `${SITE_URL}register?${params.toString()}`;
 };
 </script>
 
