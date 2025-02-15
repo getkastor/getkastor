@@ -162,6 +162,7 @@ onMounted(() => {
       </div>
     </v-container>
 
+    <landingpagePricing /> 
     <landingpageCTASection />
   </div>
 </template>

@@ -1,0 +1,227 @@
+<!-- components/landingpage/Pricing.vue -->
+<template>
+  <v-container fluid class="pricing-section py-16">
+    <div class="main-container">
+      <div class="text-center mb-12">
+        <h2 class="text-h3 font-weight-black">Start Your Free Trial</h2>
+        <p class="text-subtitle text-medium-emphasis mt-4">
+          7-day free trial. No credit card required
+        </p>
+      </div>
+      
+      <!-- Billing Toggle -->
+      <div class="d-flex justify-center align-center mb-16">
+        <span :class="{ 'text-primary font-weight-bold': !isAnnual }" @click="isAnnual = false">
+          Monthly
+        </span>
+        <v-switch
+          v-model="isAnnual"
+          class="mx-4"
+          color="primary"
+          hide-details
+        ></v-switch>
+        <span :class="{ 'text-primary font-weight-bold': isAnnual }" @click="isAnnual = true">
+          Yearly (Save 20%)
+        </span>
+      </div>
+
+      <!-- Pricing Cards -->
+      <v-row justify="center" align="stretch">
+        <v-col 
+          v-for="plan in plans" 
+          :key="plan.name"
+          cols="12" 
+          md="4"
+          class="d-flex"
+        >
+          <v-card
+            :class="{'popular': plan.popular}"
+            class="w-100 pricing-card pt-4"
+            elevation="4"
+          >
+            <v-card-item>
+              <div class="text-center pricing-header">
+                <h3 class="text-h4 font-weight-bold mb-4">{{ plan.name }}</h3>
+                <div class="pricing-content">
+                  <template v-if="plan.name !== 'Enterprise'">
+                    <div class="text-h3 font-weight-bold mb-2">
+                      ${{ isAnnual ? plan.yearlyPrice : plan.monthlyPrice }}
+                      <span class="text-body-1 font-weight-regular">/mo</span>
+                    </div>
+                    <div class="text-body-2 text-medium-emphasis">
+                      {{ isAnnual ? 'Billed annually' : 'Billed monthly' }}
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div class="enterprise-pricing mb-2 d-flex align-center justify-center">
+                      <v-icon size="x-large" color="primary" class="mr-2">mdi-office-building-cog</v-icon>
+                      <span class="custom-pricing-text">Custom</span>
+                    </div>
+                    <div class="text-body-2 text-medium-emphasis">
+                      Pricing tailored to your needs
+                    </div>
+                  </template>
+                </div>
+
+                <v-btn
+                  block
+                  :color="plan.name === 'Enterprise' ? 'secondary' : 'primary'"
+                  size="x-large"
+                  class="mt-8"
+                  :class="plan.name.toLowerCase()"
+                  @click="selectPlan(plan)"
+                >
+                  {{ plan.name === 'Enterprise' ? 'Contact Us' : 'Start Free Trial' }}
+                </v-btn>
+              </div>
+
+              <v-divider class="my-6"></v-divider>
+
+              <v-list density="comfortable" class="feature-list">
+                <v-list-item
+                  v-for="(feature, index) in plan.features"
+                  :key="index"
+                  class="feature-item"
+                >
+                  <template v-slot:prepend>
+                    <v-icon color="primary" size="small">mdi-check-circle</v-icon>
+                  </template>
+                  <v-list-item-title>{{ feature }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-card-item>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
+  </v-container>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const isAnnual = ref(true);
+
+const plans = [
+  {
+    name: 'Creator',
+    monthlyPrice: 49,
+    yearlyPrice: 39,
+    features: [
+      'Create unlimited content',
+      '1 user seat',
+      '1 Voice',
+      '3 campaigns / month',
+      'Email support',
+    ]
+  },
+  {
+    name: 'Team',
+    popular: true,
+    monthlyPrice: 99,
+    yearlyPrice: 79,
+    features: [
+      'Create unlimited content',
+      '3 user seats included',
+      '3 Voices',
+      '10 campaigns / month',
+      'Priority support',
+    ]
+  },
+  {
+    name: 'Enterprise',
+    monthlyPrice: null,
+    yearlyPrice: null,
+    features: [
+      'Create unlimited content',
+      'Custom user seats',
+      'Unlimited voices',
+      'Unlimited campaigns',
+      'Priority 24/7 support',
+      'Custom onboarding',
+    ]
+  }
+];
+
+const selectPlan = (plan) => {
+  if (plan.name === 'Enterprise') {
+    // Handle enterprise contact form/modal
+    console.log('Enterprise contact')
+    return;
+  }
+  
+  // Handle trial start
+  console.log(`Starting trial for ${plan.name} plan`);
+};
+</script>
+
+<style scoped>
+.pricing-section {
+  background: linear-gradient(135deg, rgb(248, 250, 252) 0%, rgb(255, 255, 255) 100%);
+}
+
+.pricing-card {
+  position: relative;
+  border-radius: 16px;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+}
+
+.popular {
+  border: 2px solid rgb(var(--v-theme-primary));
+}
+
+.pricing-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.enterprise-pricing {
+  height: 60px;
+  align-items: center;
+}
+
+.custom-pricing-text {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.feature-list {
+  background: transparent;
+}
+
+.feature-item {
+  padding-left: 0;
+}
+
+/* Switch styling */
+.v-switch {
+  margin-top: 8px;
+}
+
+@media (max-width: 960px) {
+  .pricing-card {
+    margin-bottom: 20px;
+  }
+  
+  .pricing-content {
+    min-height: auto;
+  }
+  
+  .enterprise-pricing {
+    height: auto;
+  }
+}
+</style>
