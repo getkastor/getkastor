@@ -157,7 +157,6 @@ const selectPlan = (plan) => {
   const params = new URLSearchParams({
     plan: plan.name.toLowerCase(),
     billing: isAnnual.value ? 'yearly' : 'monthly',
-    price: isAnnual.value ? plan.yearlyPrice.toString() : plan.monthlyPrice.toString()
   });
   
   // Redirect to your app's register page with parameters
