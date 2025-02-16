@@ -1,6 +1,9 @@
 <!-- components/landingpage/Pricing.vue -->
 <template>
-  <v-container fluid class="pricing-section py-16">
+  <v-container
+    fluid
+    class="pricing-section py-16"
+  >
     <div class="main-container">
       <div class="text-center mb-12">
         <h2 class="text-h3 font-weight-black">Start Your Free Trial</h2>
@@ -8,10 +11,13 @@
           7-day free trial. No credit card required
         </p>
       </div>
-      
+
       <!-- Billing Toggle -->
       <div class="d-flex justify-center align-center mb-16">
-        <span :class="{ 'text-primary font-weight-bold': !isAnnual }" @click="isAnnual = false">
+        <span
+          :class="{ 'text-primary font-weight-bold': !isAnnual }"
+          @click="isAnnual = false"
+        >
           Monthly
         </span>
         <v-switch
@@ -20,22 +26,28 @@
           color="primary"
           hide-details
         ></v-switch>
-        <span :class="{ 'text-primary font-weight-bold': isAnnual }" @click="isAnnual = true">
+        <span
+          :class="{ 'text-primary font-weight-bold': isAnnual }"
+          @click="isAnnual = true"
+        >
           Yearly (Save 20%)
         </span>
       </div>
 
       <!-- Pricing Cards -->
-      <v-row justify="center" align="stretch">
-        <v-col 
-          v-for="plan in plans" 
+      <v-row
+        justify="center"
+        align="stretch"
+      >
+        <v-col
+          v-for="plan in plans"
           :key="plan.name"
-          cols="12" 
+          cols="12"
           md="4"
           class="d-flex"
         >
           <v-card
-            :class="{'popular': plan.popular}"
+            :class="{ 'popular': plan.popular }"
             class="w-100 pricing-card pt-4"
             elevation="4"
           >
@@ -54,7 +66,11 @@
                   </template>
                   <template v-else>
                     <div class="enterprise-pricing mb-2 d-flex align-center justify-center">
-                      <v-icon size="x-large" color="primary" class="mr-2">mdi-office-building-cog</v-icon>
+                      <v-icon
+                        size="x-large"
+                        color="primary"
+                        class="mr-2"
+                      >mdi-office-building-cog</v-icon>
                       <span class="custom-pricing-text">Custom</span>
                     </div>
                     <div class="text-body-2 text-medium-emphasis">
@@ -77,22 +93,48 @@
 
               <v-divider class="my-6"></v-divider>
 
-              <v-list density="comfortable" class="feature-list">
+              <v-list
+                density="comfortable"
+                class="feature-list"
+              >
                 <v-list-item
                   v-for="(feature, index) in plan.features"
                   :key="index"
                   class="feature-item"
                 >
                   <template v-slot:prepend>
-                    <v-icon color="primary" size="small">mdi-check-circle</v-icon>
+                    <v-icon
+                      color="primary"
+                      size="small"
+                    >mdi-check-circle</v-icon>
                   </template>
-                  <v-list-item-title>{{ feature }}</v-list-item-title>
+                  <v-list-item-title>
+                    <div class="d-flex align-center">
+                      {{ feature }}
+                      <v-chip
+                        v-if="feature.includes('Up to 5 seats')"
+                        color="info"
+                        size="small"
+                        class="ml-2"
+                      >
+                        Coming Soon
+                      </v-chip>
+                      <span
+                        v-if="feature.includes('unlimited content') && plan.name !== 'Enterprise'"
+                        class="ml-1 text-caption"
+                      >*</span>
+                    </div>
+                  </v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-card-item>
           </v-card>
         </v-col>
       </v-row>
+            <!-- Global Fair Use Disclaimer -->
+            <div class="text-center mt-8 text-medium-emphasis text-body-2">
+        * Unlimited content generation within fair use (approximately 50 long-form pieces or 500 short-form posts monthly). Higher usage may be rate-limited.
+      </div>
     </div>
   </v-container>
 </template>
@@ -125,7 +167,7 @@ const plans = [
     yearlyPrice: 79,
     features: [
       'Create unlimited content',
-      '3 user seats included',
+      'Up to 5 seats',
       '3 Voices',
       '10 campaigns / month',
       'Priority support',
@@ -152,13 +194,13 @@ const selectPlan = (plan) => {
     console.log('Enterprise contact')
     return;
   }
-  
+
   // Construct register URL with plan parameters
   const params = new URLSearchParams({
     plan: plan.name.toLowerCase(),
     billing: isAnnual.value ? 'yearly' : 'monthly',
   });
-  
+
   // Redirect to your app's register page with parameters
   window.location.href = `${SITE_URL}register?${params.toString()}`;
 };
@@ -224,11 +266,11 @@ const selectPlan = (plan) => {
   .pricing-card {
     margin-bottom: 20px;
   }
-  
+
   .pricing-content {
     min-height: auto;
   }
-  
+
   .enterprise-pricing {
     height: auto;
   }
