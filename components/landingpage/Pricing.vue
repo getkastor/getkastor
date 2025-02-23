@@ -2,6 +2,7 @@
 <template>
   <v-container
     fluid
+    id="pricing"
     class="pricing-section py-16"
   >
     <div class="main-container">
@@ -131,16 +132,22 @@
           </v-card>
         </v-col>
       </v-row>
-            <!-- Global Fair Use Disclaimer -->
-            <div class="text-center mt-8 text-medium-emphasis text-body-2">
-        * Unlimited content generation within fair use (approximately 50 long-form pieces or 500 short-form posts monthly). Higher usage may be rate-limited.
+      <!-- Global Fair Use Disclaimer -->
+      <div class="text-center mt-8 text-medium-emphasis text-body-2">
+        * Unlimited content generation within fair use (approximately 50 long-form pieces or 500 short-form posts
+        monthly).
+        Higher usage may be rate-limited.
       </div>
     </div>
   </v-container>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router';
+
+const dataLayer = useDataLayer()
+const router = useRouter()
 
 const isAnnual = ref(true);
 
@@ -189,9 +196,21 @@ const plans = [
 ];
 
 const selectPlan = (plan) => {
+  const planPrice = isAnnual.value ? plan.yearlyPrice : plan.monthlyPrice
+  const billingCycle = isAnnual.value ? 'yearly' : 'monthly'
+
+  // Track plan selection
+  dataLayer.push({
+    event: 'pricing_interaction',
+    event_category: 'Pricing',
+    event_action: plan.name === 'Enterprise' ? 'enterprise_contact' : 'plan_selected',
+    plan_name: plan.name.toLowerCase(),
+    plan_price: planPrice,
+    billing_cycle: billingCycle
+  })
+
   if (plan.name === 'Enterprise') {
-    // Handle enterprise contact form/modal
-    console.log('Enterprise contact')
+    router.push('/contact')
     return;
   }
 
@@ -201,9 +220,43 @@ const selectPlan = (plan) => {
     billing: isAnnual.value ? 'yearly' : 'monthly',
   });
 
-  // Redirect to your app's register page with parameters
+  // Redirect to the app's register page with parameters
   window.location.href = `${SITE_URL}register?${params.toString()}`;
 };
+
+// Track billing cycle toggle
+watch(isAnnual, (newValue) => {
+  dataLayer.push({
+    event: 'pricing_interaction',
+    event_category: 'Pricing',
+    event_action: 'billing_cycle_view_change',
+    billing_cycle: newValue ? 'yearly' : 'monthly'
+  })
+})
+
+// Track pricing section visibility
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dataLayer.push({
+          event: 'pricing_interaction',
+          event_category: 'Pricing',
+          event_action: 'section_view'
+        })
+        // Only track first view
+      }
+      observer.disconnect()
+    })
+    // Trigger when 50% visible
+  }, { threshold: 0.5 })
+
+  const pricingSection = document.getElementById('pricing')
+  if (pricingSection) {
+    observer.observe(pricingSection)
+  }
+})
+
 </script>
 
 <style scoped>
