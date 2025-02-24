@@ -35,12 +35,16 @@ provide('openWaitlistModal', () => showWaitlistModal.value = true)
 
     <v-footer class="bg-primary">
       <v-container>
-        <div class="bg-primary d-flex">
+        <div class="bg-primary d-flex flex-column flex-md-row ga-4">
           <span>
             © {{ new Date().getFullYear() }} Kastor
           </span>
-          <v-spacer />
-          <div class="contact-links ga-4">
+          <v-spacer class="d-none d-md-block" />
+          <div class="contact-links d-flex ga-4 flex-column flex-md-row ">
+            <a
+              href="/terms.html"
+              target="_blank"
+            >Terms and Conditions</a>
             <a
               href="/privacy.html"
               target="_blank"
@@ -49,7 +53,6 @@ provide('openWaitlistModal', () => showWaitlistModal.value = true)
             <v-tooltip bottom>
               <template v-slot:activator="{ props }">
                 <span
-                  class="ml-8"
                   v-bind="props"
                   @click="clickToCopyEmail"
                 >
