@@ -328,4 +328,12 @@ onMounted(() => {
     height: auto;
   }
 }
+
+.v-switch :deep(.v-switch__track:not(.bg-primary)) {
+  background-color: rgb(var(--v-theme-primary)) !important;
+}
+
+.v-switch :deep(.v-switch__track.bg-primary) {
+  background-color: rgb(var(--v-theme-primary)) !important;
+}
 </style>
