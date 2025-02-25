@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, inject, watch } from 'vue'
 import { useDisplay } from 'vuetify'
+import { useGoTo } from 'vuetify'
+import { useRoute, useRouter } from 'vue-router'
 
 // define prop optional:isblog
 const props = defineProps({
@@ -10,6 +12,10 @@ const props = defineProps({
   }
 })
 
+const route = useRoute()
+const router = useRouter()
+const goTo = useGoTo()
+
 const isHydrated = ref(false)
 
 const isScrolled = ref(false)
@@ -17,10 +23,6 @@ const showWhiteBg = ref(false)
 const drawer = ref(false)
 
 // Inject modal states and methods
-const showBetaModal = inject('showBetaModal', ref(false))
-const showWaitlistModal = inject('showWaitlistModal', ref(false))
-const openBetaModal = inject('openBetaModal', () => { })
-const openWaitlistModal = inject('openWaitlistModal', () => { })
 
 
 const { width } = useDisplay()
@@ -33,8 +35,6 @@ const drawerWidth = computed(() => {
   return width.value < 700 ? width.value : 256
 })
 
-// Compute if any modal is open
-const isAnyModalOpen = computed(() => showBetaModal.value || showWaitlistModal.value)
 
 
 const handleScroll = () => {
@@ -48,7 +48,7 @@ const handleScroll = () => {
 
 const updateBackground = () => {
   // Show white background if either scrolled down or any modal is open
-  if (isAnyModalOpen.value || isScrolled.value || props.isBlog) {
+  if (isScrolled.value || props.isBlog) {
     showWhiteBg.value = true
   } else {
     // Only hide background if we're at the top and no modal is open
@@ -56,10 +56,23 @@ const updateBackground = () => {
   }
 }
 
-// Watch for changes in modal state
-watch(isAnyModalOpen, () => {
-  updateBackground()
-}, { immediate: true })
+const scrollToPricing = () => {
+  goTo('.pricing-section', {
+    duration: 500,
+    offset: 0,
+    easing: 'easeInOutCubic'
+  })
+}
+
+const handleTryItFree = () => {
+  // if we're on the home page, scroll to the pricing section
+  if (route.path === '/') {
+    scrollToPricing()
+  } else {
+    // otherwise, navigate to the pricing page
+    router.push('/')
+  }
+}
 
 // Add scroll event listener when component is mounted
 onMounted(() => {
@@ -119,6 +132,13 @@ onUnmounted(() => {
         >
           BLOG
         </NuxtLink>
+        <NuxtLink
+          to="/contact"
+          class="text-decoration-none blog-link d-block text-center py-2"
+          @click="drawer = false"
+        >
+          Contact us
+        </NuxtLink>
       </v-list-item>
       <v-list-item>
         <v-btn
@@ -127,14 +147,14 @@ onUnmounted(() => {
           class="navButton beta my-4"
           variant="elevated"
           size="x-large"
-          @click="openBetaModal"
+          @click="handleTryItFree"
         >
           <v-icon start>mdi-rocket-launch</v-icon>
-          Join Beta
+          Free Trial
         </v-btn>
       </v-list-item>
 
-      <v-list-item>
+      <!-- <v-list-item>
         <v-btn
           block
           variant="outlined"
@@ -146,7 +166,7 @@ onUnmounted(() => {
           <v-icon start>mdi-email-outline</v-icon>
           Join Waitlist
         </v-btn>
-      </v-list-item>
+      </v-list-item> -->
     </v-list>
   </v-navigation-drawer>
 
@@ -187,16 +207,22 @@ onUnmounted(() => {
         >
           BLOG
         </NuxtLink>
+        <NuxtLink
+          to="/contact"
+          class="text-decoration-none blog-link mr-8"
+        >
+          Contact us
+        </NuxtLink>
         <v-btn
           color="secondary"
           class="navButton beta"
           variant="elevated"
-          @click="openBetaModal"
+          @click="handleTryItFree"
         >
           <v-icon start>mdi-rocket-launch</v-icon>
-          Join Beta
+          Free Trial
         </v-btn>
-        <v-btn
+        <!-- <v-btn
           variant="outlined"
           class="ml-6 navButton waitlist"
           :class="{ 'border-primary text-primary': showWhiteBg }"
@@ -204,7 +230,7 @@ onUnmounted(() => {
         >
           <v-icon start>mdi-email-outline</v-icon>
           Join Waitlist
-        </v-btn>
+        </v-btn> -->
       </div>
 
       <!-- Mobile menu icon -->
