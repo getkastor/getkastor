@@ -149,7 +149,7 @@ import { useRouter } from 'vue-router';
 const dataLayer = useDataLayer()
 const router = useRouter()
 
-const isAnnual = ref(true);
+const isAnnual = ref(false);
 
 const runtimeConfig = useRuntimeConfig()
 const SITE_URL = runtimeConfig.public.siteURL
