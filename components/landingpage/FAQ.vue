@@ -9,40 +9,45 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: 'What content types can Kastor create?',
+    question: 'What is Kastor?',
+    answer: `<p>Kastor is an AI-powered content marketing platform that helps you create authentic, on-brand content—fast. It’s built for marketers, solopreneurs, and teams who want to generate LinkedIn posts, tweets, emails, blog posts, and full campaigns without starting from scratch.</p>
+  <p>With Kastor, you define your voice once and generate high-quality content in seconds across all your channels. It’s like having a content team that already knows your tone, goals, and messaging style—available on demand.</p>`
+  },
+  {
+    question: 'What type of content can Kastor create?',
     answer: `<p>Kastor supports LinkedIn posts, tweets, blog posts, marketing emails, and full campaigns.</p><p>You can generate content in seconds for one channel or orchestrate multi-asset campaigns across several.</p>`
   },
   {
-    question: 'Can I use Kastor to repurpose existing content?',
-    answer: `<p>Yes. Kastor can take a blog post, tweet, or announcement and turn it into fresh content for other platforms.</p><p>Just choose "repurpose content" when creating your brief.</p>`
+    question: 'Can Kastor repurpose existing content into new formats?',
+    answer: `<p>Yes. Kastor can take a blog post, whitepaper, LinkedIn Post, webinar or interview transcript, etc, and turn it into fresh content for other platforms.</p><p>Just choose "repurpose content" when creating your brief, and Kastor will adapt your content to match the tone and format of each channel.</p>`
   },
   {
     question: 'Can I use Kastor on mobile?',
-    answer: `<p>Yes. Kastor is fully responsive and works in any modern mobile browser.</p><p>You can access the full platform from your phone or tablet.</p>`
+    answer: `<p>Yes. Kastor is fully responsive and accessible via modern mobile browsers. You can use it on your phone or tablet without installing an app.</p><p>The full platform is available on mobile for content creation on the go.</p>`
   },
   {
-    question: 'Does Kastor support different tones of voice (e.g., casual vs. professional)?',
+    question: 'Does Kastor support different writing styles (e.g., casual vs. professional)?',
     answer: `<p>Absolutely. You can create multiple "voices" to match different tones—whether it’s casual, formal, or promotional.</p>
       <p>Each voice also includes both general settings and channel-specific configurations (like separate examples and guidelines for Twitter, LinkedIn, email, and blog). That means your brand can adapt its tone across platforms while staying consistent overall.</p>
       <p>And if needed, you can still adjust the tone or provide specific guidance for any individual piece of content—so you stay in control without starting from scratch.</p>`
   },
   {
-    question: 'What AI does Kastor use?',
-    answer: `<p>Kastor uses advanced language models (LLMs) from OpenAI, Anthropic, and other top providers.</p><p>We choose the best model for the task, so you get high-quality, relevant content every time.</p>`
+    question: 'Which AI models does Kastor use for content generation?',
+    answer: `<p>Kastor uses advanced language models (LLMs) from OpenAI, Anthropic, selecting the best engine for each type of content request.</p><p>This ensures high-quality, relevant, and human-sounding results across formats—from short tweets to long-form blog posts.</p>`
   },
   {
     question: 'How is Kastor different from ChatGPT or other AI writing tools?',
     answer: `<p>Unlike general-purpose AI tools, Kastor is purpose-built for content marketing. It lets you define and manage brand voices, generate multi-channel campaigns, repurpose existing content, and maintain tone consistency—without needing to prompt engineer or start from scratch each time.</p>
       <p>Because Kastor is designed around real content workflows, you’ll find it much faster and easier to get to the result you want. Once your voice and campaign setup are in place, Kastor does the heavy lifting—saving you countless iterations and helping you stay on brand at scale.</p>`
   },
-  {
-    question: 'Will my content be used to train AI models?',
-    answer: `<p>Kastor does not use your content to train its own models.</p><p>However, your content is processed through third-party AI providers (such as OpenAI and Anthropic), and we cannot fully control how those providers handle training.</p><p>For this reason, we strongly recommend not uploading confidential, sensitive, or proprietary information to Kastor.</p>`
-  },
-  {
-    question: 'Is my content shared with third parties?',
-    answer: `<p>Your content is shared only with our AI technology providers for the sole purpose of generating content. It is not shared publicly or with other users.</p><p>However, because your content is processed by external providers, we advise caution and recommend avoiding the submission of sensitive or private information.</p>`
-  }
+  // {
+  //   question: 'Will my content be used to train AI models?',
+  //   answer: `<p>Kastor does not use your content to train its own AI models.</p><p>However, because your content is processed through third-party providers (like OpenAI and Anthropic), we cannot guarantee how those providers use or retain that data.</p><p>To protect your privacy, we strongly advise against uploading confidential or sensitive information to the platform.</p>`
+  // },
+  // {
+  //   question: 'Is my content shared with third parties?',
+  //   answer: `<p>Your content is not shared publicly or with other Kastor users. It is only shared with our AI technology partners as needed to generate the content you request.</p><p>Because these providers operate independently, we recommend treating all inputs as potentially visible to third-party systems, and avoiding submission of private or proprietary data.</p>`
+  // }
 ]
 
 useHead({
