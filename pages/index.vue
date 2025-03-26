@@ -14,7 +14,6 @@ useSeoMeta({
   // twitterCard: 'summary_large_image',
 })
 
-
 // Interfaces
 
 interface UserType {
@@ -162,6 +161,7 @@ onMounted(() => {
       </div>
     </v-container>
 
+    <landingpageFAQ />
     <landingpageCTASection />
   </div>
 </template>
