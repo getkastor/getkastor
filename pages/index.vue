@@ -161,7 +161,8 @@ onMounted(() => {
         </v-row>
       </div>
     </v-container>
-
+    
+    <landingpageFAQ />
     <landingpageCTASection />
   </div>
 </template>
