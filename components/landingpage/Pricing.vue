@@ -221,7 +221,7 @@ const selectPlan = (plan) => {
   });
 
   // Redirect to the app's register page with parameters
-  window.location.href = `${SITE_URL}register?${params.toString()}`;
+  window.location.href = `${SITE_URL}/register?${params.toString()}`;
 };
 
 // Track billing cycle toggle
