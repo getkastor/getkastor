@@ -152,7 +152,7 @@ const router = useRouter()
 const isAnnual = ref(false);
 
 const runtimeConfig = useRuntimeConfig()
-const SITE_URL = runtimeConfig.public.siteURL
+const APP_URL = runtimeConfig.public.apiBase
 
 const plans = [
   {
@@ -221,7 +221,7 @@ const selectPlan = (plan) => {
   });
 
   // Redirect to the app's register page with parameters
-  window.location.href = `${NUXT_PUBLIC_API_BASE_URL}/register?${params.toString()}`;
+  window.location.href = `${APP_URL}/register?${params.toString()}`;
 };
 
 // Track billing cycle toggle
