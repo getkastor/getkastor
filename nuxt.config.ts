@@ -66,7 +66,7 @@ export default defineNuxtConfig({
     // Keys within public, will be also exposed to the client-side
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
-      siteURL: process.env.NUXT_PUBLIC_SITE_URL
+      siteURL: process.env.NUXT_SITE_URL
     }
   },
   vite: {
