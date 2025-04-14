@@ -70,6 +70,7 @@ included_paths = [
   # "public/final-blog.png",
   # "public/kastor-demo-900.mp4",
   # "public/kastor-demo.mp4",
+  # "public/privacy.html",
   # "public/robots.txt",
   # "public/tweet-creation.png",
   # "public/voice-creation.png",
