@@ -5,7 +5,7 @@ import { useGoTo } from 'vuetify'
 const goTo = useGoTo()
 
 const scrollToCTA = () => {
-  goTo('.cta-section', {
+  goTo('.pricing-section', {
     duration: 500,
     offset: 0,
     easing: 'easeInOutCubic'

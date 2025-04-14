@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
+import { useGoTo } from 'vuetify'
+
 
 definePageMeta({
   layout: 'landingpage',
@@ -13,6 +15,16 @@ useSeoMeta({
   ogImage: 'https://getkastor.com/OG_image.png',
   // twitterCard: 'summary_large_image',
 })
+
+const goTo = useGoTo()
+
+const scrollToCTA = () => {
+  goTo('.pricing-section', {
+    duration: 500,
+    offset: 0,
+    easing: 'easeInOutCubic'
+  })
+}
 
 // Interfaces
 
@@ -94,12 +106,12 @@ onMounted(() => {
             elevation="4"
             class="text-button-large beta"
             :ripple="false"
-            @click="openBetaModal"
+            @click="scrollToCTA"
           >
             <v-icon start>mdi-rocket-launch</v-icon>
-            Join the Beta
+            Try It Free
           </v-btn>
-          <v-btn
+          <!-- <v-btn
             size="x-large"
             variant="flat"
             class="text-button-large waitlist-button waitlist"
@@ -108,7 +120,7 @@ onMounted(() => {
           >
             <v-icon start>mdi-email-outline</v-icon>
             Join Waitlist
-          </v-btn>
+          </v-btn> -->
         </div>
       </div>
     </v-container>
@@ -161,8 +173,8 @@ onMounted(() => {
       </div>
     </v-container>
 
+    <landingpagePricing /> 
     <landingpageFAQ />
-    <landingpageCTASection />
   </div>
 </template>
 
