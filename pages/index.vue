@@ -15,7 +15,8 @@ useSeoMeta({
   ogImage: 'https://getkastor.com/OG_image.png',
   twitterImage: 'https://getkastor.com/OG_image.png',
   twitterTitle: 'Instant, Authentic Social Media & Blog Content',
-  twitterDescription: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds.'
+  twitterDescription: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds.',
+  twitterCard: 'summary_large_image',
 })
 
 const goTo = useGoTo()
