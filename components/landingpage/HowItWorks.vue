@@ -39,7 +39,7 @@ const steps: Steps[] = [
     details: [
       'Choose from multiple options',
       'Fine-tune to perfection or publish instantly',
-      'Get more content whenever you want'
+      '2 blog post modes: get your post straight from the brief, or workshop the outline with Kastor'
     ],
     image: '/tweet-creation.png',
     alt: 'In seconds, you get multiple options for posts that match your style'
