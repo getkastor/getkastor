@@ -13,7 +13,9 @@ useSeoMeta({
   description: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
   ogDescription: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds - get results across Twitter, LinkedIn, SEO and email. Try it free.',
   ogImage: 'https://getkastor.com/OG_image.png',
-  // twitterCard: 'summary_large_image',
+  twitterImage: 'https://getkastor.com/OG_image.png',
+  twitterTitle: 'Instant, Authentic Social Media & Blog Content',
+  twitterDescription: 'Effortlessly create social posts and blogs that actually sound like you. From idea to authentic posts in seconds.'
 })
 
 const goTo = useGoTo()
