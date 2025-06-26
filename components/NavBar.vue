@@ -125,13 +125,13 @@ onUnmounted(() => {
 
     <v-list class="mt-6">
       <v-list-item class="blog-list-item">
-        <NuxtLink
+        <!-- <NuxtLink
           to="/blog"
           class="text-decoration-none blog-link d-block text-center py-2"
           @click="drawer = false"
         >
           BLOG
-        </NuxtLink>
+        </NuxtLink> -->
         <NuxtLink
           to="/contact"
           class="text-decoration-none blog-link d-block text-center py-2"
@@ -201,12 +201,12 @@ onUnmounted(() => {
 
       <!-- Desktop buttons -->
       <div class="d-none d-md-flex button-container align-center">
-        <NuxtLink
+        <!-- <NuxtLink
           to="/blog"
           class="text-decoration-none blog-link mr-8"
         >
           BLOG
-        </NuxtLink>
+        </NuxtLink> -->
         <NuxtLink
           to="/contact"
           class="text-decoration-none blog-link mr-8"
